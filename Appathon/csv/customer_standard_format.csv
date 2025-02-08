@@ -1,0 +1,1679 @@
+"Priority
+Rank",Field #,Field Name,Business Name,Business Definition,"Valid Values 
+(Note:  The values provided are examples only and may not be a complete list of values)","Field
+Type",Length,"Start 
+Pos","End 
+Pos","Digits if 
+numeric","Decimals if 
+numeric",NCPDP D.0 Field #,NCPDP D.0 Field Name,NCPDP D.0 Field Description
+1,1,RECORDID,Record Identifier,"The number assigned to the record for identification purposes. All detail records are assigned ""02.""","""02""",A,2,1,2,0,0,,,
+1,2,RXCLAIMNBR,RxCLAIM Number,"A system-generated number assigned to each submitted transaction on the claims processing system. This number acts as a date and uniquely identifies a claim in the system.
+
+The RXCLAIMNBR, CLMSEQNBR, and CLAIMSTS fields are used to associate records in the Supplemental and Compound MCEF files to the claims in the Standard MCEF file.","Pos 1-2 = Year
+Pos 3-5 = Julian day of the original sequence
+Pos 6-12 = RxCLAIM-generated number
+Pos 13-15 = Processor number 
+
+Example: Claim Number 061371234567001
+06 = Year 2006
+137 = Julian date for May 17
+1234567 = System-generated number
+001 = Processor number",N,15,3,17,15,0,503-F3,Authorization Number,Number assigned by the processor to identify an authorized transaction.
+1,3,CLMSEQNBR,Claim Sequence Number,"The number assigned to this particular iteration of the claim, indicating the order in which it was processed.  The sequence begins at 999, then reduces by 1:  999, 998, 997, etc. 
+
+Multiple sequence numbers can be assigned to the same RxCLAIM number if the pharmacy, fill date, refill code and Rx number are the same.
+
+The RXCLAIMNBR, CLMSEQNBR, and CLAIMSTS fields are used to associate records in the Supplemental and Compound MCEF files to the claims in the Standard MCEF file.
+
+Note:  If a claim is reversed, the original claim and the reversal will have the same sequence number. ",Claims start at 999 and reduce in number,N,3,18,20,3,0,503-F3,Authorization Number,Number assigned by the processor to identify an authorized transaction.
+1,4,CLAIMSTS,Claim Status Code,"The code that indicates the payment status of the claim after it has been processed. 
+
+The RXCLAIMNBR, CLMSEQNBR, and CLAIMSTS fields are used to associate records in the Supplemental and Compound MCEF files to the claims in the Standard MCEF file.
+
+Example: If a claim is paid, reversed, then paid within the weekly time frame of Saturday 00:00:01 – Friday 24:00:00, the MCEF only displays the last paid transaction. The MCEF does not display the previous paid and reversal. ",See the Claim Status tab.,A,1,21,21,0,0,112-AN,Transaction Response Status,Code indicating the status of the transaction.
+1,5,CARRIERID,Carrier ID,"The identifier assigned to the insurance company or HMO that offers and underwrites the health plan.  The carrier is the highest level within the claims processing system hierarchy. All accounts, groups and members fall within the carrier.",,A,9,22,30,0,0,,,
+3,6,SCARRIERID,Carrier ID Override,"The identifier for the network carrier that owns the pharmacy network and/or product override. When processing the claim, the system will read the override carrier to find the pharmacy network and/or product override, but will continue to process under the current carrier.  A product override would be necessary if the client needs to override any values that Medi-Span had assigned to the product. ",Prime does not use this functionality.,A,9,31,39,0,0,,,
+5,7,CARRPROC,Processor Identifier,Field is not currently used. ,Contains only zeroes. ,N,10,40,49,10,0,,,
+1,8,ACCOUNTID,Account ID,"The identifier assigned to the second level of the claims processing system hierarchy. This level is generally used for reporting purposes. Accounts may identify subsidiary organizations within the main client plan, regional areas within which the client operates or other major breakouts within the client carrier.",,A,15,50,64,0,0,,,
+5,9,ACCTBENCDE,Account Benefit Code,Field is not currently used. ,Contains only spaces to ensure the field is blank.,A,10,65,74,0,0,,,
+4,10,VERSIONNBR,Version Release Number,The NCPDP version/release number of the rules used to process this claim. This number also identifies the format of the transaction.,"3A = Standard Claim/Reversal
+3B = Workers Compensation
+3C = Medicaid Claim/Reversal
+32 = Version 3.2
+50 = Version 5.0
+51 = Version 5.1
+D0 = Version D.0
+
+Additional values are expected for Medicare. For example, N1 transactions will have either C1 or C2.",A,2,75,76,0,0,102-A2,Version/Release Number,Code uniquely identifying the transmission syntax and corresponding Data Dictionary.
+1,11,GROUPID,Group ID,The identifier assigned to the third level of the claims processing system hierarchy - below carrier and account. Each account may be broken down into multiple groups representing individuals or groups of employees. The group number links a member to the appropriate benefit plan for claims processing. ,,A,15,77,91,0,0,,,
+2,12,GROUPPLAN,Group Plan Code,"The benefit plan identifier associated to the group for its members' eligibility, and sent via the group's eligibility file.",,A,10,92,101,0,0,,,
+2,13,GRPCLIBENF,Group Client Benefit Code,The identifier used to keep accumulator dollars with the correct member if the member changes membership levels.  The identifier also is used to categorize different groups together for reporting purposes.  The Group Client Benefit Code (CBC) is sent to Prime on the eligibility files. Field is used for clients who elect to submit Group CBC in the eligibility group file.,,A,10,102,111,0,0,,,
+5,14,GROUPSIC,Group SIC Code,Field is not currently used. ,Contains only spaces to ensure the field is blank.,A,4,112,115,0,0,,,
+4,15,CLMRESPSTS,Claim Response Status Code,"The code that indicates the claim's status when Prime sent response back to the pharmacy. 
+
+Note:  Refer to the CLAIMSTS field (#4) definition and valid values for more information about the status code that applied after the claim was processed.  ","C = Captured - Code indicating that the transaction had been captured
+P = Paid - Code indicating that the transaction has been processed using plan rules and was paid
+R = Rejected - Code indicating that the transaction has been denied/rejected
+A = Reversal Accepted - Code indicating that the claim reversal has been accepted
+B = Benefit - Code indicating benefit information returned
+D = Duplicate of Paid - Code indicating that the transaction was paid in a previously submitted transaction
+F = PA Deferred - Code indicating that the prior authorization transaction cannot be processed until additional information is obtained
+Q = Duplicate of Capture - Code indicating that the transaction had been previously captured
+S = Duplicate of Approved - Code indicating that the transaction was previously approved",A,1,116,116,0,0,112-AN ,Transaction Response Status,Code indicating the status of the transaction.
+1,16,MEMBERID,Member ID,The identifier assigned a member within a group based on the eligibility file submitted by the client.,,A,20,117,136,0,0,,,
+1,17,MBRLSTNME,Member Last Name,The member's last name based on the eligibility file submitted by the client.,,A,25,137,161,0,0,,,
+1,18,MBRFSTNME,Member First Name,The member's first name based on the eligibility file submitted by the client.,,A,15,162,176,0,0,,,
+1,19,MBRMDINIT,Member Middle Initial,The member's middle initial based on the eligibility file submitted by the client.,,A,1,177,177,0,0,,,
+1,20,MBRPRSNCDE,Member Person Code,The identification code assigned to a specific person within a family (or cardholder). Person code is optionally used in conjunction with the cardholder ID number to uniquely identify family members within the cardholder ID number (last 2 digits of the card ID).,,A,3,178,180,0,0,,,
+1,21,MBRRELCDE,Member Relationship Code,The member's connection to the cardholder or subscriber. ,"1 = Cardholder
+2 = Spouse
+3 = Dependent
+4 = Other
+0 or blanks = Unspecified: map to a value of ""U"" for unspecified.",A,1,181,181,0,0,306-C6,Patient Relationship Code,Code indicating relationship of patient to cardholder.
+1,22,MBRSEX,Member Gender Code,The gender of the member.,"M = Male
+F = Female",A,1,182,182,0,0,305-C5,Patient Gender Code,Code indicating the gender of the individual.
+1,23,MBRBIRTH,Member Date of Birth,The date of birth of the member based on the eligibility file submitted by the client.,Format = CCYYMMDD,N,8,183,190,8,0,,,
+3,24,MBRAGE,Member Age - First of Month,The member's age as of the first of the month based on the eligibility file submitted by the client.. ,,N,3,191,193,3,0,,,
+1,25,MBRZIP,Member Zip Code,The member's zip code based on the eligibility file submitted by the client.,,A,15,194,208,0,0,,,
+2,26,SOCSECNBR,Member Social Security Number (SSN),The Social Security Number of the member based on the eligibility file submitted by the client.  ,,A,9,209,217,0,0,,,
+5,27,DURKEY,Drug Utilization Review (DUR) Key,Field is not currently used. ,Contains only spaces to ensure the field is blank.,A,18,218,235,0,0,,,
+2,28,DURFLAG,Member Drug Utilization Review (DUR) Process Flag,"The code that indicates whether the Drug Utilization Review (DUR) edit was used when processing claims for the member.  DUR is a system of drug use review that can detect potential adverse drug interactions, drug-pregnancy conflicts, therapeutic duplications, drug-age conflicts, etc.   ","Y = Default. DUR was used when processing the member's submitted claims.
+N = DUR was not used when processing the member's submitted claims. ",A,1,236,236,0,0,,,
+1,29,MBRFAMLYID,Member Family ID,"The unique identifier for the member's family within the group, based on the eligibility file submitted by the client. 
+
+If the member's benefit includes accumulators, this field should contain a value. 
+
+This data displays on the MCEF if it is on the member's eligibility file.",,A,20,237,256,0,0,,,
+3,30,MBRFAMLIND,Member Family Indicator,"The code that indicates whether the member's benefit plan is for an individual or a family, based on the eligibility file submitted by the client.  
+
+This data displays on the MCEF if it is on the member's eligibility file.","Blank
+N = Not Family; Individual
+Y = Family",A,1,257,257,0,0,,,
+2,31,MBRFAMLTYP,Member Family Type,"The definition of the individuals that the subscriber selected to be covered by the pharmacy benefit.
+
+This field is used to determine if the individual or family accumulator amounts should be used.
+
+This data displays on the MCEF if it is on the member's eligibility file.","1 = Family
+2 = Card Holder
+3 = Card Holder & Spouse
+4 = Card Holder & Dependents
+5 = Spouse & Dependents 
+6 = Dependents
+7 = Spouse Only
+8 = Member +1 ",A,1,258,258,0,0,,,
+2,32,COBIND,Coordination of Benefits (COB) Code,The Coordination of Benefits value that indicates whether the claim was processed as primary or secondary. A claim may be processed as secondary when a person is covered under more than one group medical program. COB requires that all programs coordinate payment of benefits in order to eliminate over-insurance or duplication of benefits.,"01 = Claim processed as Primary
+02 = Claim processed as Secondary, etc.
+
+Field always contains a value. ",A,2,259,260,0,0,,,
+3,33,MBRPLAN,Member Benefit Plan Code,"The benefit plan identifier associated to the member's record. Field is used for clients who elect to submit a Plan Code at the member level which would override the Plan Code sent at the group level.
+
+Note: The member's eligibility record ties the member to the Group record. The Group record is where the benefit plan is associated to the Group, via the Group's eligibility file.
+
+Some clients require that both their commercial and Medicare Part D members have a member plan different than the group plan.  However, all members within a given group have the same member plan.   ",,A,10,261,270,0,0,,,
+5,34,MBRPRODCDE,Member Client Product Code,The Client Product Code copied from the Member file.  It is used for reporting purposes only.,,A,6,271,276,0,0,,,
+5,35,MBRRIDERCD,Member Client Rider Code,Field is not currently used. ,Contains only spaces to ensure the field is blank.,A,6,277,282,0,0,,,
+5,36,CARENETID,Care Network Identifier,Field is not currently used. ,Contains only spaces to ensure the field is blank.,A,10,283,292,0,0,,,
+5,37,CAREQUALID,Care Qualifier Identifier,Field is not currently used. ,Contains only spaces to ensure the field is blank.,A,10,293,302,0,0,,,
+2,38,CAREFACID,Care Facility ID,"The identifier of the healthcare facility that is associated with the member. A care facility may be a clinic, nursing home, or other center that provides healthcare services. Care Facility data must be submitted on member eligibility file in order for this field to be functional.
+
+Note:  If the member's claim is from a healthcare facility that is not indicated in this field, the claim will reject.",,A,10,303,312,0,0,336-8C,Facility ID,ID assigned to the patient’s clinic/host party.
+2,39,CAREFACNAM,Care Facility Name,"The name of the healthcare facility that is associated with the member. A care facility may be a clinic, nursing home, or other center that provides healthcare services. Care Facility data must be submitted on member eligibility file in order for this field to be functional.
+
+Note:  If the member's claim is from a healthcare facility that is not indicated in this field, the claim will reject.",,A,25,313,337,0,0,,,
+2,40,MBRPCPHYS,Primary Physician ID,"The Drug Enforcement Agency (DEA) identifier assigned to the member's primary medical provider.  A primary provider is the member's first point of contact for any undiagnosed health concern. Primary Physician data must be submitted on member eligibility file in order for this field to be functional.
+
+Note:  If the plan has sent the DEA number, this field will display the value. If any other value has been sent, this field will be blank.",,A,15,338,352,0,0,,,
+2,41,PPRSFSTNME,Primary Prescriber First Name,"The first name of the member's primary medical provider.  A primary provider is the member's first point of contact for any undiagnosed health concern.  Primary Physician data must be submitted on member eligibility file in order for this field to be functional.
+
+The Primary Physician First Name displays as submitted using PRMCAREPRV field (#60) and PRMCAREPRQ field (#61).
+
+Note:  If the plan has sent the DEA number, this field will display the value. If any other value is sent, this field will be blank.",,A,15,353,367,0,0,,,
+2,42,PPRSLSTNME,Primary Prescriber Last Name,"The last name of the member's primary medical provider.  A primary provider is the member's first point of contact for any undiagnosed health concern. Primary Physician data must be submitted on member eligibility file in order for this field to be functional.
+
+The Primary Physician Last Name  displays as submitted using PRMCAREPRV field (#60) and PRMCAREPRQ field (#61).
+
+Note:  If the plan has sent the DEA number, this field will display the value. If any other value is sent, this field will be blank.",,A,25,368,392,0,0,,,
+2,43,PPRSMDINIT,Primary Prescriber Middle Initial,"The middle initial of the member's primary medical provider. A primary provider is the member's first point of contact for any undiagnosed health concern. Primary Physician data must be submitted on member eligibility file in order for this field to be functional.
+
+The Primary Physician Middle Initial displays as submitted using PRMCAREPRV field (#60) and PRMCAREPRQ field (#61).
+
+Note:  If the plan has sent the DEA number, this field will display the value. If any other value has been sent, this field will be blank.",,A,1,393,393,0,0,,,
+2,44,PPRSSPCCDE,Primary Prescriber Specialty Code,"The field of medicine in which the member's primary provider has specialized (e.g., urology, pediatrics, psychiatry, gynecology, geriatrics).  Primary Physician data must be submitted on member eligibility file in order for this field to be functional.
+
+The Primary Prescriber Specialty Code displays as submitted using PRMCAREPRV field (#60) and PRMCAREPRQ field (#61). 
+
+Note:  If the plan has sent the DEA number, this field will display the value. If any other value has been sent, this field will be blank.",,A,6,394,399,0,0,,,
+2,45,MBRALTINFL,Member Alternate Insurance Code,A code that indicates whether the member has a different insurance company or plan that may be responsible for primary payment for the products dispensed.  The code also indicates how claims for this member should be processed.  Also referred to as Coordination of Benefits.,"Blank = Not specified
+N = No: Member does not have additional coverage; coverage is primary
+Y = Yes: Member has other insurance and the claim should process under the other insurance first. 
+D = Dual Coverage: Indicates all matching member records should be considered to determine the most appropriate record to use for claim processing. Also indicates the current record is open for use to pay claims. If the member record with this code is determined to be the best match, the claim is processed against this record and acts as an N record from that point forward.
+X = Y/Dual Coverage: Acts like Y. When flag is X, the system continues to look for other matching records to use. If another matching record is found with a D, Dual Coverage logic is used to determine which record to use for claim processing. If the only available record is X, claim will reject. 
+0 = Additional Coverage: There is additional coverage and the claims processing system should look under the same carrier for benefits.
+1 = Additional Coverage, Other Carrier: There is additional coverage, but the claims processing system should look under another carrier for benefits.
+Note: Values Y, 0, and 1 work in conjunction with Process COB field on Member Eligibility Detail screen in plan edit #2. ",A,1,400,400,0,0,,,
+3,46,MBRALTINCD,Member Alternate Insurance Name,"The name of the alternate insurance company or plan that may be responsible for primary payment for the products dispensed.  Alternate insurance data must be submitted on member eligibility file in order for this field to be functional.
+
+Note:  This field only contains a value when the MBRALTINFL field (#45) does not contain 'N'. ",,A,10,401,410,0,0,,,
+3,47,MBRALTINID,Alternate Insurance Member ID,The member identifier associated with the alternate insurance. Alternate insurance data must be submitted on member eligibility file in order for this field to be functional.,,A,20,411,430,0,0,,,
+2,48,MBRMEDDTE,Member Medicare Coverage From Date,"The start date of the member's Medicare coverage, also known as the Original From Date (OFD). Medicare insurance data must be submitted on member eligibility file in order for this field to be functional.",,N,8,431,438,8,0,,,
+2,49,MBRMEDTYPE,Member Medicare Coverage Type,The code that indicates the type of Medicare coverage that the member currently has. ,"Valid values are these:
+Blank = Not specified
+A = Secondary Part A
+B = Part B
+D = Parts A & B Age 65
+M = Parts A & B
+N = Not Covered
+R = Renal
+U = Secondary, Unknown
+W = Secondary, Working/TEFRA
+Y = Yes, Undefined",A,1,439,439,0,0,,,
+2,50,MBRHICCDE,Medicare Beneficiary Identifier (MBI) ,"The MBI is a random alpha-numeric ID assigned to the member that does not contain any personally identifiable information. 
+
+This ID replaced the HICN (Health Insurance Claim Number) in April 2018. Medicare insurance data must be submitted on member eligibility file in order for this field to be functional.",,A,20,440,459,0,0,,,
+3,51,CARDHOLDER,Subscriber ID - Submitted,The identification number assigned to the person responsible for payment of premiums or whose employment is the basis for eligibility for membership in a health plan.  This is the exact ID that was submitted on the claim. This data must be submitted on the claim by the adjudicating pharmacy.,,A,20,460,479,0,0,302-C2,Cardholder ID,Insurance ID assigned to the cardholder or identification number used by the plan.
+3,52,PATLASTNME,Member Last Name - Submitted,The member's last name as submitted on the claim. This data must be submitted on the claim by the adjudicating pharmacy.,,A,15,480,494,0,0,311-CB,Patient Last Name,Individual last name.
+3,53,PATFRSTNME,Member First Name - Submitted,The member's first name as submitted on the claim. This data must be submitted on the claim by the adjudicating pharmacy.,,A,12,495,506,0,0,310-CA,Patient First Name,Individual first name.
+3,54,PERSONCDE,Person Code - Submitted,The identification code assigned to a specific person within a family (or subscriber) as submitted on the claim. Person code is optionally used in conjunction with the subscriber ID number to uniquely identify family members within the subscriber ID number (last 2 digits of the card ID). This data must be submitted on the claim by the adjudicating pharmacy.,,A,3,507,509,0,0,303-C3,Person Code,Code assigned to a specific person within a family.
+3,55,RELATIONCD,Relationship Code - Submitted,The member's connection to the subscriber as submitted on the claim.,"Blank or 0 = Not Specified
+1 = Subscriber
+2 = Spouse
+3 = Child
+4 = Other",A,1,510,510,0,0,306-C6,Patient Relationship Code,Code indicating relationship of patient to cardholder.
+3,56,SEXCODE,Member Gender Code - Submitted,The gender of the member as submitted on the claim by the pharmacy.,"0 = Unspecified
+1 = Male
+2 = Female
+3 = Non-binary",A,1,511,511,0,0,305-C5,Patient Gender Code,Code indicating the gender of the individual.
+3,57,BIRTHDTE,Member Date of Birth - Submitted,The date of birth of the member as submitted on the claim.,Format = CCYYMMDD,N,8,512,519,8,0,304-C4,Date Of Birth,Date of birth of patient.
+3,58,ELIGCLARIF,Eligibility Clarification Code - Submitted,"The code that indicates whether the current eligibility status of the member should be overridden to allow benefit coverage. An override may be required if eligibility is not maintained at the dependent level, and the dependent's status requires clarification to extend coverage to this member.  Without the override, claims for this member will reject.
+
+Example: The member has become a student but eligibility has not been updated yet. The pharmacy can indicate “3” so that the carrier may override eligibility for this member.
+","0  or blank = Unspecified
+1 = No Override
+2 = Override
+3 = Full time Student
+4 = Disabled Dependent
+5 = Dependent Parent
+6 = Significant Other",A,1,520,520,0,0,309-C9,Eligibility Clarification Code,Code indicating that the pharmacy is clarifying eligibility for a patient.
+3,59,CUSTLOC,Customer Location Code - Submitted,"The identifier of the healthcare facility that is associated with the member as submitted on the claim. A care facility may be a clinic, nursing home, or other center that provides healthcare services. 
+
+",See the Place of Service Codes tab. ,A,2,521,522,0,0,,,
+4,60,PRMCAREPRV,Primary Care Provider ID - Submitted,The identification number assigned to the member's primary medical provider as submitted on the claim.  A primary provider is the member's first point of contact for any undiagnosed health concern. This data must be submitted on the claim by the adjudicating pharmacy.,,A,15,523,537,0,0,421-DL,Primary Care Provider ID,ID assigned to the primary care provider. Used when the patient is referred to a secondary care provider.
+4,61,PRMCAREPRQ,Primary Care Provider ID Qualifier - Submitted,"The code that indicates the type of provider ID that was submitted on the claim, e.g., DEA, NPI, etc. ","Examples: 
+01 = NPI
+06 = UPIN
+12 = DEA
+",A,2,538,539,0,0,468-2E,Primary Care Provider ID Qualifier,Code qualifying the ‘Primary Care Provider ID’ (421-DL).
+4,62,FACILITYID,Facility ID - Submitted,"The 10-character identifier of the specific healthcare facility that is associated with the member as submitted on the claim. A care facility may be a clinic, nursing home, or other center that provides healthcare services.  ","Examples are hospitals, clinics, and nursing home.",A,10,540,549,0,0,336-8C,Facility ID,ID assigned to the patient’s clinic/host party.
+3,63,OTHCOVERAG,Other Coverage Code - Submitted,The code that indicates whether or not the member has other insurance coverage as submitted on the claim. This is a standard NCPDP field for the pharmacy to submit to indicate if the record is primary or secondary.  ,"0 = Not specified
+1 = No other coverage identified
+2 = Other coverage exists; payment collected
+3 = Other coverage exists; this claim not covered
+4 = Other coverage exists; payment not collected
+5 = Managed care plan denial
+6 = Other coverage denied; not a participating provider
+7 = Other coverage exists; not in effect at time of service
+8 = Claim is a billing for a copay",A,1,550,550,0,0,308-C8,Other Coverage Code,Code indicating whether or not the patient has other insurance coverage.
+2,64,BINNUMBER,Bank Identification Number (BIN) - Submitted,"The Bank ID Number or card issuer ID that is used for network routing of the claim payment.  This ID must be submitted on the claim by the adjudicating pharmacy. The BIN must be established with Prime in order for the claim to populate this file. 
+
+Each electronic claims processor must have a BIN assigned by the American National Institute. ",,A,6,551,556,0,0,101-A1,BIN Number,Card Issuer ID or Bank ID Number used for network routing.
+2,65,PROCESSOR,Processor Control Number - Submitted,An input code used by pharmacies that identifies the claim to be sent to Prime and how to process the claim. This data must be submitted on the claim by the adjudicating pharmacy.,,A,10,557,566,0,0,104-A4,Processor Control Number,Number assigned by the processor.
+3,66,GROUPNBR,Group Number - Submitted,"The identifier assigned to the group associated with the submitted claim.  This number is used to determine how to process the claim, based on the rules for the group. This data must be submitted on the claim by the adjudicating pharmacy.",,A,15,567,581,0,0,301-C1,Group ID,ID assigned to the cardholder group or employer group.
+3,67,TRANSCDE,Transaction Code - Submitted,"The numeric code that specifies the type of transaction sent or received. 
+
+Transaction Types include:
+- Claim(s) original billing
+- Claim(s) reversal or backout
+- Claim(s) billing following downtime
+- Claim(s) re-billing; reverse prior billing & original bills
+- Claim(s) refill billing
+- Claim(s) information for DUR",See the Submitted Transaction Code tab. ,A,2,582,583,0,0,103-A3,Transaction Code,Code identifying the type of transaction.
+1,68,DATESBM,Claim Submitted Date ,"The date the claim was submitted to the claims processing  system to be processed.  If this is the original claim, then this date will be identical to the ORGPDSBMDT field (#70).",Format = YYYYMMDD,N,8,584,591,8,0,,,
+3,69,TIMESBM,Claim Submitted Time,"The time the claim was submitted to the claims processing  system.
+
+",Format = HHMMSS,N,6,592,597,6,0,,,
+3,70,ORGPDSBMDT,Original Paid Transaction Submitted Date,"The date the claim was submitted the first time to the claims processing  system to be processed and had a paid status.  
+",Format = YYYYMMDD,N,8,598,605,8,0,,,
+3,71,RVDATESBM,Claim Reversal Submitted Date,The date the claim was submitted to the claims processing  system to be processed and flagged as a reversal. ,Format = YYYYMMDD,N,8,606,613,8,0,,,
+3,72,CLMCOUNTER,Claim Counter,"A number assigned to each claim based on its paid status. These numbers are used to determine the total number of paid claims and for reporting purposes. 
+
+Each paid claim counts as 1, and each reversed claim counts as -1. ","1 = Paid
+-1 = Reversed",S,1,614,614,1,0,,,
+3,73,GENERICCTR,Brand/Generic Drug Counter,"A number assigned to each claim based on whether the drug is generic or brand. These numbers are used to determine the total number of paid generic claims for reporting purposes.
+
+Each generic, paid claim counts as 1, each brand (not generic) claim counts as 0, and each reversed claim counts as -1.  ","1 = Generic, paid
+0 = Not generic, paid
+-1 = Reversed",S,1,615,615,1,0,,,
+3,74,FORMLRYCTR,Formulary Counter,"A number assigned to each claim based on whether the drug is on the benefit plan's formulary or not.  These numbers are used to determine the total number of paid claims for formulary drugs for reporting purposes.
+
+Each formulary, paid claim counts as 1, each non-formulary claim counts as 0, and each reversed claim counts as -1.  ","1 = Formulary
+0 = Not formulary
+-1 = Reversed",S,1,616,616,1,0,,,
+1,75,RXNUMBER,Prescription Number - Submitted,"The prescription number assigned to the submitted claim.  This is the reference number assigned by the provider for the dispensed drug or product and/or service provided. 
+
+","First 9 characters of the Submitted Rx Number
+
+Note:  To view all 12 characters of the Submitted Rx Number, go to RXNUMBER12, TCD Sbm Rx Nbr (Field #496).  The two fields display the same Submitted Rx Number. ",A,9,617,625,0,0,402-D2,Prescription/ Service Reference Number,Reference number assigned by the provider for the dispensed drug/product and/or service provided.
+4,76,RXNUMBERQL,Prescription Number Qualifier - Submitted ,"The code that indicates the type of billing submitted with the claim. 
+
+Note:  Currently, Prime's claims processing system only supports RxBilling, which is for prescription fills.","Valid Values are 0, 1, or 2.  
+
+Prime only uses 1 = RxBilling
+",A,1,626,626,0,0,455-EM,Prescription/ Service Reference Number Qualifier,Indicates the type of billing submitted.
+1,77,REFILL,Prescription New/Refill Code - Submitted,"The code that indicates whether the prescription is an original fill or a refill as submitted on the claim.  If it's a refill, the code is the number of the refill.","00 - New prescription
+01 to 99 - Number of refills",A,2,627,628,0,0,403-D3,Fill Number,The code indicating whether the prescription is an original or a refill.
+5,78,DISPSTATUS,Dispense Status,Field is not currently used. ,Contains only spaces to ensure the field is blank.,A,1,629,629,0,0,,,
+1,79,DTEFILLED,Prescription Fill Date - Submitted,The date the prescription was dispensed as submitted on the claim.,Format = YYYYMMDD,N,8,630,637,8,0,457-EP,Associated Prescription/Service Date,Date of the ‘Associated Prescription/Service Reference Number’ (456-EN).
+1,80,COMPOUNDCD,Prescription Compound Code - Submitted,"A numeric code indicating whether or not the prescription is a compound as submitted on the claim. 
+
+Note:  When a claim is for a multiple ingredient compound drug, the compound ingredient details are found on the Compound Claims Extract File (optional file sent with the MCEF).","1 = Not a Compound
+2 = Compound",A,1,638,638,0,0,406-D6,Compound Code,Code indicating whether or not the prescription is a compound.
+1,81,PRODTYPCDE,Product ID Qualifier - Submitted,"The two-digit qualifier that indicates the type of pharmaceutical identifier that was submitted on the claim, e.g., UPC, NDC, etc. 
+
+Note:  The code displayed in this field indicates the type of value that displays in the PRODUCTID field (#82) If the PRODTYPCDE field displays 03, then an NDC displays in the PRODUCTID field.  ",See the Product Type Codes tab. ,A,2,639,640,0,0,436-E1,Product/Service ID Qualifier,Code qualifying the value in 'Product/Service ID' (4Ø7-D7).
+1,82,PRODUCTID,Product ID - Submitted,"The actual pharmaceutical identifier as submitted on the claim. This data must be submitted on the claim by the adjudicating pharmacy.
+
+Notes:  The value displayed in this field is the actual ID for the type indicated in the PRODTYPCDE field (#81). 
+
+When a claim is for any multiple ingredient compound drug, this field displays the value of the most expensive legend ingredient of the compound, regardless of how the compound is set up. ",,A,20,641,660,0,0,407-D7,Product/Service ID,ID of the product dispensed or service provided
+4,83,PRODUCTKEY,Product Key,"The precise product file record that was used during claim processing. This key is internal to Prime's product file code.
+
+Note:  When a claim is for any multiple ingredient compound drug, this field displays the value of the most expensive legend ingredient of the compound, regardless of how the compound is set up. ",,N,9,661,669,9,0,,,
+3,84,METRICQTY,Metric Quantity Dispensed - Submitted,"The number of metric units of medication dispensed. This must comply with NCPDP billing unit standards.
+
+Note:  This is a legacy field, is not required and has been replaced by DECIMALQTY field (#85).","This value is calculated by multiplying the quantity that the pharmacy dispensed by the billing unit, as indicated in the Std Billing Unit field on the Product Detail screen. 
+
+Metric Quantity = Dispensed Quantity x Billing Unit.",S,5,670,674,5,0,404-D4,Metric Quantity,Number of metric units of medication dispensed.
+1,85,DECIMALQTY,Quantity Dispensed - Submitted,The quantity of the prescription that the pharmacy submitted and dispensed. This data must be submitted on the claim by the adjudicating pharmacy.,,S,11,675,685,11,3,442-E7,Quantity Dispensed,Quantity dispensed expressed in metric decimal units.
+1,86,DAYSSUPPLY,Days Supply - Submitted,The number of days a prescription will last. This data must be submitted on the claim by the adjudicating pharmacy.,,S,3,686,688,3,0,405-D5,Days Supply,Estimated number of days the prescription will last.
+1,87,PSC,Product Selection Code - Submitted,The submitted code that indicates whether the prescription must be filled as written or a drug substitution is allowed.,"0 = No product selection indicated
+1 = Substitution not allowed by prescriber
+2 = Substitution allowed - patient requesting product dispensed 
+3 = Substitution allowed - pharmacist selected product dispensed
+4 = Substitution allowed - generic drug not in stock
+5 = Substitution allowed - brand drug dispensed as a generic
+6 = Override
+7 = Substitution not allowed - brand drug mandated by law
+8 = Substitution allowed - generic drug not available in marketplace
+9 = Other ",A,1,689,689,0,0,408-D8,Dispense As Written (DAW)/ Product Selection Code,Code indicating whether or not the prescriber’s instructions regarding generic substitution were followed.
+2,88,WRITTENDTE,Prescription Written Date -  Submitted,The date the prescription was written by the prescriber.,"Format = YYYYMMDD
+",N,8,690,697,8,0,414-DE,Date Prescription Written,Date prescription was written.
+2,89,NBRFLSAUTH,Number of Authorized Refills - Submitted,The prescribed number of refills allowed.,"00 through 99, with 99 being as needed, refills unlimited",S,2,698,699,2,0,415-DF,Number of Refills Authorized,Number of refills authorized by the prescriber.
+2,90,ORIGINCDE,Prescription Origin Code - Submitted,The code that indicates the method used to submit the  prescription to the pharmacy. ,"0 = Not specified
+1 = Written
+2 = Telephone
+3 = Electronic
+4 = Facsimile
+5 = Pharmacy",A,1,700,700,0,0,419-DJ,Prescription Origin Code,Code indicating the origin of the prescription.
+4,91,SBMCLARCD1,Prescription Denial Clarification Code - Submitted,"The code that indicates special processing instructions.  
+
+Example:  The pharmacy can submit the claim with a code explaining that this claim is for a vacation supply, lost prescription, therapy change, etc. ",See the Rx Denial Clarification tab. ,A,2,701,702,0,0,420-DK,Submission Clarification Code,Code indicating that the pharmacist is clarifying the submission.
+3,92,PAMCNBR,Prior Authorization/Medical Certification Number - Submitted,"The number associated with the Prior Authorization (PA) for the member and submitted by the pharmacy.  This data must be submitted on the claim by the adjudicating pharmacy. This is not the PA number that is attached to a member record.
+
+If this claim uses a dynamic PA, a PA message is sent from Prime to the pharmacy, telling the pharmacy to enter a specific number to allow the PA to pay. ",,A,11,703,713,0,0,416-DG,Prior Authorization/Medical Certification Code and Number,"Value indicating prior authorization or medical certification occurred, and the number associated with the code in the left most position."
+3,93,PAMCCDE,Prior Authorization/Medical Certification Code - Submitted,The type of prior authorization associated with this claim.,"0 or blank = Not Specified
+1 = Prior Authorization
+2 = Medical Certification
+3 = EPSDT (Early Period Screening Diagnosis Treatment)
+4 = Exemption from Copay
+5 = Exemption from Rx Limits
+6 = Family Planning Indicator
+7 = AFDC (Aid to Families with Dependent Children)
+8 = Payer Defined Exception",A,2,714,715,0,0,461-EU,Prior Authorization Type Code,Code clarifying the ‘Prior Authorization Number Submitted’ (462-EV) or benefit/plan exemption.
+1,94,PRAUTHNBR,Member Prior Authorization Number,"A Prior Authorization (PA) number that allows the claim to be paid for this member. This number is either a dynamic Prior Authorization (PA) number generated by Prime, or an existing PA number. This PA number is either created at Prime or auto-loaded in a batch file.  ",V = Prior Authorization/Medical Certification Code and must be left justified in the full field.  The remaining 11 digits must be right justified and contain only zeroes.,A,11,716,726,0,0,498-PY,Prior Authorization Number-Assigned,Unique number identifying the prior authorization assigned by the processor
+2,95,PRAUTHRSN,Member Prior Authorization Reason Code,The reason that a prior authorization was required for this claim. ,See the Prior Auth Reasons tab. ,A,2,727,728,0,0,,,
+2,96,PRAUTHFDTE,Member Prior Authorization From Date,"The start date of the member's prior authorization. 
+
+Examples:   For a date of May 20, 1998, this field would display  0980520.
+
+For a date of May 20, 2005, this field would display 1050520. ","Format = CYYMMDD
+0 = 1900s
+1 = 2000s",N,7,729,735,7,0,,,
+2,97,PRAUTHTDTE,Member Prior Authorization Through Date,"The end date of the member's prior authorization. 
+
+Examples:   For a date of May 20, 1998, this field would display  0980520.
+
+For a date of May 20, 2005, this field would display 1050520.","Format = CYYMMDD
+0 = 1900s
+1 = 2000s",N,7,736,742,7,0,,,
+1,98,LABELNAME,Drug Label Abbreviation,"The label name of the drug dispensed plus the drug's strength and dosage. This is the abbreviation of PRODNAME field (#99). 
+
+Note:  When a claim is for any multiple ingredient compound drug, this field displays the value of the most expensive legend ingredient of the compound, regardless of how the compound is set up. ","Examples:
+
+SIMVASTATIN  TAB 20MG
+LISINOPRIL   TAB 20MG
+NORETHIN ACE TAB 5MG   ",A,30,743,772,0,0,,,
+1,99,PRODNAME,Drug Name ,"The full drug name of the drug dispensed.   
+
+Note:  When a claim is for any multiple ingredient compound drug, this field displays the value of the most expensive legend ingredient of the compound, regardless of how the compound is set up. ","Examples:
+
+SIMVASTATIN
+LISINOPRIL
+NORETHINDRONE ACETATE     ",A,70,773,842,0,0,,,
+2,100,DRUGMFGRID,Drug Manufacturer ID,"The identifier of the manufacturer of the drug dispensed.  Value is derived from the Product File.
+
+Note:  When a claim is for any multiple ingredient compound drug, this field displays the value of the most expensive legend ingredient of the compound, regardless of how the compound is set up. ",,A,5,843,847,0,0,,,
+2,101,DRUGMFGR,Drug Manufacturer Name,"The name of the drug's manufacturer. Value is derived from the Product File.
+
+Note:  When a claim is for any multiple ingredient compound drug, this field displays the value of the most expensive legend ingredient of the compound, regardless of how the compound is set up. ",,A,10,848,857,0,0,,,
+1,102,GPINUMBER,Generic Product Indicator (GPI) Number,"A high-level classification of drugs into like-therapeutic classes, based on Medi-Span’s 14-digit Generic Product Indicator (GPI). 
+
+Note:  When a claim is for any multiple ingredient compound drug, this field displays the value of the most expensive legend ingredient of the compound, regardless of how the compound is set up. ","Each successive two-digit subfield of the GPI represents this data: drug group, drug class, drug subclass, drug name, drug name extension, dosage form and strength.
+
+Examples: 
+12-xx-xx-xx-xx-xx-xx Drug Group 
+12-34-xx-xx-xx-xx-xx Drug Class  
+12-34-56-xx-xx-xx-xx Drug Subclass  
+12-34-56-78-xx-xx-xx Product Name  
+12-34-56-78-90-xx-xx Drug Name Ext  
+12-34-56-78-90-12-xx Dosage Form  
+12-34-56-78-90-12-34 Strength (Drug Label Name field)",A,14,858,871,0,0,,,
+2,103,GENERICNME,Generic Drug Name,"The name of the generic drug, which is commonly the chemical name, e.g., acetaminophen. This field also includes the strength and unit of measure. Value is derived from the Product File.
+
+Notes:  This field displays the chemical name, even if a brand name was prescribed. 
+
+When a claim is for any multiple ingredient compound drug, this field displays the value of the most expensive legend ingredient of the compound, regardless of how the compound is set up. ",,A,60,872,931,0,0,,,
+2,104,PRDPACUOM,Product Package Size  - Unit of Measure (UOM),"The unit of measure used to specify the product's package size.
+","EA = Each
+GM = Gram
+ML = Milliliter",A,2,932,933,0,0,,,
+1,105,PRDPACSIZE,Product Package Size,The numeric quantity of the package size of the product. Value is derived from the Product File.,,S,11,934,944,11,3,,,
+5,106,DDID,Drug Descriptor Identifier (DDID),The Drug Descriptor Identifer from Medispan. Value is derived from the Product File.,,N,6,945,950,6,0,,,
+5,107,GCN,Generic Code Number (GCN),Field is not currently used because it is a First Databank field. Prime uses Medi-Span. ,Contains only zeroes. ,N,5,951,955,5,0,,,
+5,108,GCNSEQ,Generic Code Number (GCN) Sequence Number,Field is not currently used because it is a First Databank field. Prime uses Medi-Span. ,Contains only zeroes. ,N,6,956,961,6,0,,,
+5,109,KDC,KDC,Field is not currently used because it is a First Databank field. Prime uses Medi-Span. ,Contains only zeroes. ,N,10,962,971,10,0,,,
+1,110,AHFS,American Hospital Formulary Service (AHFS) Class Code,"A 6-digit code assigned by the American Hospital Formulary Service (AHFS) that classifies each product into a therapeutic category.  The code indicates the group, class and subclass of the drug. 
+
+Note:  When a claim is for any multiple ingredient compound drug, this field displays the value of the most expensive legend ingredient of the compound, regardless of how the compound is set up. ",See the AHFS Class Codes tab.,A,8,972,979,0,0,,,
+3,111,DRUGDEACOD,Drug Enforcement Agency (DEA) Code,"A classification for controlled substances as defined by the Drug Enforcement Agency. DEA numbers are not collected on all pharmacy claims.
+
+Note:  When a claim is for any multiple ingredient compound drug, this field displays the value of the most expensive legend ingredient of the compound, regardless of how the compound is set up. ","BLANK = Blank
+0 = Not Specified
+1 = Class I, High abuse potential, no accepted medical use
+2 = Class II, High abuse potential, severe dependence liability
+3 = Class III, Moderate dependence liability
+4 = Class IV, Limited dependence liability
+5 = Class V, Limited abuse potential",A,1,980,980,0,0,,,
+1,112,RXOTCIND,Prescription Over the Counter (OTC) Code,"The code that indicates whether the drug requires a prescription or is over-the-counter (OTC) and whether it is single source or multi source. 
+
+Note:  When a claim is for any multiple ingredient compound drug, this field displays the value of the most expensive legend ingredient of the compound, regardless of how the compound is set up. 
+","O = OTC, Single Source
+P = OTC, Multisource
+R = Rx, Single Source
+S = Rx, Multisource
+",A,1,981,981,0,0,,,
+1,113,MULTSRCCDE,Multisource Code,"The availability of the drug in generic form. 
+
+Note:  When a claim is for any multiple ingredient compound drug, this field displays the value of the most expensive legend ingredient of the compound, regardless of how the compound is set up. ","M = Multisource brand with no generics available
+O = Original brand with generics available
+N = Single-source brand with no generics available
+Y = Generic drug
+Z = O/R Gen Ind; Price as 'N'",A,1,982,982,0,0,,,
+2,114,GENINDOVER,Generic Code Override,"The code that indicates the availability of a drug in generic form and is used for override purposes.
+
+The product may have been dispensed as one status - see MULTSRCCDE field (#113) - but it may have been overridden for pricing purposes. Example: Dispense as brand, but priced as generic.  
+
+Notes:  When a claim is for any multiple ingredient compound drug, this field displays the value of the most expensive legend ingredient of the compound, regardless of how the compound is set up. 
+
+Not all health plans use this type of override.","O = Original brand with generics available
+M = Multisource brand with no generics available
+N = Single-source brand with no generics available
+X = Price as N Report as Y
+Y = Generic drug
+Z = O/R Gen Ind; Price as 'N'
+",A,1,983,983,0,0,,,
+2,115,PRDREIMIND,Product Reimbursement Code,"The code used to help differentiate products that are treated as generics by the benefit plan even if it is a brand name drug. 
+
+Note:  When a claim is for any multiple ingredient compound drug, this field displays the value of the most expensive legend ingredient of the compound, regardless of how the compound is set up. ","1 = Generic/Ther Eq starts A 
+2 = Generic/Ther Eq starts B
+3 = Generic/Ther Eq NR or NA
+4 = Brand/Ther Eq starts A        
+5 = Brand/Ther Eq starts B 
+6 = Brand/Ther Eq NR or NA",A,1,984,984,0,0,,,
+2,116,BRNDTRDNME,Drug Brand/Trademark Code,"The code that indicates whether the drug is brand, generic or has a trademark (patented).  
+
+Note:  When a claim is for any multiple ingredient compound drug, this field displays the value of the most expensive legend ingredient of the compound, regardless of how the compound is set up. ","B = Brand
+G = Generic
+T = Trademark",A,1,985,985,0,0,,,
+2,117,FDATHERAEQ,Food and Drug Administration (FDA) Therapeutic Equivalent Code,"The code that is assigned by the FDA and rates generic or therapeutically equivalent drugs on their effectiveness. “A” codes are considered generically bioequivalent. “B” codes are not generically bioequivalent. 
+
+For some AB-rated products, a number is added to the end of the code (eg, AB1, AB2, etc).  This is assigned to multisource products that have same active ingredients, dosage form, route of administration (ROA), and strength as the reference brand, and a study has been submitted demonstrating the products'  bioequivalence.
+
+Note:  When a claim is for any multiple ingredient compound drug, this field displays the value of the most expensive legend ingredient of the compound, regardless of how the compound is set up. ",See the Therapeutic Equiv. Codes tab.,A,2,986,987,0,0,,,
+1,118,METRICSTRG,Drug Metric Strength,"The strength or amount of medicine in a dispensed product, such as 25 MG, 10000 ML, etc.
+
+Note: When a claim is for any multiple ingredient compound drug, this field displays the value of the most expensive legend ingredient of the compound, regardless of how the compound is set up. ",Example of value to display is '20' (of 20mg),N,11,988,998,11,3,,,
+1,119,DRGSTRGUOM,Drug Strength - Unit of Measure (UOM),"The unit of measure for the dose / strength of the dispensed product.  
+
+Note:  When a claim is for any multiple ingredient compound drug, this field displays the value of the most expensive legend ingredient of the compound, regardless of how the compound is set up. ",Example of value to display is 'mg' (of 20mg),A,10,999,1008,0,0,,,
+1,120,ADMINROUTE,Drug Administration Route Code,"The 2-digit code that defines how the drug enters the body. There are several codes, such as OR=Oral, IJ=Injection, and EX=External. 
+
+Note:  When a claim is for any multiple ingredient compound drug, this field displays the value of the most expensive legend ingredient of the compound, regardless of how the compound is set up. ",See the Route of Admin tab.,A,2,1009,1010,0,0,,,
+1,121,DOSAGEFORM,Drug Dosage Form Code,"The code that defines the form in which the drug product is dispensed. This code is defined by the carrier and can override Medi-Span's dosage designation. 
+
+Examples of drug forms include AERO=aerosol, INHA=Inhaler, and SOLN=Solution.  
+
+Note:  When a claim is for any multiple ingredient compound drug, this field displays the value of the most expensive legend ingredient of the compound, regardless of how the compound is set up. ",See the Dosage Form tab.,A,4,1011,1014,0,0,,,
+1,122,MNTDRUGCDE,Maintenance Drug Code,"The code that indicates whether the drug product is a maintenance drug or not.  A maintenance drug is prescribed to treat a chronic condition (i.e., diabetes, arthritis, high blood pressure, or heart conditions). These drugs are usually administered continuously rather than intermittently. This code is either defined by Medi-Span or by the carrier. 
+
+Note:  When a claim is for any multiple ingredient compound drug, this field displays the value of the most expensive legend ingredient of the compound, regardless of how the compound is set up. ","Blank = Non-Maintenance Drug
+X = Maintenance Drug",A,1,1015,1015,0,0,,,
+4,123,THRDPARTYX,Drug Third Party Exception Code,"The Third Party Exception code that was included on the Product File Item detail record for the drug.  Medi-Span assigns Third Party Exception codes to products that typically are not covered by third party administrators. Some examples of Third Party Exception codes are cosmetic alterations drugs, smoking deterrents, oral contraceptives, and anti-anxiety agents.
+
+Note:  When a claim is for any multiple ingredient compound drug, this field displays the value of the most expensive legend ingredient of the compound, regardless of how the compound is set up. ",See the Third Party Exception Codes tab.,A,1,1016,1016,0,0,,,
+3,124,DRGUNITDOS,Drug Unit Dose/Unit of Use Code,"The code that indicates whether the product is packaged as a unit dose (single dose) or a unit of use. 
+
+Unit dose packaging is intended for administration as a single-dose at a time and is packaged by the number of units used for each dose taken at one time. This applies to products such as injectables. 
+
+Unit-of-use packaging includes a standard quantity for a specific therapy, such as oral contraceptives, where the member uses all the tablets in the package without the pharmacist removing portions from it. 
+
+Note:  When a claim is for any multiple ingredient compound drug, this field displays the value of the most expensive legend ingredient of the compound, regardless of how the compound is set up. ","Blank
+X = Unit-Dose/Single Dose
+U = Unit-of-Use",A,1,1017,1017,0,0,,,
+4,125,SBMUNITDOS,Unit Dose Code - Submitted,"The code that indicates the type of unit dose used for the submitted claim.
+
+","0 = Not Specified
+1 = Not Unit Dose
+2 = Manufacturer Unit Dose
+3 = Pharmacy Unit Dose
+4 = Pharmacy Unit Dose Patient Compliance Packaging
+5 = Pharmacy Multi-drug Patient Compliance Packaging
+6 = Remote Device Unit Dose
+7 = Remote Device Multi-drug Compliance
+8 = Manufacturer Unit of Use Package (not unit dose)",A,1,1018,1018,0,0,429-DT,Special Packaging Indicator,Code indicating the type of dispensing dose.
+5,126,ALTPRODTYP,Submitted Alternate Product Type,Field is not currently used. ,,A,1,1019,1019,0,0,,,
+5,127,ALTPRODCDE,Submitted Alternate Product Code,Field is not currently used. ,Contains only spaces to ensure the field is blank.,A,13,1020,1032,0,0,,,
+4,128,SRXNETWRK,Super Pharmacy Network ID,The identifier assigned to the group of networks (super network) for the selected pharmacy.,Prime-derived value,A,6,1033,1038,0,0,,,
+5,129,SRXNETTYPE,Super Pharmacy Network Type,Field is not currently used. ,Contains only spaces to ensure the field is blank.,A,2,1039,1040,0,0,,,
+3,130,RXNETWORK,Pharmacy Network ID,"The identifier of the pharmacy network (chain) tied to the selected pharmacy.  A pharmacy network is a group of pharmacies that have been properly credentialed as a participating pharmacy and have entered into an agreement with Prime to provide covered prescription drug services to members. Example:  Walgreens, CVS, etc.
+
+The pharmacy network is used for pricing purposes during claim processing. ","This field displays the Network ID as loaded in claims processing system. 
+
+Note:  For all claims, if the Network ID =  ******, then the claim is processed as an out-of-network claim.  ",A,6,1041,1046,0,0,,,
+3,131,RXNETWRKNM,Pharmacy Network Name,"The name of the pharmacy network (chain) tied to the selected pharmacy. A pharmacy network is a group of pharmacies that have been properly credentialed as a participating pharmacy and have entered into an agreement with Prime to provide covered prescription drug services to members.  Example: Walgreens, CVS, etc. Value is derived from the NCPDP Pharmacy File.
+
+The pharmacy network is used for pricing purposes during  claim processing. ",,A,25,1047,1071,0,0,,,
+3,132,RXNETCARR,Pharmacy Network Carrier ID,"The identifier of the carrier that owns the pharmacy network, if this applies.  This field only contains a value if the carrier is the 'owner' of the network.  The field is related to the SCARRIERID field (#6).
+
+Note:  *DEFAULT carriers are not specific, so all clients have access to the networks with that carrier.",Prime does not use this functionality.,A,9,1072,1080,0,0,,,
+4,133,REGIONCDE,Pharmacy Network Region Code,"The geographic location where the selected pharmacy network resides.  Region codes are used for pricing - different contracted rates for different geographic regions.
+
+Usually, a region is a state, but sometimes it is a combination of states. Regions are typically used for reporting purposes. Value is normally derived from the NCPDP Pharmacy File.",,A,10,1081,1090,0,0,,,
+2,134,PHRAFFIL,Pharmacy Chain Code ,"The code that indicates the chain to which the pharmacy is affiliated.  This is an industry standard number.  This field displays the same code as the AFFILIATIN field (#147) and PAYEEID field (#148). Value is derived from the NCPDP Pharmacy File.
+",,A,10,1091,1100,0,0,,,
+3,135,NETPRIOR,Pharmacy Network Priority Code,"The code that indicates whether a primary or secondary network was used during claim processing.  This is used for clients with more than one network. 
+
+Example:  A client may have an in-house pharmacy that would serve as a primary network.  Other pharmacies would be considered in a secondary network. ","Valid Values are:
+Blank = not specified
+1 = Primary
+2 = Secondary",A,3,1101,1103,0,0,,,
+4,136,NETTYPE,Pharmacy Network Type,The code that indicates the type of pharmacy network associated with the claim.,"AF = Affiliate
+Blank = Not specified
+NT = Network
+NL = Network List
+PO = Payee Override",A,2,1104,1105,0,0,,,
+5,137,NETSEQ,Pharmacy Network Sequence,Field is not currently used. ,Contains only zeroes. ,N,5,1106,1110,5,0,,,
+5,138,PAYCNTR,Pharmacy Payment Center,Field is not currently used. ,Contains only spaces to ensure the field is blank.,A,10,1111,1120,0,0,,,
+4,139,PHRNDCLST,Pharmacy Network List Used - National Drug Code (NDC),The National Drug Code list that Prime associated to the pharmacy network used during claim processing. ,Prime-derived value,A,10,1121,1130,0,0,,,
+4,140,PHRGPILST,Pharmacy Network List Used - Generic Product Indicator (GPI),The Generic Product Indicator list that Prime associated to the pharmacy network used during claim processing. ,Prime-derived value,A,10,1131,1140,0,0,,,
+4,141,SRVPROVID,Service Provider ID - Validated,"The pharmacy's provider identification number as validated against the NCPDP Pharmacy file. NCPDP stands for National Council for Prescription Drug Programs. 
+
+Note: This field may contain either the National Provider Identifier (NPI) or the NCPDP ID number of the pharmacy.
+",,A,15,1141,1155,0,0,201-B1,Service Provider ID,ID assigned to a pharmacy or provider.
+3,142,SRVPROVIDQ,Service Provider ID Qualifier - Validated,"The two-digit qualifier that indicates the type of pharmacy provider ID that was validated against the NCPDP Pharmacy file, e.g., NPI, NCPDP, etc.  NCPDP stands for National Council for Prescription Drug Programs. 
+
+Note:  The code displayed in this field indicates the type of value that displays in the SRVPROVID field (#141). ","*BLANK - Not Specified 
+01 - National Provider Identifier (NPI) 
+02 - Blue Cross 
+03 - Blue Shield 
+04 - Medicare 
+05 - Medicaid 
+06 - UPIN 
+07 - NCPDP Provider ID (previously known as NABP)
+08 - State License 
+09 - TRICARE
+10 - Health Industry Number 
+11 - Federal Tax ID 
+12 - Drug Enforcement Admin 
+13 - State Issued 
+14 - Plan Specific
+15 - HCIdea
+16 - Combat Methamphetamine Epidemic Act (CMEA)
+17 - Foreign Prescriber Identifier
+99 - Other",A,2,1156,1157,0,0,202-B2,Service Provider ID Qualifier,Code qualifying the ‘Service Provider ID’ (2Ø1-B1).
+5,143,Filler,Filler,Field is not currently used. ,,A,25,1158,1182,0,0,,,
+5,144,PROVLOCKQL,Provider Lock Qualifier,Field is not currently used. ,Contains only spaces to ensure the field is blank.,A,1,1183,1183,0,0,,,
+5,145,PROVLOCKID,Provider Lock Identifier,Field is not currently used. ,Contains only spaces to ensure the field is blank.,A,15,1184,1198,0,0,,,
+4,146,STORENBR,Pharmacy Store Number,The identifier of the pharmacy (store) within the pharmacy chain that dispensed the drug. Value is derived from the NCPDP Pharmacy File.,,A,15,1199,1213,0,0,,,
+3,147,AFFILIATIN,Pharmacy Relationship Code ,"The code that indicates the chain to which the pharmacy is affiliated.  This is an industry standard number.  This field displays the same code as the PHRAFFIL field (#134). Value is derived from the NCPDP Pharmacy File.
+",,A,6,1214,1219,0,0,,,
+4,148,PAYEEID,Pharmacy Payee ID,"The identifier of the agency that receives payment on behalf of the selected pharmacy. Some pharmacies are their own payee. Others direct payments toward their affiliation office or another special financial office.
+
+This field indicates who will be paid, prior to payment and  billing processing. Payment & Billing can override this ID. Value is normally derived from the NCPDP Pharmacy File.",,A,12,1220,1231,0,0,,,
+4,149,DISPRCLASS,Dispenser Class Code,The code that indicates the class of entity that dispensed the drug. ,See the Dispenser Class tab.,A,3,1232,1234,0,0,,,
+1,150,DISPROTHER,Dispenser Type Code,"The code that further describes the type of pharmacy that dispensed the drug, e.g., Community/Retail, Long term care pharmacy, etc. 
+
+",See the Dispenser Type tab.,A,3,1235,1237,0,0,,,
+2,151,PHARMZIP,Pharmacy Zip Code,"The pharmacy's zip code.
+Value is derived from the NCPDP Pharmacy File.",,A,10,1238,1247,0,0,,,
+5,152,PRESNETWID,MD Network Identifier,Field is not currently used. ,Contains only spaces to ensure the field is blank.,A,6,1248,1253,0,0,,,
+2,153,PRESCRIBER,Prescriber ID - Submitted,"The identification number assigned to the medical provider who wrote the prescription for the claim.  Usually, this is the National Provider Identifier  (NPI). This data must be submitted on the claim by the adjudicating pharmacy.",,A,15,1254,1268,0,0,411-DB,Prescriber ID,ID assigned to the prescriber.
+2,154,PRESCRIDQL,Prescriber ID Qualifier - Submitted ,"The two-digit qualifier that indicates the type of medical provider ID that was submitted on the claim, e.g., DEA, NPI, NCPDP, etc. 
+
+Note:  The code displayed in this field indicates the type of value that displays in the PRESCRIBER field (#153). ","*BLANK - Not Specified 
+01 - National Provider Identifier (NPI) 
+02 - Blue Cross 
+03 - Blue Shield 
+04 - Medicare 
+05 - Medicaid 
+06 - UPIN 
+07 - NCPDP Provider ID (no longer valid)
+08 - State License 
+09 - TRICARE
+10 - Health Industry Number 
+11 - Federal Tax ID 
+12 - Drug Enforcement Admin 
+13 - State Issued 
+14 - Plan Specific
+15 - HCIdea
+16 - Combat Methamphetamine Epidemic Act (CMEA)
+17 - Foreign Prescriber Identifier
+99 - Other",A,2,1269,1270,0,0,466-EZ,Prescriber ID Qualifier,Code qualifying the ‘Prescriber ID’ (411-DB).
+2,155,PRESLSTNME,Prescriber Last Name,The last name of the medical provider who wrote the prescription for the claim.  This field displays the name if the prescriber ID matches Prime's prescriber file. ,,A,25,1271,1295,0,0,,,
+2,156,PRESFSTNME,Prescriber First Name,The first name of the medical provider who wrote the prescription for the claim.   This field displays the name if the prescriber ID matches Prime's prescriber file.,,A,15,1296,1310,0,0,,,
+4,157,PRESMDINIT,Prescriber Middle Initial,The middle Initial of the medical provider who wrote the prescription for the claim.  This field displays the middle initial if the prescriber ID matches Prime's prescriber file.,,A,1,1311,1311,0,0,,,
+2,158,PRESSPCCDE,Prescriber Specialty Code,"The field of medicine in which the medical provider who wrote the prescription for the claim has specialized (e.g., urology, pediatrics, psychiatry, gynecology, geriatrics). 
+
+This field displays the specialty code if the prescriber ID matches Prime's prescriber file.",See the Doctor Specialty tab.,A,6,1312,1317,0,0,,,
+1,159,FNLPLANCDE,Final Benefit Plan Code,"The identifier assigned to the benefit plan that was used to process the claim.
+
+Note: This may differ from the GROUPPLAN and/or MBRPLAN code. ",,A,10,1318,1327,0,0,,,
+3,160,FNLPLANDTE,Final Benefit Plan Effective Date,The start date of the benefit plan that was used to process the claim.,"Format CYYMMDD; 0 represents 1900's,  1 represents 2000's",N,7,1328,1334,7,0,,,
+3,161,PLANQUAL,Benefit Plan Qualifier,A code that further describes the attributes of the benefit plan.  This information may be used for reference or reporting purposes. It does not affect claim processing. Assigned per benefit build.,,A,10,1335,1344,0,0,,,
+3,162,PLNNDCLIST,Benefit Plan National Drug Code (NDC) List Name,The benefit plan's National Drug Code list that was used to process the claim.  This value displays only if this list was used in the claims processing. Assigned per benefit build.,,A,10,1345,1354,0,0,,,
+3,163,PLNGPILIST,Benefit Plan Generic Product Indicator (GPI) List Name,The benefit plan's Generic Product Indicator list that was used to process the claim. This value displays only if this list was used in the claims processing. Assigned per benefit build.,,A,10,1355,1364,0,0,,,
+3,164,PLNPNDCLST,Benefit Plan Preferred Drug List - National Drug Code (NDC),"The benefit plan's list of preferred drugs, grouped by National Drug Code (NDC).  The term ""preferred"" does not necessarily equate to a formulary.  Assigned per benefit build.",,A,10,1365,1374,0,0,,,
+3,165,PLNPGPILST,Benefit Plan Preferred Drug List - Generic Product Indicator (GPI),"The benefit plan's list of preferred drugs, grouped by Generic Product Indicator (GPI). The term ""preferred"" does not necessarily equate to a formulary.  Assigned per benefit build.",,A,10,1375,1384,0,0,,,
+1,166,PLANDRUGST,Benefit Plan Drug Status Code,The code that defines how the claim was processed.  Detailed information explaining each code is included in the Appendix - Plan Drug Status Cds. ,See the Plan Drug Status tab.,A,1,1385,1385,0,0,,,
+5,167,PLANFRMLRY,Plan Formulary,Field is not currently used. ,Contains only spaces to ensure the field is blank.,A,1,1386,1386,0,0,,,
+4,168,PLNFNLPSCH,Benefit Plan Final Price Schedule,The benefit plan's price schedule that was used to process the claim.  A price schedule contains all the rules that determine the dollar amount that the pharmacy is paid. ,Values are Prime-defined and used in Prime's claim processing system. ,A,10,1387,1396,0,0,,,
+3,169,FORMULARY,Formulary Protocol Flag,"The code that indicates whether the pharmaceutical product is on the preferred Generic Product Indicator (GPI) list or preferred National Drug Code (NDC) list.  This code is based on the drug status and generic indicator.  
+
+This field is populated when Preferred Formulary edit is enabled. 
+","Blank = Pharmaceutical product is not on the preferred GPI or NDC list. 
+Y = Pharmaceutical product is on either the preferred GPI or NDC list.
+
+The following is true whether the drug is in the preferred NDC/GPI list or not: 
+•  The flag is set to 'Y' if the drug status is 'F', '5', '6'.  
+•  The flag is also set to 'Y' if the drug status is Y' and the drug's generic indicator is 'Y'.
+•  The flag is set to blank if the drug status is 'C', 'G', '9'.  
+•  The flag is set to blank if drug status is 'Y' or 'Z', but the drug's generic indicator is not 'Y'.
+
+For drug statuses that were not mentioned above, the flag is set to 'Y' only when the drug was found in the preferred formulary list. The drug status that is being compared is the drug status value at the time claim was being processed using edit 26.",A,1,1397,1397,0,0,,,
+1,170,FORMLRFLAG,Formulary Flag,The code that indicates whether the prescribed drug is on the plan's formulary or not.,"N = Drug is not on formulary
+Y = Drug is on formulary",A,1,1398,1398,0,0,,,
+2,171,CONTHERAPY,Contingent Therapy Code,"The code that indicates whether the benefit plan used for claim processing has contingent therapy rules. Contingent therapy rules can be set up on a Plan Generic Product Indicator list, a Plan National Drug Code list or on a prior authorization.
+
+Contingent therapy is a set of criteria that restricts or limits the use of a pharmaceutical product. Example:  A member must be within a specified age range to receive a lower copay for a pharmaceutical product.  The most common reason to use contingent therapy is for Utilization Management programs. ","* BLANK = None
+N = None (Display value)
+L = GPI Plan List
+P = GPI Prior Authorization
+D = NDC Plan List
+C = Prior Authorization",A,1,1399,1399,0,0,,,
+3,172,MESSAGE1,Pharmacy Claim Message 1,The first free-form text message that was sent to the pharmacy for this claim. Message may be passed back for all claim statuses.,,A,40,1400,1439,0,0,504-F4,Message,Free form message.
+3,173,MESSAGE2,Pharmacy Claim Message 2,The second free-form text message that was sent to the pharmacy for this claim. Message may be passed back for all claim statuses.,,A,40,1440,1479,0,0,504-F4,Message,Free form message.
+3,174,MESSAGE3,Pharmacy Claim Message 3,The third free-form text message that was sent to the pharmacy for this claim. Message may be passed back for all claim statuses.,,A,40,1480,1519,0,0,504-F4,Message,Free form message.
+3,175,REJCNT,Pharmacy Claim Reject Code Count,The total number of reject codes for this claim.  This field only displays a value if rejected claims are included on the MCEF.,,S,2,1520,1521,2,0,510-FA,Reject Count,Count of ‘Reject Code’ (511-FB) occurrences.
+3,176,REJCDE1,"Pharmacy Claim Reject Code 1
+","The NCPDP code identifying the reason for rejecting the claim (e.g., refill too soon). This field only displays a value if rejected claims are included on the MCEF.",See the Reject Codes tab. ,A,3,1522,1524,0,0,511-FB,Reject Code,Code indicating the error encountered.
+3,177,REJCDE2,Pharmacy Claim Reject Code 2,"The NCPDP code identifying the reason for rejecting the claim (e.g., refill too soon).  This field only displays a value if rejected claims are included on the MCEF,  and if the claim has more than one reject code. ",See the Reject Codes tab. ,A,3,1525,1527,0,0,511-FB,Reject Code,Code indicating the error encountered.
+3,178,REJCDE3,Pharmacy Claim Reject Code 3,"The NCPDP code identifying the reason for rejecting the claim (e.g., refill too soon).  This field only displays a value if rejected claims are included on the MCEF, and if the claim has more than two reject codes. ",See the Reject Codes tab. ,A,3,1528,1530,0,0,511-FB,Reject Code,Code indicating the error encountered.
+4,179,RJCPLANID,Benefit Plan Identifier - Rejected Pharmacy Claim,The identifier of the benefit plan for the rejected claim. This field only displays a value if rejected claims are included on the MCEF. ,,A,8,1531,1538,0,0,,,
+2,180,DURCONFLCT,Drug Utilization Review (DUR) Conflict Code - Submitted,"The reason code for the Drug Utilization Review (DUR) conflict, if a conflict is detected for the claim.  This is the code that the pharmacy has sent to Prime in an attempt to resolve the conflict.  An example of a conflict includes drug-to-drug interaction (DD).  ",See the Submitted Reason for Service tab.,A,2,1539,1540,0,0,439-E4,Reason For Service Code,Code identifying the type of utilization conflict detected or the reason for the pharmacist’s professional service.
+3,181,DURINTERVN,Drug Utilization Review (DUR)  Professional Service Code (Intervention Code) - Submitted,The code that indicates the steps the pharmacist took to  receive more information about the Drug Utilization Review (DUR) conflict detected on the claim.,See the Professional Service Codes tab. ,A,2,1541,1542,0,0,,,
+3,182,DUROUTCOME,Drug Utilization Review (DUR) Result of Service Code (Outcome Code) - Submitted,"The code that indicates the result of the pharmacist intervention, as part of a Drug Utilization Review (DUR) conflict detected on the claim.",See the Result of Service tab,A,2,1543,1544,0,0,441-E6,Result of Service Code,Action taken by a pharmacist in response to a conflict or the result of a pharmacist’s professional service.
+3,183,LVLSERVICE,Drug Utilization Review (DUR)  Level of Service - Submitted ,"An optional field that indicates the level of effort that the pharmacy put into resolving the Drug Utilization Review (DUR) conflict. This data is submitted by the pharmacy. 
+
+This field is typically not used. However, it may be used to indicate a level of service that charges a different dispensing fee based on the level.","00 = Not specified
+01 = Patient Consultation
+02 = Home Delivery
+03 = Emergency
+04 = 24 Hour Service
+05 = Generic Product Selection 
+11 = Level 1 (LOWEST)
+12 = Level 2
+13 = Level 3
+14 = Level 4
+15 = Level 5 (highest)
+(16-20 reserved for future use)",A,2,1545,1546,0,0,418-DI,Level Of Service,Coding indicating the type of service the provider rendered.
+3,184,DIAGNOSIS,Diagnosis Code - Submitted,"The diagnosis code assigned to the claim. If the field is blank, the diagnosis code is not available or not specified. Newly added functionality to require diagnosis on specific medications.",,A,15,1547,1561,0,0,424-DO,Diagnosis Code,Code identifying the diagnosis of the patient.
+3,185,DIAGNOSISQ,Diagnosis Code Qualifier - Submitted,"The two-digit qualifier that indicates the type of diagnosis code that was submitted on the claim.
+","00 = Not specified
+01 = International Classification of Diseases (ICD-9)
+02 = International Classification of Diseases-10-Clinical Modifications (ICD-10-CM)
+03 = National Criteria Care Institute (NCCI)
+04 = The Systematized Nomenclature of Medicine Clinical Terms® (SNOMED)
+05 = Common Dental Terminology (CDT)
+06 = Not used
+07 = American Psychiatric Association Diagnostic Statistical Manual of Mental Disorders (DSM IV)",A,2,1562,1563,0,0,492-WE,Diagnosis Code Qualifier,Code qualifying the ‘Diagnosis Code’ (424-DO).
+3,186,RVDURCNFLC,Reversal Drug Utilization Review (DUR) Conflict Code,"The reason code for the Drug Utilization Review (DUR) conflict, if a conflict is detected for the reversed claim.  This is the code that the pharmacy has sent to Prime in an attempt to resolve the conflict.
+",See the Submitted Reason for Service tab.,A,2,1564,1565,0,0,439-E4,Reason For Service Code,Code identifying the type of utilization conflict detected or the reason for the pharmacist’s professional service.
+3,187,RVDURINTRV,Reversal Submitted Professional Service Code (Intervention Code) - Drug Utilization Review (DUR),The code that indicates the action that was taken by the pharmacist to receive more information about the conflict as part of the Drug Utilization Review (DUR) conflict detected on the reversed claim.,See the Professional Service Codes tab. ,A,2,1566,1567,0,0,440-E5,Professional Service Code,Code identifying pharmacist intervention when a conflict code has been identified or service has been rendered.
+3,188,RVDUROUTCM,Reversal Drug Utilization Review (DUR) Result of Service Code (Outcome Code),"The code that indicates the result of the intervention that was taken by the pharmacist, as a result of a Drug Utilization Review (DUR) conflict detected on the reversed claim.",See the Result of Service tab,A,2,1568,1569,0,0,441-E6,Result of Service Code,Action taken by a pharmacist in response to a conflict or the result of a pharmacist’s professional service.
+3,189,RVLVLSERVC,Reversal Level of Service Code - Drug Utilization Review (DUR),"An optional field that indicates the level of effort that the pharmacy put into resolving the Drug Utilization Review (DUR) conflict for the reversed claim. This data is submitted by the pharmacy. 
+
+This field is typically not used. However, it may be used to indicate a level of service that charges a different dispensing fee based on the level.","00 = Not Specified
+01 = Patient Consultation
+02 = Home Delivery
+03 = emergency
+04 = 24 hour service
+05 = Generic Product Selection
+11 = Level 1 (lowest)
+12 = Level 2
+13 = Level 3
+14 = Level 4
+15 = Level 5 (highest)",A,2,1570,1571,0,0,418-DI,Level Of Service,Coding indicating the type of service the provider rendered.
+3,190,DRGCNFLCT1,Drug Conflict Code 1 - Drug Utilization Review (DUR),The first reason for the Drug Utilization Review (DUR) conflict that is associated to the claim and used for DUR reporting. This reason is sent to the pharmacy.,See the Submitted Reason for Service tab.,A,2,1572,1573,0,0,439-E4,Reason For Service Code,Code identifying the type of utilization conflict detected or the reason for the pharmacist’s professional service.
+3,191,SEVERITY1,Severity Index Code 1- Drug Utilization Review (DUR),"The code that indicates how critical a specific Drug Utilization Review (DUR) conflict is. This significance code is assigned by the originating database (Medi-Span). 
+
+","0 = Not Specified
+1 = Major: Interactions are either well-documented and have the potential of being harmful to the member or have a low incidence of occurrence, but have the potential of serious adverse outcomes (i.e., life-threatening). 
+2 = Moderate: Interactions are less likely than major interactions to cause harm to the member or are not documented as well as major interactions.
+3 = Minor: Interactions may occur, but are the least significant because documentation is poor or conflicting. These interactions are also those that pose a limited or unclear risk to the member.",A,1,1574,1574,0,0,528-FS,Clinical Significance Code,Code identifying the significance or severity level of a clinical event as contained in the originating database.
+3,192,OTHRPHARM1,Other Pharmacy Code 1 - Drug Utilization Review (DUR),"The code that indicates the location where the previous prescription was filled.  If this field contains a value, then the previous pharmacy is related to the Drug Utilization Review (DUR) conflict with the current claim. ","Blank
+0 = No value; Not specified
+1 = Your pharmacy
+2 = Other pharmacy in same chain
+3 = Other pharmacy",A,1,1575,1575,0,0,529-FT,Other Pharmacy Indicator,Code indicating the pharmacy responsible for the previous event involved in the DUR conflict.
+3,193,DTEPRVFIL1,Date of Previous Fill 1 - Drug Utilization Review (DUR),"The last date that this prescription was dispensed .  If this field contains a value, then the previous fill is related to the Drug Utilization Review (DUR) conflict with the current claim. ",,N,8,1576,1583,8,0,530-FU,Previous Date of Fill,Date prescription was previously filled.
+3,194,QTYPRVFIL1,Quantity of Previous Fill 1 - Drug Utilization Review (DUR),"The quantity of the last fill of this prescription.  If this field contains a value, then the previous fill quantity is related to the  Drug Utilization Review (DUR) conflict with the current claim. ",,N,11,1584,1594,11,3,531-FV,Quantity Of Previous Fill,Amount expressed in metric decimal units of the conflicting agent that was previously filled.
+4,195,DATABASE1,Database Code 1 - Drug Utilization Review (DUR),"The code that indentifies the source of the data associated with the Drug Utilization Review (DUR). 
+
+","2 =  Medi-Span
+4 =  Processor Developed  
+
+",A,1,1595,1595,0,0,532-FW,Database Indicator,Code identifying the source of drug information used for DUR processing or to define the database used for identifying the product.
+3,196,OTHRPRESC1,Other Prescriber Code 1 - Drug Utilization Review (DUR),"The code that compares the medical provider who wrote the current prescription with the medical provider who wrote the previous prescription.  If this field contains a value, then the prescriber is related to the Drug Utilization Review (DUR) conflict with the current claim. 
+
+Note:  These fields help prevent prescription abuse. ","Blank
+0 = No value
+1 = Same prescriber
+2 = Different prescriber",A,1,1596,1596,0,0,533-FX,Other Prescriber Indicator,Code comparing the prescriber of the current prescription to the prescriber of the previously filled conflicting prescription.
+3,197,FREETEXT1,Free Text Message 1 - Drug Utilization Review (DUR),Free-form message related to this claim's Drug Utilization Review (DUR) conflict. This information is sent from Prime to the pharmacy.,,A,30,1597,1626,0,0,544-FY,DUR Free Text Message,Text that provides additional detail regarding a DUR conflict.
+3,198,DRGCNFLCT2,Drug Conflict Code 2 - Drug Utilization Review (DUR),The second reason for the Drug Utilization Review (DUR) conflict that is associated to the claim and used for DUR reporting. This reason is sent back to the pharmacy.,See the Submitted Reason for Service tab.,A,2,1627,1628,0,0,439-E4,Reason For Service Code,Code identifying the type of utilization conflict detected or the reason for the pharmacist’s professional service.
+3,199,SEVERITY2,Severity Index Code 2- Drug Utilization Review (DUR),"The code that indicates how critical a specific Drug Utilization  Review (DUR) conflict is. This significance code is assigned by the originating database (Medi-Span). 
+
+","0 = Not Specified
+1 = Major: Interactions are either well-documented and have the potential of being harmful to the member or have a low incidence of occurrence, but have the potential of serious adverse outcomes (i.e., life-threatening). 
+2 = Moderate: Interactions are less likely than major interactions to cause harm to the member or are not documented as well as major interactions.
+3 = Minor: Interactions may occur, but are the least significant because documentation is poor or conflicting. These interactions are also those that pose a limited or unclear risk to the member.",A,1,1629,1629,0,0,528-FS,Clinical Significance Code,Code identifying the significance or severity level of a clinical event as contained in the originating database.
+3,200,OTHRPHARM2,Other Pharmacy Code 2 - Drug Utilization Review (DUR),"The code that indicates the location where the previous prescription was filled.  If this field contains a value, then the two pharmacies are related to the Drug Utilization Review (DUR) conflict with the current prescription. ","Blank
+0 = No value; Not specified
+1 = Your pharmacy
+2 = Other pharmacy in same chain
+3 = Other pharmacy",A,1,1630,1630,0,0,529-FT,Other Pharmacy Indicator,Code indicating the pharmacy responsible for the previous event involved in the DUR conflict.
+3,201,DTEPRVFIL2,Date of Previous Fill 2 - Drug Utilization Review (DUR),"The last date that this prescription was dispensed. If this field contains a value, then the two fill dates are related to the Drug Utilization Review (DUR) conflict with the current prescription.",Format = CCYYMMDD,N,8,1631,1638,8,0,530-FU,Previous Date of Fill,Date prescription was previously filled.
+3,202,QTYPRVFIL2,Quantity of Previous Fill 2 - Drug Utilization Review (DUR),"The quantity of the last fill of this prescription.  If this field contains a value, then the two quantities are related to the Drug Utilization Review (DUR) conflict with the current prescription. ",,N,11,1639,1649,11,3,531-FV,Quantity Of Previous Fill,Amount expressed in metric decimal units of the conflicting agent that was previously filled.
+3,203,DATABASE2,Database Code 2 - Drug Utilization Review (DUR),The code that indentifies the source of the data associated with the Drug Utilization Review (DUR). ,"2 =  Medi-Span
+4 = Processor Developed  
+
+",A,1,1650,1650,0,0,532-FW,Database Indicator,Code identifying the source of drug information used for DUR processing or to define the database used for identifying the product.
+3,204,OTHRPRESC2,Other Prescriber Code 2 - Drug Utilization Review (DUR),"The code that compares the medical provider who wrote the current prescription with the medical provider who wrote the previous prescription.  If this field contains a value, then the prescriber is related to the Drug Utilization Review (DUR) conflict with the current prescription. 
+
+Note:  These fields help prevent prescription abuse. ","Blank
+0 = No value
+1 = Same prescriber
+2 = Different prescriber",A,1,1651,1651,0,0,533-FX,Other Prescriber Indicator,Code comparing the prescriber of the current prescription to the prescriber of the previously filled conflicting prescription.
+3,205,FREETEXT2,Free Text Message 2 - Drug Utilization Review (DUR),A second free-form message related to this claim's Drug Utilization Review (DUR) conflict. This information is sent from Prime to the pharmacy.,,A,30,1652,1681,0,0,544-FY,DUR Free Text Message,Text that provides additional detail regarding a DUR conflict.
+3,206,DRGCNFLCT3,Drug Conflict Code 3 - Drug Utilization Review (DUR),The third reason for the Drug Utilization Review (DUR) conflict that is associated to the claim and used for DUR reporting. This reason is sent to the pharmacy.,See the Submitted Reason for Service tab.,A,2,1682,1683,0,0,439-E4,Reason For Service Code,Code identifying the type of utilization conflict detected or the reason for the pharmacist’s professional service.
+3,207,SEVERITY3,Severity Index Code 3- Drug Utilization Review (DUR),"The code that indicates how critical a specific Drug Utilization  Review (DUR) conflict is. This significance code is assigned by the originating database (Medi-Span). 
+
+","0 = Not Specified
+1 = Major: Interactions are either well-documented and have the potential of being harmful to the member or have a low incidence of occurrence, but have the potential of serious adverse outcomes (i.e., life-threatening). 
+2 = Moderate: Interactions are less likely than major interactions to cause harm to the member or are not documented as well as major interactions.
+3 = Minor: Interactions may occur, but are the least significant because documentation is poor or conflicting. These interactions are also those that pose a limited or unclear risk to the member.",A,1,1684,1684,0,0,528-FS,Clinical Significance Code,Code identifying the significance or severity level of a clinical event as contained in the originating database.
+3,208,OTHRPHARM3,Other Pharmacy Code 3 - Drug Utilization Review (DUR),"The code that indicates the location where the previous prescription was filled.  If this field contains a value, then the two pharmacies are related to the Drug Utilization Review (DUR) conflict with the current prescription. ","Blank
+0 = No value; Not specified
+1 = Your pharmacy
+2 = Other pharmacy in same chain
+3 = Other pharmacy",A,1,1685,1685,0,0,529-FT,Other Pharmacy Indicator,Code indicating the pharmacy responsible for the previous event involved in the DUR conflict.
+3,209,DTEPRVFIL3,Date of Previous Fill 3 - Drug Utilization Review (DUR),"The last date that this prescription was dispensed. If this field contains a value, then the two fill dates are related to the Drug Utilization Review (DUR) conflict with the current prescription.",Format = CCYYMMDD,N,8,1686,1693,8,0,530-FU,Previous Date of Fill,Date prescription was previously filled.
+3,210,QTYPRVFIL3,Quantity of Previous Fill 3 - Drug Utilization Review (DUR),"The quantity of the last fill of this prescription.  If this field contains a value, then the two quantities are related to the Drug Utilization Review (DUR) conflict with the current prescription. ",,N,11,1694,1704,11,3,531-FV,Quantity Of Previous Fill,Amount expressed in metric decimal units of the conflicting agent that was previously filled.
+3,211,DATABASE3,Database Code 3 - Drug Utilization Review (DUR),"The code that indentifies the source of the data associated with the Drug Utilization Review (DUR).
+","4 = Processor Developed  
+2 =  Medi-Span
+",A,1,1705,1705,0,0,532-FW,Database Indicator,Code identifying the source of drug information used for DUR processing or to define the database used for identifying the product.
+3,212,OTHRPRESC3,Other Prescriber Code 3 - Drug Utilization Review (DUR),"The code that compares the medical provider who wrote the current prescription with the medical provider who wrote the previous prescription.  If this field contains a value, then the prescriber is related to the Drug Utilization Review (DUR) conflict with the current prescription. 
+
+Note:  These fields help prevent prescription abuse. ","Blank
+0 = No value
+1 = Same prescriber
+2 = Different prescriber",A,1,1706,1706,0,0,533-FX,Other Prescriber Indicator,Code comparing the prescriber of the current prescription to the prescriber of the previously filled conflicting prescription.
+3,213,FREETEXT3,Free Text Message 3 - Drug Utilization Review (DUR,A third free-form message related to this claim's Drug Utilization Review (DUR) conflict. This information is sent from Prime to the pharmacy.,,A,30,1707,1736,0,0,544-FY,DUR Free Text Message,Text that provides additional detail regarding a DUR conflict.
+3,214,FEETYPE,Fee Type,Field is not currently used. ,Contains only spaces to ensure the field is blank.,A,2,1737,1738,0,0,,,
+1,215,AWPUNITCST,Average Wholesale Price (AWP) - Unit Cost,"The average wholesale price of a prescription drug or product as published by Medi-Span or First Data Bank. This is the price used by Prime Therapeutics in adjudicating claims with pharmacies. 
+
+The AWP Unit Price represents the current price per each unit (e.g., tablet, capsule, lozenge, suppository, etc.) gram or milliliter as defined by the Package Size Unit of Measure. In the case when dry injectable products may be reconstituted to variable volumes, this price represents the price per single dry vial, ample, or syringe. 
+
+Note:   When a claim is for any multiple ingredient compound drug, this field displays the value of the most expensive legend ingredient of the compound, regardless of how the compound is set up. ",Prime currently utilizes Medi-Span publications for price details,S,13,1739,1751,13,5,,,
+2,216,WACUNITCST,Wholesale Acquisition Cost (WAC) - Unit Cost,The cost of the drug charged by the manufacturer to the wholesaler.  This cost is published by Medi-Span. ,Prime currently utilizes Medi-Span publications for price details,S,13,1752,1764,13,5,,,
+2,217,GEAPUNTCST,Generic Equivalent Average Price (GEAP) - Unit Cost ,"The Average Wholesale Price (AWP) for all multi-source drug products that are therapeutically equivalent to the brand drug. Only multi-source products with a Therapeutic Equivalence Evaluation (TEE) Code beginning with A are included in the calculation (excluding A1 and A2).  This cost is published by Medi-Span. 
+
+",Prime currently utilizes Medi-Span publications for price details,S,13,1765,1777,13,5,,,
+3,218,CTYPEUCOST,Cost Type - Unit Cost ,"The cost of the drug, based on the submitted cost type (e.g., AWP, Submitted, etc.).",Derived from pharmacy-submitted claim cost,S,13,1778,1790,13,5,,,
+3,219,BASISCOST,Basis of Cost Determination Code - Submitted ,"The code that indicates the method by which the drug cost was calculated. 
+
+Note:  When a claim is for any multiple ingredient compound drug, this field displays the value of the most expensive legend ingredient of the compound, regardless of how the compound is set up. ",See the Submitted Basis of Cost tab. ,A,2,1791,1792,0,0,423-DN,Basis Of Cost Determination,Code indicating the method by which 'Ingredient Cost Submitted' was calculated.
+3,220,PRCQTY,Pricing Quantity,The quantity of the prescription that the pharmacy submitted and dispensed.  This quantity is used to determine the price. ,This data must be submitted on the claim by the adjudicating pharmacy.,S,11,1793,1803,11,3,,,
+5,221,PRODAYSSUP,Prorated Days Supply,Field is not currently used.,Contains only zeroes.,S,3,1804,1806,3,0,,,
+5,222,PROQTY,Prorated Quantity,Field is not currently used.,Contains only zeroes.,S,11,1807,1817,11,3,,,
+4,223,RVINCNTVSB,Reversal Incentive Amount -  Submitted,"The dollar amount of the incentive fee that was submitted by the pharmacy for a reversed claim. This amount is in addition to the dispensing fee. This fee is paid by the plan to the pharmacy when members use specific services (e.g., vaccine administration or smoking cessation).",,S,9,1818,1826,9,2,438-E3,Incentive Amount Submitted,Amount represents a fee that is submitted by the pharmacy for contractually agreed upon services. This amount is included in the 'Gross Amount Due' (43Ø-DU). 
+3,224,SBMINGRCST,Ingredient Cost - Submitted,The cost of the prescription drug ingredients as submitted by the pharmacy. ,,S,9,1827,1835,9,2,409-D9,Ingredient Cost Submitted,Submitted product component cost of the dispensed prescription. This amount is included in the 'Gross Amount Due' (43Ø-DU).
+3,225,SBMDISPFEE,Dispensing Fee - Submitted ,The fee for dispensing the prescription as submitted by the pharmacy.,,S,9,1836,1844,9,2,412-DC,Dispensing Fee Submitted,Dispensing fee submitted by the pharmacy. This amount is included in the 'Gross Amount Due' (43Ø-DU).
+3,226,SBMPSLSTAX,Percentage Sales Tax - Submitted ,The dollar amount of the sales tax for the prescription as submitted by the pharmacy.  The pharmacy calculates the sales tax as a percentage. ,,S,9,1845,1853,9,2,482-GE,Percentage Sales Tax Amount Submitted,Percentage sales tax submitted.
+3,227,SBMFSLSTAX,Flat Sales Tax - Submitted,The dollar amount of the sales tax for the prescription as submitted by the pharmacy.  The pharmacy calculates the sales tax as a flat dollar amount. ,,S,9,1854,1862,9,2,481-HA,Flat Sales Tax Amount Submitted,Flat sales tax submitted for prescription. This amount is included in the ‘Gross Amount Due’
+3,228,SBMSLSTAX,Total Sales Tax - Submitted,The total amount of sales tax for the prescription as submitted by the pharmacy.  ,,S,9,1863,1871,9,2,410-DA,Sales Tax,Sales tax for the prescription dispensed.
+3,229,SBMPATPAY,Member Paid Amount - Submitted,The dollar amount that the pharmacy anticipates receiving from the member for the prescription dispensed. ,,S,9,1872,1880,9,2,433-DX,Patient Paid Amount Submitted,Amount the pharmacy received from the patient for the prescription dispensed.
+3,230,SBMAMTDUE,Gross Amount Due - Submitted,"The total dollar amount that the pharmacy expects to be reimbursed for the dispensed prescription from all sources, including the member and benefit plan. ",,S,9,1881,1889,9,2,430-DU,Gross Amount Due,"Total price claimed from all sources. For prescription claim request, field represents a sum of ‘Ingredient Cost Submitted’ (4Ø9-D9), ‘Dispensing Fee Submitted’ (412-DC), ‘Flat Sales Tax Amount Submitted’ (481-HA), ‘Percentage Sales Tax Amount Submitted’ (482-GE), ‘Incentive Amount Submitted’ (438-E3), ‘Other Amount Claimed’ (48Ø-H9). For service claim request, field represents a sum of ‘Professional Services Fee Submitted’ (477-BE), ‘Flat Sales Tax Amount Submitted’ (481-HA), ‘Percentage Sales Tax Amount Submitted’ (482-GE), ‘Other Amount Claimed’ (48Ø-H9)."
+3,231,SBMINCENTV,Incentive Amount - Submitted,"The dollar amount of the incentive fee as submitted by the pharmacy. This amount is in addition to the dispensing fee. This fee is paid by the plan to the pharmacy when members use specific services (e.g., vaccine administration or smoking cessation).
+",,S,9,1890,1898,9,2,438-E3,Incentive Amount Submitted,Amount represents a fee that is submitted by the pharmacy for contractually agreed upon services. This amount is included in the 'Gross Amount Due' (43Ø-DU).
+4,232,SBMPROFFEE,Professional Service Fee - Submitted,"The dollar amount submitted by the pharmacy for professional services associated with the claim. 
+
+Notes:  This field is only used for 5.1 claims.
+
+This field is no longer used.  This dollar amount now displays in the SBMINCENTV field (#231). ","Contains only zeroes.
+",S,9,1899,1907,9,2,477-BE,Professional Service Fee Submitted,Amount submitted by the provider for professional services rendered.
+4,233,SBMTOTHAMT,Total Other Amount - Submitted,"The dollar amount submitted by the pharmacy for additional  expenses (e.g., postage, delivery fees) associated with the claim.",,S,9,1908,1916,9,2,480-H9,Other Amount Claimed Submitted,Amount representing the additional incurred costs for a dispensed prescription or service.
+3,234,USUALNCUST,Usual & Customary Amount - Submitted,"The customary amount that a network pharmacy would charge a cash-paying customer for this prescription, including any applicable discount programs and excluding sales tax or postage.
+",Format = s$$$$$$cc,S,9,1917,1925,9,2,426-DQ,Usual and Customary Charge,Amount charged cash customers for the prescription exclusive of sales tax or other amounts claimed.
+4,235,DENIALDTE,Primary Payer Denial Date - Submitted,The date that the primary payer either paid or denied the submitted claim when Prime is a secondary payer. This is used for Coordination of Benefits. ,Format = CCYYMMDD,N,8,1926,1933,8,0,443-E8,Other Payer Date,Payment or denial date of the claim submitted to the other payer. Used for coordination of benefits.
+3,236,OTHRPAYOR,Other Payer Amount Paid - Submitted,The dollar amount that the primary payer contributed toward this prescription when Prime is a secondary payer.  This is used for Coordination of Benefits. ,,S,9,1934,1942,9,2,431-DV,Other Payer Amount Paid,Amount of any payment known by the pharmacy from other sources.
+3,237,CALINGRCST,Ingredient Cost - Calculated,The total calculated cost of the ingredients for the prescription. ,,S,9,1943,1951,9,2,,,
+3,238,CALDISPFEE,Dispensing Fee - Calculated,The fee for dispensing the prescription as calculated by Prime and based on contractual agreements.   ,,S,9,1952,1960,9,2,,,
+3,239,CALPSTAX,Percentage Sales Tax - Calculated,The dollar amount of the sales tax for the prescription as calculated by Prime. This sales tax is calculated as a percentage. ,,S,9,1961,1969,9,2,,,
+3,240,CALFSTAX,Flat Sales Tax - Calculated ,The dollar amount of the sales tax for the prescription as calculated by Prime. This sales tax is calculated as a flat dollar amount. ,,S,9,1970,1978,9,2,,,
+3,241,CALSLSTAX,Total Sales Tax - Calculated,The total amount of sales tax for the prescription as calculated by Prime. ,,S,9,1979,1987,9,2,,,
+3,242,CALPATPAY,Member Pay Amount - Calculated ,"The total dollar amount of the member's payment responsibility for a prescription as calculated by Prime. 
+                        
+   CALCOPAY (#247)
++ CALATRDED (#252)
++ CALPRODSEL (#248)
++ CALEXCEBFT (#250)
+___________________________
+= Calculated Member Pay Amount
+
+Note: Medicare Part D does not use Exceeded Benefit Maximum.",,S,9,1988,1996,9,2,,,
+3,243,CALDUEAMT,Total Amount Due - Calculated ,The total dollar amount due to the pharmacy for the prescription.,,S,9,1997,2005,9,2,,,
+3,244,CALWITHHLD,Withhold Amount - Calculated,The amount that is subtracted from the payment to the pharmacy for the prescription as calculated by Prime. ,,S,9,2006,2014,9,2,,,
+3,245,CALFCOPAY,Flat Copay Amount - Calculated ,"The flat dollar amount to be collected from the member at the time the prescription was filled, as calculated by Prime. ",,S,9,2015,2023,9,2,,,
+3,246,CALPCOPAY,Coinsurance Amount - Calculated,The dollar amount calculated by Prime as a percentage of the claim to be collected from the member at the time the prescription was filled.  This is also known as coinsurance.,,S,9,2024,2032,9,2,,,
+3,247,CALCOPAY,Total Copay Amount - Calculated,"The total dollar amount to be collected from the member at the time the prescription was filled, as calculated by Prime. 
+
+   CALFCOPAY (#245) 
++ CALPCOPAY (#246) 
+_______________________
+= Total Copay",,S,9,2033,2041,9,2,,,
+3,248,CALPRODSEL,Product Selection Amount - Calculated,"The dollar amount to be collected from the member because of the product type that the member selected.  This amount is included in the Member Pay Amount field (CALPATPAY #242). 
+
+Typically, Product Selection Amount would represent the dollar cost difference between an original brand cost and the cost of the generic form of the same chemical substance.  
+
+Example: Prozac costs $5.03 per pill, while fluoxetine costs $2.59 per pill.  In a plan with mandatory generic, the $3 difference in the costs of the two would show in the Product Selection field, and would be the patient's responsibility to pay.  
+
+This is also known as Member Pays the Difference (MPTD), Mandatory Generic, Generic Mandate, Differential, Dispense As Written (DAW), Dispense As Written (DAW) Override, Penalty, PSC Penalty, Ancillary Charge, and Sanction. ",,S,9,2042,2050,9,2,,,
+3,249,CALATRTAX,Sales Tax Amount - Calculated ,The dollar amount of sales tax calculated by Prime to be collected from the member at the time the prescription was filled.,,S,9,2051,2059,9,2,,,
+3,250,CALEXCEBFT,Amount that Exceeds Benefit Maximum - Calculated ,"The dollar amount calculated by Prime that exceeds the benefit plan's maximum allowable for specific services (e.g., infertility, smoking cessation). This is also known as Over Cap Amount.",,S,9,2060,2068,9,2,,,
+3,251,CALINCENTV,Incentive Fee Amount - Calculated ,"The dollar amount of the incentive fee calculated by Prime. This amount is in addition to the dispensing fee and is paid by the plan to the pharmacy when members use specific services (e.g., vaccine administration, smoking cessation).",,S,9,2069,2077,9,2,,,
+3,252,CALATRDED,Deductible Amount Applied - Calculated ,The dollar amount of the member's deductible calculated by Prime to be collected from the member at the time the prescription was filled.  This amount is included in the Member Pay Amount field (CALPATPAY #242). ,,S,9,2078,2086,9,2,,,
+3,253,CALCOB,Total Coordination of Benefits Amount - Calculated,"The dollar amount that the primary payer contributed toward this prescription when Prime is a secondary payer. 
+
+All COB-related fields display the same values, regardless of whether the fields are calculated or approved. 
+
+Note:  A value displays only when the claim is being processed as secondary, otherwise it will default to 0. ",,S,9,2087,2095,9,2,,,
+3,254,CALTOTHAMT,Total Other Amount - Calculated,"Field is not currently used. 
+
+Note:  This field always displays a zero.  The dollar amount by the primary payer is listed in field OTHRPAYOR (#236). ",,S,9,2096,2104,9,2,,,
+3,255,CALPROFFEE,Professional Service Fee Paid - Calculated,"Field is not currently used. 
+
+Note:  This dollar amount now  displays in the CALINCENTV field (#251). ",Contains only zeroes.,S,9,2105,2113,9,2,,,
+3,256,CALOTHPAYA,Other Payer Amount Recognized - Calculated ,"The dollar amount that the primary payer contributed toward this prescription when Prime is a secondary payer.  This is used for Coordination of Benefits.  
+
+All COB-related fields display the same values, regardless of whether the fields are calculated or approved. 
+
+Note:  This field displays a zero if the claims is submitted as a primary claim to Prime. ",,S,9,2114,2122,9,2,,,
+3,257,CALCOSTSRC,Cost Source Code - Calculated ,"The identifier of the database vendor that supplied the indicated cost record (e.g., Medi-Span, First Data Bank, etc.).",,A,1,2123,2123,0,0,,,
+1,258,PHRINGRCST,Ingredient Cost - Approved ,"The final cost of the prescription drug ingredients after all calculations have been applied to the claim. The amount is based on the submitted vs. the calculated amounts.  
+",,S,9,2124,2132,9,2,,,
+1,259,PHRDISPFEE,Dispensing Fee - Approved,The final fee for dispensing the prescription after all calculations have been applied to the claim. The approved amount is based on the submitted vs. the calculated amounts. ,,S,9,2133,2141,9,2,,,
+3,260,PHRPPSTAX,Pharmacy Percentage Sales Tax - Approved,The final dollar amount of the sales tax for the prescription after all calculations have been applied to the claim. This sales tax is calculated as a percentage. The approved amount is based on the submitted vs. the calculated amounts.,,S,9,2142,2150,9,2,,,
+3,261,PHRFSTAX,Pharmacy Flat Sales Tax - Approved,The final dollar amount of the sales tax for the prescription after all calculations have been applied to the claim.  This sales tax is calculated as a flat dollar amount. The approved amount is based on the submitted vs. the calculated amounts.,,S,9,2151,2159,9,2,,,
+1,262,PHRSLSTAX,Total Sales Tax - Approved,The final amount of sales tax for the prescription after all calculations have been applied to the claim. The approved amount is based on the submitted vs. the calculated amounts. ,,S,9,2160,2168,9,2,,,
+1,263,PHRPATPAY,Member Pay Amount - Approved ,"The final dollar amount of the member's payment responsibility for a prescription after all calculations have been applied to the claim. The approved amount is based on the submitted vs. the calculated amounts.
+
+   PHRCOPAY (#274) 
++ PHRATRDED (#279) 
++ PHRPRODSEL (#275) 
++ PHREXCEBFT (#277)
+__________________________
+= Approved Member Pay Amount
+                      
+Note:  Medicare Part D does not use Exceeded Benefit Maximum.",,S,9,2169,2177,9,2,,,
+1,264,PHRDUEAMT,Total Amount Due - Approved ,"The final dollar amount due to the pharmacy for the prescription paid by Prime. The approved amount is based on the submitted vs. the calculated amounts. 
+
+   PHRINGRCST (#258)
++ PHRDISPFEE (#259) 
++ PHRTOTHAMT (#281) 
++ PHRFSTAX (#261) 
++ PHRPPSTAX (#260) 
+- PHRPATPAY (#263) 
+- PHROTHPAYA (#283) 
+__________________________
+= Approved Total Amount
+",,S,9,2178,2186,9,2,,,
+3,265,PHRWITHHLD,Withhold Amount - Approved,The final amount that is subtracted from the payment to the pharmacy for the prescription. The approved amount is based on the submitted vs. the calculated amounts. ,,S,9,2187,2195,9,2,,,
+4,266,PHRPPRCS,Pharmacy Price Schedule Used - Approved ,The code that identifies the price schedule used during claim processing to reimburse the pharmacy. ,Values are Prime-defined and used in Prime's claim processing system. ,A,10,2196,2205,0,0,,,
+4,267,PHRPRCST,Pharmacy Price Schedule Table - Approved,The code that identifies the price schedule table used during claim processing to calculate the patient/member pay dollar amount.,Values are Prime-defined and used in Prime's claim processing system. ,A,10,2206,2215,0,0,,,
+4,268,PHRPTPS,Pharmacy Member Pay Schedule - Approved ,"The code that identifies the patient/member pay schedule used during claim processing to calculate the copay and differential portion (e.g., deductibles and fees) of the amount that the member pays. ",Values are Prime-defined and used in Prime's claim processing system. ,A,10,2216,2225,0,0,,,
+4,269,PHRPTPST,Pharmacy Member Pay Schedule Table - Approved ,"The code that identifies the patient/member pay table used during claim processing to calculate the patient/member pay dollar amount.  
+
+Note:  This field is sourced from the same field as PHRPTPST13 (Field #497).  This field is left justified and contains the first 10 characters of the Pharmacy Approved Patient Pay Schedule Table.  Field #497 - PHRPTPST13 contains all 13 characters of the Pharmacy Approved Patient Pay Schedule Table.",Values are Prime-defined and used in Prime's claim processing system. ,A,10,2226,2235,0,0,,,
+4,270,PHRCOPAYSC,Pharmacy Copay Schedule Used - Approved,The code that identifies the copay schedule used in the price calculations. ,Values are Prime-defined and used in Prime's claim processing system. ,A,10,2236,2245,0,0,,,
+4,271,PHRCOPAYSS,Pharmacy Copay Schedule Step - Approved,The step number of the copay schedule used during claim processing. ,Values are Prime-defined and used in Prime's claim processing system. ,N,2,2246,2247,2,0,,,
+2,272,PHRFCOPAY,Flat Copay Amount - Approved,The final flat dollar amount that was collected from the member at the time the prescription was filled. The approved amount is based on the submitted vs. the calculated amounts. ,,S,9,2248,2256,9,2,,,
+2,273,PHRPCOPAY,Coinsurance Amount - Approved,The final dollar amount calculated by Prime as a percentage of the claim that was collected from the member at the time the prescription was filled.  This is also known as coinsurance. The approved amount is based on the submitted vs. the calculated amounts. ,,S,9,2257,2265,9,2,,,
+3,274,PHRCOPAY,Total Copay Amount - Approved,"The final dollar amount that was collected from the member at the time the prescription was filled. The approved amount is based on the submitted vs. the calculated amounts. 
+
+   PHRFCOPAY (#272) 
++ PHRPCOPAY (#273)
+___________________________
+= Approved Total Copay Amount",,S,9,2266,2274,9,2,,,
+2,275,PHRPRODSEL,Product Selection Amount - Approved,"The dollar amount that was collected from the member because of the product type that the member selected.  The approved amount is based on the submitted vs. the calculated amounts. This amount is included in the Member Pay Amount field (PHRPATPAY #263). 
+
+Typically, Product Selection Amount would represent the dollar cost difference between an original brand cost and the cost of the generic form of the same chemical substance.  
+
+Example: Prozac costs $5.03 per pill, while fluoxetine costs $2.59 per pill.  In a plan with mandatory generic, the $3 difference in the costs of the two would show in the Product Selection field, and would be the patient's responsibility to pay.  
+
+This is also known as Member Pays the Difference (MPTD), Mandatory Generic, Generic Mandate, Differential, Dispense As Written (DAW), Dispense As Written (DAW) Override, Penalty, PSC Penalty, Ancillary Charge, and Sanction. 
+
+
+
+
+",,S,9,2275,2283,9,2,,,
+3,276,PHRATRTAX,Member Sales Tax Amount - Approved,The final dollar amount of sales tax that was collected from the member. The approved amount is based on the submitted vs. the calculated amounts. ,,S,9,2284,2292,9,2,,,
+2,277,PHREXCEBFT,Amount that Exceeds Benefit Maximum - Approved,"The final dollar amount that exceeded the benefit plan's maximum allowable for specific services (e.g., infertility, smoking cessation).  This is also known as Over Cap Amount.
+
+This amount is included in the calculation for field PHRPATPAY (#263). The approved amount is based on the submitted vs. the calculated amounts. ",,S,9,2293,2301,9,2,,,
+1,278,PHRINCENTV,Incentive Fee Amount - Approved,"The final dollar amount of the incentive fee. This amount is in addition to the dispensing fee and is paid by the plan to the pharmacy when members use specific services (e.g., vaccine administration, smoking cessation). 
+
+This amount is included in the calculation for field PHRDUEAMT (#264). The approved amount is based on the submitted vs. the calculated amounts. ",,S,9,2302,2310,9,2,,,
+2,279,PHRATRDED,Deductible Amount - Approved,The final dollar amount of the member's deductible that was collected from the member at the time the prescription was filled. The approved amount is based on the submitted vs. the calculated amounts. ,,S,9,2311,2319,9,2,,,
+2,280,PHRCOB,Total Coordination of Benefits Amount - Approved,"The final dollar amount that the primary payer contributed toward this prescription when Prime is a secondary payer.  
+
+All COB-related fields display the same values, regardless of whether the fields are calculated or approved. 
+
+Note:  A value displays only when the claim is being processed as secondary, otherwise it will default to 0.  ",,S,9,2320,2328,9,2,,,
+5,281,PHRTOTHAMT,Total Other Amount - Approved,"Field is not currently used. 
+
+Note:  This field always displays a zero and is not populated.  The dollar amount by the primary payer is listed in field OTHRPAYOR (#236). ",,S,9,2329,2337,9,2,,,
+5,282,PHRPROFFEE,Professional Service Fee - Approved,"Field is not currently used. 
+
+Note:  This dollar amount now  displays in the PHRINCENTV field (#278). ",Contains only zeroes. ,S,9,2338,2346,9,2,,,
+5,283,PHROTHPAYA,Other Payer Amount Recognized - Approved,"The final dollar amount that the primary payer contributed toward this prescription when Prime is a secondary payer.  This is used for Coordination of Benefits.  
+
+All COB-related fields display the same values, regardless of whether the fields are calculated or approved. 
+
+Note:  This field displays a zero if the claim is submitted as a primary claim to Prime. ",,S,9,2347,2355,9,2,,,
+4,284,PHRCOSTSRC,Cost Source Code - Approved,"The identifier of the database vendor that supplied the indicated cost record (e.g., Medi-Span, First Data Bank, etc.). 
+
+Note:  When a claim is for any multiple ingredient compound drug, this field displays the value of the most expensive legend ingredient of the compound, regardless of how the compound is set up. ","Values include: 
+F = First DataBank  
+B = First DataBank Baseline  
+D = First DataBank Daily  
+M = Medi-Span  
+P = Plan  
+R = Redbook  
+S = Submitted",A,1,2356,2356,0,0,,,
+3,285,PHRCOSTTYP,Cost Type - Approved,"The code that indicates how the drug was priced per unit. 
+
+Note:  When a claim is for any multiple ingredient compound drug, this field displays the value of the most expensive legend ingredient of the compound, regardless of how the compound is set up. ","Possible values include: 
+AAWP = Average of AWP
+AWP = Average Wholesale Price
+DIRECT = Direct Price
+MAC01, MAC02, MAC04, MAC05 = Maximum Allowable Cost ",A,10,2357,2366,0,0,,,
+1,286,PHRPRCTYPE,Price Type - Approved,"The code that indicates the final pharmacy price type (cost + fee + tax) used to process and apply pharmacy overall pricing to the transaction.  This price type was reported to the pharmacy.
+
+Note:  When a claim is for any multiple ingredient compound drug, this field displays the value of the most expensive legend ingredient of the compound, regardless of how the compound is set up. ","Examples:
+MAC01 = Maximum Allowable Cost  
+AWP = Average Wholesale Price 
+SUBMITTED = Submitted Drug Cost  
+U = Usual and Customary  
+$ = Dollar amount indicated by the price comparison code ",A,10,2367,2376,0,0,,,
+5,287,POSINGRCST,Ingredient Cost - Post Claim Processing,Field is not currently used. ,Contains only zeroes. ,S,9,2377,2385,9,2,,,
+5,288,POSDISPFEE,Dispensing Fee - Post Claim Processing,Field is not currently used. ,Contains only zeroes. ,S,9,2386,2394,9,2,,,
+5,289,POSPSLSTAX,Percentage Sales Tax - Post Claim Processing,Field is not currently used. ,Contains only zeroes. ,S,9,2395,2403,9,2,,,
+5,290,POSFSLSTAX,Flat Sales Tax - Post Claim Processing,Field is not currently used. ,Contains only zeroes. ,S,9,2404,2412,9,2,,,
+5,291,POSSLSTAX,Total Sales Tax - Post Claim Processing,Field is not currently used. ,Contains only zeroes. ,S,9,2413,2421,9,2,,,
+5,292,POSPATPAY,Member Pay Amount - Post Claim Processing,Field is not currently used. ,Contains only zeroes. ,S,9,2422,2430,9,2,,,
+5,293,POSDUEAMT,Total Amount - Post Claim Processing,Field is not currently used. ,Contains only zeroes. ,S,9,2431,2439,9,2,,,
+5,294,POSWITHHLD,Withhold Amount - Post Claim Processing,Field is not currently used. ,Contains only zeroes. ,S,9,2440,2448,9,2,,,
+5,295,POSCOPAY,Copay Amount - Post Claim Processing,Field is not currently used. ,Contains only zeroes. ,S,9,2449,2457,9,2,,,
+5,296,POSPRODSEL,Product Selection Amount - Post Claim Processing,Field is not currently used. ,Contains only zeroes. ,S,9,2458,2466,9,2,,,
+5,297,POSATRTAX,Member  Sales Tax Amount - Post Claim Processing,Field is not currently used. ,Contains only zeroes. ,S,9,2467,2475,9,2,,,
+5,298,POSEXCEBFT,Amount that Exceeds Benefit Maximum - Post Claim Processing,Field is not currently used. ,Contains only zeroes. ,S,9,2476,2484,9,2,,,
+5,299,POSINCENTV,Incentive Amount - Post Claim Processing,Field is not currently used. ,Contains only zeroes. ,S,9,2485,2493,9,2,,,
+5,300,POSATRDED,Deductible Amount - Post Claim Processing,Field is not currently used. ,Contains only zeroes. ,S,9,2494,2502,9,2,,,
+5,301,POSTOTHAMT,Total Other Amount - Post Claim Processing,Field is not currently used. ,Contains only zeroes. ,S,9,2503,2511,9,2,,,
+5,302,POSPROFFEE,Professional Service Fee Paid - Post Claim Processing,Field is not currently used. ,Contains only zeroes. ,S,9,2512,2520,9,2,,,
+5,303,POSOTHPAYA,Other Payer Amount Recognized - Post Claim Processing,Field is not currently used. ,Contains only zeroes. ,S,9,2521,2529,9,2,,,
+5,304,POSCOSTSRC,Cost Source - Post Claim Processing,Field is not currently used. ,Contains only spaces to ensure the field is blank.,A,1,2530,2530,0,0,,,
+3,305,CLIENTFLAG,Pricing Code - Client,"The code that indicates the type of pricing used in the client pricing of the claim.  The value in this field is identical to the CLTCOSTSRC field (#332). 
+
+Note:  When a claim is for any multiple ingredient compound drug, this field displays the value of the most expensive legend ingredient of the compound, regardless of how the compound is set up.","*BLANK
+F = First DataBank
+B = First DataBank Baseline
+D = First DataBank Daily
+M = Medi-Span
+P = Plan
+R = Redbook
+S = Submitted",A,1,2531,2531,0,0,,,
+3,306,CLTINGRCST,Ingredient Cost - Client,"The final cost of the ingredients that was included in the total amount paid, after all calculations have been applied based on the client pricing of the claim. 
+
+Note:  Under Standard (Pass-through) pricing, this amount is identical to the PHRINGRCST field (#258).  Client fields are used for Traditional (Spread) pricing.",,S,9,2532,2540,9,2,,,
+3,307,CLTDISPFEE,Dispensing Fee - Client,"The final fee for dispensing the prescription after all calculations have been applied based on the client pricing of the claim.
+
+Note:  Under Standard (Pass-through) pricing, this amount is identical to the PHRDISPFEE field (#259).  Client fields are used for Traditional (Spread) pricing.",,S,9,2541,2549,9,2,,,
+3,308,CLTSLSTAX,Total Sales Tax - Client,"This is the final amount of sales tax for the prescription after all calculations have been applied based on the client pricing of the claim.  This field displays the tax amount the client pays. 
+
+Note:  Under Standard (Pass-through) pricing, this amount is identical to the PHRSLSTAX field (#262).  Client fields are used for Traditional (Spread) pricing.
+  ",,S,9,2550,2558,9,2,,,
+3,309,CLTPATPAY,Member Pay Amount - Client ,"The final dollar amount of the member's payment responsibility for the prescription after all calculations have been applied based on the client pricing of the claim.    
+
+   CLTCOPAY (#320) 
++ CLTATRDED (#327) 
++ CLTPRODSEL (#321) 
++ CLTEXCEBFT (#325)
+__________________________
+= Client Member Pay Amount
+
+Notes:  Under Standard (Pass-through) pricing, this amount is identical to the PHRPATPAY field (#263). Client fields are used for Traditional (Spread) pricing.
+                     
+Medicare Part D does not use Exceeded Benefit Maximum.",,S,9,2559,2567,9,2,,,
+3,310,CLTDUEAMT,Total Amount - Client,"The final dollar amount that the client pays Prime  
+for the prescription after all calculations have been applied based on the client pricing of the claim.    
+
+   CLTINGRCST (#306)
++ CLTDISPFEE (#307) 
++ CLTTOTHAMT (#328) 
++ CLTPSTAX (#322) 
++ CLTFSTAX (#323) 
+- CLTPATPAY (#309) 
+- CLTOTHPAYA (#331) 
+__________________________
+= Client Total Amount
+
+Note:  Under Standard (Pass-through) pricing, this amount is identical to the PHRDUEAMT field (#264).  Client fields are used for Traditional (Spread) pricing.",,S,9,2568,2576,9,2,,,
+3,311,CLTWITHHLD,Withhold Amount - Client,"The final amount that is subtracted from the payment to the pharmacy for the prescription after all calculations have been applied based on the client pricing of the claim.
+
+Note:  Under Standard (Pass-through) pricing, this amount is identical to the PHRWITHHLD field (#265).  Client fields are used for Traditional (Spread) pricing.",,S,9,2577,2585,9,2,,,
+4,312,CLTPRCS,Price Schedule Used - Client,"The code that identifies the final price schedule used during the client pricing of the claim. 
+
+Note:  Under Standard (Pass-through) pricing, this amount is identical to the PHRPPRCS field (#266).  Client fields are used for Traditional (Spread) pricing.",Values are Prime-defined and used in Prime's claim processing system. ,A,10,2586,2595,0,0,,,
+4,313,CLTPRCST,Price Schedule Table Used - Client,"The code that identifies the price schedule table used during the client pricing of the claim to calculate the patient/member pay dollar amount.
+
+Note:  Under Standard (Pass-through) pricing, this amount is identical to the PHRPRCST field (#267).  Client fields are used for Traditional (Spread) pricing.",Values are Prime-defined and used in Prime's claim processing system. ,A,10,2596,2605,0,0,,,
+4,314,CLTPTPS,Member Pay Schedule Used - Client,"The code that identifies the final member pay schedule used during the client pricing of the claim to calculate the copay and differential portion (e.g., deductibles and fees) of the amount that the member pays. 
+
+Note:  Under Standard (Pass-through) pricing, this amount is identical to the PHRPTPS field (#268).  Client fields are used for Traditional (Spread) pricing.
+",Values are Prime-defined and used in Prime's claim processing system. ,A,10,2606,2615,0,0,,,
+4,315,CLTPTPST,Member Pay Schedule Table Used - Client,"The code that identifies the final member pay table used during the rebilling of the claim to calculate the patient/member pay dollar amount.  
+
+Note:  Under Standard (Pass-through) pricing, this amount is identical to the PHRPTPST field (#269).  Rebilled fields are used for Traditional (Spread) pricing.",Values are Prime-defined and used in Prime's claim processing system. ,A,10,2616,2625,0,0,,,
+4,316,CLTCOPAYS,Copay Schedule Used - Client,"The code that identifies the final copay schedule used in the client pricing of the claim. 
+
+Note:  Under Standard (Pass-through) pricing, this amount is identical to the PHRCOPAYSC field (#270).  Client fields are used for Traditional (Spread) pricing.",Values are Prime-defined and used in Prime's claim processing system. ,A,10,2626,2635,0,0,,,
+4,317,CLTCOPAYSS,Copay Schedule Step Used - Client,"The step number of the final copay schedule used in the client pricing of the claim.
+
+Note:  Under Standard (Pass-through) pricing, this amount is identical to the PHRCOPAYSS field (#271).  Client fields are used for Traditional (Spread) pricing.",Values are Prime-defined and used in Prime's claim processing system. ,N,2,2636,2637,2,0,,,
+4,318,CLTFCOPAY,Flat Copay Amount - Client,"The final flat dollar amount that was collected from the member at the time the prescription was filled.  This amount is determined after all calculations have been applied based on the client pricing for the claim.
+
+Note:  Under Standard (Pass-through) pricing, this amount is identical to the PHRFCOPAY field (#272).  Client fields are used for Traditional (Spread) pricing.",,S,9,2638,2646,9,2,,,
+4,319,CLTPCOPAY,Coinsurance Amount - Client,"The final dollar amount calculated as a percentage of the claim that was collected from the member at the time the prescription was filled.  This amount is determined after all calculations have been applied based on the client pricing for the claim.  It is also known as coinsurance.
+
+Note:  Under Standard (Pass-through) pricing, this amount is identical to the PHRPCOPAY field (#273). Client fields are used for Traditional (Spread) pricing.",,S,9,2647,2655,9,2,,,
+4,320,CLTCOPAY,Total Copay Amount - Client,"The final dollar amount that was collected from the member at the time the prescription was filled.  This amount is determined after all calculations have been applied based on the client pricing for the claim.   
+
+   CLTFCOPAY (#318) 
++ CLTPCOPAY (#319)
+___________________________
+= Client Total Copay Amount
+
+Note:  Under Standard (Pass-through) pricing, this amount is identical to the PHRCOPAY field (#274). Client fields are used for Traditional (Spread) pricing.",,S,9,2656,2664,9,2,,,
+4,321,CLTPRODSEL,Product Selection Amount - Client,"The dollar amount that was collected from the member because of the product type that the member selected. This amount is determined after all calculations have been applied based on the client pricing for the claim.  It also is included in the Member Pay Amount field (CLTPATPAY #309). 
+
+Typically, Product Selection Amount would represent the dollar cost difference between an original brand cost and the cost of the generic form of the same chemical substance.  
+
+Example: Prozac costs $5.03 per pill, while fluoxetine costs $2.59 per pill.  In a plan with mandatory generic, the $3 difference in the costs of the two would show in the Product Selection field, and would be the patient's responsibility to pay.  
+
+This is also known as Member Pays the Difference (MPTD), Mandatory Generic, Generic Mandate, Differential, Dispense As Written (DAW), Dispense As Written (DAW) Override, Penalty, PSC Penalty, Ancillary Charge, and Sanction. 
+
+Note:  Under Standard (Pass-through) pricing, this amount is identical to the PHRPRODSEL field (#275).  Client fields are used for Traditional (Spread) pricing.",,S,9,2665,2673,9,2,,,
+4,322,CLTPSTAX,Percentage Sales Tax - Client,"The final dollar amount of the sales tax for the prescription after all calculations have been applied based on the client pricing of the claim.  This sales tax is calculated as a percentage. 
+
+Note:  Under Standard (Pass-through) pricing, this amount is identical to the PHRPPSTAX field (#260).  Client fields are used for Traditional (Spread) pricing.",,S,9,2674,2682,9,2,,,
+4,323,CLTFSTAX,Flat Sales Tax - Client,"The final dollar amount of the sales tax for the prescription after all calculations have been applied based on the client pricing of the claim. This sales tax is calculated as a flat dollar amount. 
+
+Note:  Under Standard (Pass-through) pricing, this amount is identical to the PHRFSTAX field (#261).  Client fields are used for Traditional (Spread) pricing.",,S,9,2683,2691,9,2,,,
+3,324,CLTATRTAX,Total Sales Tax (Member Pay) - Client,"This is the final dollar amount of the sales tax that was collected from the member after all calculations have been applied based on the client pricing of the claim. This field displays a value if the client has the benefit set up for the member to pay the sales tax.  
+
+Note:  Under Standard (Pass-through) pricing, this amount is identical to the PHRATRTAX field (#276).  Client fields are used for Traditional (Spread) pricing.",,S,9,2692,2700,9,2,,,
+3,325,CLTEXCEBFT,Amount that Exceeds Benefit Maximum - Client,"The final dollar amount that exceeded the benefit plan's maximum allowable for specific services (e.g., infertility, smoking cessation) after all calculations have been applied based on the client pricing for the claim.   
+
+Note:  Under Standard (Pass-through) pricing, this amount is identical to the PHREXCEBFT field (#277).  Client fields are used for Traditional (Spread) pricing.",,S,9,2701,2709,9,2,,,
+3,326,CLTINCENTV,Incentive Fee Amount - Client,"The final dollar amount of the incentive fee after all calculations have been applied based on the client pricing of the claim.  This amount is in addition to the dispensing fee and is paid by the plan to the pharmacy when members use specific services (e.g., vaccine administration, smoking cessation). 
+
+Note:  Under Standard (Pass-through) pricing, this amount is identical to the PHRINCENTV field (#278).  Client fields are used for Traditional (Spread) pricing.",,S,9,2710,2718,9,2,,,
+3,327,CLTATRDED,Deductible Amount - Client,"The final dollar amount of the member's deductible that was collected from the member at the time the prescription was filled after all calculations have been applied based on the client pricing for the claim. 
+
+Note:  Under Standard (Pass-through) pricing, this amount is identical to the PHRATRDED field (#279).  Client fields are used for Traditional (Spread) pricing.",,S,9,2719,2727,9,2,,,
+3,328,CLTTOTHAMT,Total Other Amount - Client,"Field is not currently used. 
+
+Note:  This field always displays a zero and is not populated.  The dollar amount by the primary payer is listed in field OTHRPAYOR (#236). ",,S,9,2728,2736,9,2,,,
+4,329,CLTPROFFEE,Professional Service Fee - Client,"Field is not currently used. 
+
+Note:  This field is no longer used.  This dollar amount now  displays in the CLTINCENTV field (#326). ",Contains only zeroes.,S,9,2737,2745,9,2,,,
+4,330,CLTCOB,Coordination of Benefits Total Amount - Client,"The final dollar amount that the primary payer contributed toward this prescription when Prime is a secondary payer. 
+
+All COB-related fields display the same values, regardless of whether the fields are calculated, approved or client. 
+
+Note:  A value displays only when the claim is being processed as secondary, otherwise it will default to 0.  
+",,S,9,2746,2754,9,2,,,
+4,331,CLTOTHPAYA,Other Payer Amount Recognized - Client,"The final dollar amount that the primary payer contributed toward this prescription when Prime is a secondary payer.  This is used for Coordination of Benefits.  
+
+All COB-related fields display the same values, regardless of whether the fields are calculated, approved or client. 
+
+Note:  This field displays a zero if the claim is submitted as a primary claim to Prime. 
+",,S,9,2755,2763,9,2,,,
+4,332,CLTCOSTSRC,Cost Source Code - Client ,"The code that indicates the type of pricing used in the client pricing of the claim.  The value in this field is identical to the CLIENTFLAG field (#305). 
+
+Note:  When a claim is for any multiple ingredient compound drug, this field displays the value of the most expensive legend ingredient of the compound, regardless of how the compound is set up.
+
+","*BLANK
+F = First DataBank
+B = First DataBank Baseline
+D = First DataBank Daily
+M = Medi-Span
+P = Plan
+R = Redbook
+S = Submitted",A,1,2764,2764,0,0,,,
+3,333,CLTCOSTTYP,Cost Type - Client ,"The code that indicates how the drug was priced per unit as part of the client pricing of the claim. 
+
+Note:  When a claim is for any multiple ingredient compound drug, this field displays the value of the most expensive legend ingredient of the compound, regardless of how the compound is set up. 
+",See the Cost Type Codes tab.,A,10,2765,2774,0,0,,,
+4,334,CLTPRCTYPE,Price Type - Client,"The code that indicates the final client price type (cost + fee + tax) after all calculations have been applied based on the client pricing of the claim. 
+
+Notes:  Under Standard (Pass-through) pricing, this amount is identical to the PHRPRCTYPE field (#286).  Client fields are used for Traditional (Spread) pricing.
+
+When a claim is for any multiple ingredient compound drug, this field displays the value of the most expensive legend ingredient of the compound, regardless of how the compound is set up. ","Examples:
+MAC01 = Maximum Allowable Cost 
+AWP = Average Wholesale Price 
+SUBMITTED = Submitted Drug Cost  
+U = Usual and Customary  
+$ = Dollar amount indicated by the price 
+comparison code ",A,10,2775,2784,0,0,,,
+4,335,RSPREIMBUR,Basis of Reimbursement Determination - Response,"The code that indicates how the reimbursement amount was calculated and was reported back to the pharmacy (response).  
+
+Note:  When a claim is for any multiple ingredient compound drug, this field displays the value of the most expensive legend ingredient of the compound, regardless of how the compound is set up. 
+","00 = Not specified
+01 = Ingredient cost paid as submitted
+02 = Ingredient cost reduced to AWP pricing
+03 = Ingredient cost reduced to AWP less x% pricing
+04 = Usual and customary paid as submitted
+05 = Paid lower of ingredient cost plus fees versus usual and customary
+06 = MAC pricing - ingredient cost paid
+07 = MAC Pricing ingredient cost reduced to MAC pricing
+08 = Contract pricing
+25 = Nominal Price          
+26 = Federal Supply Schedule",A,2,2785,2786,0,0,522-FM,Basis Of Reimbursement Determination,Code identifying how the reimbursement amount was calculated for ‘Ingredient Cost Paid’ (5Ø6-F6).
+4,336,RSPINGRCST,Ingredient Cost - Response,The final cost of the prescription drug ingredients that was included in the total amount paid and was reported back to the pharmacy (response).  ,,S,9,2787,2795,9,2,506-F6,Ingredient Cost Paid,Drug ingredient cost paid included in the ‘Total Amount Paid’ (5Ø9-F9).
+4,337,RSPDISPFEE,Dispensing Fee - Response,The final fee for dispensing the prescription that was reported back to the pharmacy (response). ,,S,9,2796,2804,9,2,507-F7,Dispensing Fee Paid,Dispensing fee paid included in the ‘Total Amount Paid’ (5Ø9-F9).
+4,338,RSPPSLSTAX,Percentage Sales Tax - Response,The final dollar amount of the sales tax for the prescription that was reported back to the pharmacy (response). This sales tax is calculated as a percentage. ,,S,9,2805,2813,9,2,559-AX,Percentage Sales Tax Amount Paid,Amount of percentage sales tax paid which is included in the ‘Total Amount Paid’ (5Ø9-F9).
+4,339,RSPFSLSTAX,Flat Sales Tax - Response,The final flat dollar amount of the sales tax for the prescription that was reported back to the pharmacy (response). ,,S,9,2814,2822,9,2,558-AW,Flat Sales Tax Amount Paid,Flat sales tax paid which is included in the ‘Total Amount Paid’ (5Ø9-F9).
+4,340,RSPSLSTAX,Total Sales Tax - Response,The final dollar amount of sales tax that was reported back to the pharmacy (response). ,,S,9,2823,2831,9,2,523-FN,Amount Attributed To Sales Tax,Amount to be collected from the patient that is included in ‘Patient Pay Amount’ (5Ø5-F5) that is due to sales tax paid.
+4,341,RSPPATPAY,Member Pay Amount - Response,"The final dollar amount of the member's payment responsibility for the prescription that was reported back to the pharmacy (response).   
+
+   RSPCOPAY (#345) 
++ RSPATRDED (#350) 
++ RSPPRODSEL (#346) 
++ RSPEXCEBFT (#348)
++ CLTCOVGAP (#18 on Supplemental File)
+__________________________
+= Member Pay Amount Response
+
+Prime's recommendation is that clients take in the actual value transmitted in this field rather than recalculate the field as the calculation requires fields from multiple files.",,S,9,2832,2840,9,2,505-F5,Patient Pay Amount,"Amount that is calculated by the processor and returned to the pharmacy as the TOTAL amount to be paid by the patient to the pharmacy; the patient’s total cost share, including copayments, amounts applied to deductible, over maximum amounts, penalties, etc."
+4,342,RSPDUEAMT,Total Amount Paid - Response,"The final dollar amount due to the pharmacy for the prescription paid by Prime that was reported back to the pharmacy (response). 
+
+   RSPINGRCST (#336)
++ RSPDISPFEE (#337) 
++ RSPTOTHAMT (#351) 
++ RSPFSLSTAX (#339) 
++ RSPPSLSTAX(#338) 
+- RSPPATPAY (#341) 
+- RSPOTHPAYA (#353) 
+__________________________
+= Total Amount Paid Response",,S,9,2841,2849,9,2,,,
+4,343,RSPFCOPAY,Flat Copay Amount - Response,The final flat dollar amount that was collected from the member at the time the prescription was filled and was reported back to the pharmacy (response).  ,,S,9,2850,2858,9,2,518-FI  ,Amount Of Copay,Amount to be collected from the patient that is included in ‘Patient Pay Amount’ (5Ø5-F5) that is due to a per prescription copay.
+4,344,RSPPCOPAY,Coinsurance Amount - Response,The final dollar amount calculated as a percentage of the claim to be collected from the member at the time the prescription was filled.  This amount was reported back to the pharmacy (response) and is also known as coinsurance.,,S,9,2859,2867,9,2,572-4U,Amount of Coinsurance,Amount to be collected from the patient that is included in ‘Patient Pay Amount’ (5?5-F5) that is due to a per prescription coinsurance.
+4,345,RSPCOPAY,Total Copay Amount - Response,"The final dollar amount that was collected from the member at the time the prescription was filled and was reported back to the pharmacy (response). 
+
+   RSPFCOPAY(#343) 
++ RSPPCOPAY (#344)
+___________________________
+= Total Copay Amount Response",,S,9,2868,2876,9,2,518-FI,Amount Of Copay,Amount to be collected from the patient that is included in ‘Patient Pay Amount’ (5Ø5-F5) that is due to a per prescription copay.
+4,346,RSPPRODSEL,Product Selection Amount - Response ,"The dollar amount that was collected from the member because of the product type that the member selected.  This amount was reported back to the pharmacy (response) and is included in the Member Pay Amount field (RSPPATPAY #341). 
+
+Typically, Product Selection Amount would represent the dollar cost difference between an original brand cost and the cost of the generic form of the same chemical substance.  
+
+Example: Prozac costs $5.03 per pill, while fluoxetine costs $2.59 per pill.  In a plan with mandatory generic, the $3 difference in the costs of the two would show in the Product Selection field, and would be the patient's responsibility to pay.  
+
+This is also known as Member Pays the Difference (MPTD), Mandatory Generic, Generic Mandate, Differential, Dispense As Written (DAW), Dispense As Written (DAW) Override, Penalty, PSC Penalty, Ancillary Charge, and Sanction. ",,S,9,2877,2885,9,2,519-FJ,Amount Attributed To Product Selection,Amount to be collected from the patient that is included in ‘Patient Pay Amount’ (5Ø5-F5) that is due to the patient’s selection of drug product.
+4,347,RSPATRTAX,Member Sales Tax Amount - Response,The final dollar amount of sales tax that was collected from the member and was reported back to the pharmacy (response).,,S,9,2886,2894,9,2,523-FN,Amount Attributed To Sales Tax,Amount to be collected from the patient that is included in ‘Patient Pay Amount’ (5Ø5-F5) that is due to sales tax paid.
+4,348,RSPEXCEBFT,Amount that Exceeds Benefit Maximum - Response,"The final dollar amount that exceeded the benefit plan's maximum allowable for specific services (e.g., infertility, smoking cessation) and was reported back to the pharmacy (response).  This is also known as Over Cap Amount.",,S,9,2895,2903,9,2,520-FK,Amount Exceeding Periodic Benefit Maximum,Amount to be collected from the patient that is included in ‘Patient Pay Amount’ (5Ø5-F5) that is due to the patient exceeding a periodic benefit maximum.
+4,349,RSPINCENTV,Incentive Fee Amount - Response,The final dollar amount of the incentive fee that was reported back to the pharmacy (response). ,,S,9,2904,2912,9,2,521-FL,Incentive Amount Paid,Amount represents the contractually agreed upon incentive fee paid for specific services rendered. Amount is included in the 'Total Amount Paid' (5Ø9-F9).
+4,350,RSPATRDED,Deductible Amount - Response,The final dollar amount of the member's deductible that was collected from the member at the time the prescription was filled and was reported back to the pharmacy (response).  ,,S,9,2913,2921,9,2,517-FH,Amount Applied To Periodic Deductible,Amount to be collected from a patient that is included in ‘Patient Pay Amount’ (5Ø5-F5) that is applied to a periodic deductible.
+4,351,RSPTOTHAMT,Total Other Amount - Response,"Field is not currently used. 
+
+Note:  This field always displays a zero and is not populated.  The dollar amount by the primary payer is listed in field OTHRPAYOR (#236). ",,S,9,2922,2930,9,2,565-J4,Other Amount Paid,Amount paid for additional costs claimed in ‘Other Amount Claimed Submitted’ (48Ø-H9).
+4,352,RSPPROFEE,Professional Service Fee - Response,"Field is not currently used. 
+
+Note:  This field is no longer used.  This dollar amount now  displays in the RSPINCENTV field (#349). ",Contains only zeroes. ,S,9,2931,2939,9,2,562-J1,Professional Service Fee Paid,Amount representing the contractually agreed upon fee for professional services rendered. This amount is included in the ‘Total Amount Paid’ (5Ø9-F9).
+4,353,RSPOTHPAYA,Other Payer Amount Recognized - Response,"The final dollar amount that the primary payer contributed toward this prescription when Prime is a secondary payer.  This is used for Coordination of Benefits.  
+
+All COB-related fields display the same values, regardless of whether the fields are calculated, approved, client or response. 
+
+Note:  This field displays a zero if the claim is submitted as a primary claim to Prime. ",,S,9,2940,2948,9,2,566-J5,Other Payer Amount Recognized,Total amount recognized by the processor of any payment from another source.
+4,354,RSPACCUDED,Accumulated Deductible Amount - Response,The accumulated dollar amount of the member/family's deductible that was collected from the member during the benefit period. This amount was reported back to the pharmacy (response).  ,99999.99 is a valid value. It indicates there is a limit to be reached and nothing has been applied to it.,S,9,2949,2957,9,2,512-FC,Accumulated Deductible Amount,Amount in dollars met by the patient/family in a deductible plan.
+4,355,RSPREMBFT,Remaining Benefit Amount - Response,"The dollar amount of the member's or family's maximum benefit that has not been used. If the claim applied to both the individual and the family maximum, then the individual value displays. This amount was reported back to the pharmacy (response). ",99999.99 is a valid value. It indicates there is a limit to be reached and nothing has been applied to it.,S,9,2958,2966,9,2,514-FE,Remaining Benefit Amount,Amount remaining in a patient/family plan with a periodic maximum benefit.
+4,356,RSPREMDED,Remaining Deductible Amount - Response,"The dollar amount of the member's or family's deductible that has not been met. If the claim applied to both the individual and the family deductible, then the individual value displays. This amount was reported back to the pharmacy (response).",,S,9,2967,2975,9,2,513-FD,Remaining Deductible Amount,Amount not met by the patient/family in the deductible plan.
+4,357,RSPPLANID,Plan ID - Response,Field is not currently used. ,Contains only spaces to ensure the field is blank.,A,8,2976,2983,0,0,,,
+2,358,INDDEDPTD,Accumulated Individual Deductible Period to Date,The dollar amount that the member has paid toward the individual deductible for the current benefit period. This is the amount that has been accumulated toward the individual deductible as of the date of this claim. ,9999999.99 is a valid value. It indicates there is a limit to be reached and nothing has been applied to it,S,9,2984,2992,9,2,,,
+2,359,INDDEDREM,Remaining Individual Deductible Amount,The dollar amount that the member has left to pay toward the individual's deductible amount as of this claim. ,,S,9,2993,3001,9,2,,,
+2,360,FAMDEDPTD,Accumulated Family Deductible Period to Date,The dollar amount that the family has paid toward the family deductible for the current benefit period. This is the amount that has been accumulated toward the family deductible as of the date of this claim. ,9999999.99 is a valid value. It indicates there is a limit to be reached and nothing has been applied to it.,S,9,3002,3010,9,2,,,
+2,361,FAMDEDREM,Remaining Family Deductible Amount,The dollar amount that the member has left to pay toward the family's deductible amount as of this claim. ,,S,9,3011,3019,9,2,,,
+4,362,DEDSCHD,Deductible Schedule Code ,The code that identifies the deductible schedule used for the claim during claim processing. This field works with the Deductible Accumulation Code  specified in field DEDACCC (#363).,Values are Prime-defined and used in Prime's claim processing system. ,A,10,3020,3029,0,0,,,
+2,363,DEDACCC,Deductible Accumulation  Code,"The code that is used with the deductible schedule, and ties all claims for a deductible together, either within a benefit plan or across benefit plans.  If a benefit plan has more than one deductible schedule, accumulation codes provide a way to separate the accumulations for each type of schedule.
+
+Accumulation codes help determine the amounts that the member paid toward the deductible, out-of-pocket maximum, benefit maximum and lifetime benefit maximum.","The most frequently used values include:
+BOTH
+OON
+PREVENTIVE
+SPECIALTY
+PASSTHRU
+TOTAL
+TOTALOON
+PREFNET
+COIN
+COPAY",A,10,3030,3039,0,0,,,
+2,364,DEDFLAG,Deductible Flag,The indication whether a deductible was applied during claim processing. ,"X = Deductible was applied
+Blank = No deductible was applied",A,1,3040,3040,0,0,,,
+2,365,INDLBFTUT,Individual Lifetime Benefit Maximum Amount Used,The dollar amount of the member's lifetime benefit maximum that the benefit plan paid for this claim.  ,,S,9,3041,3049,9,2,,,
+2,366,INDLBFTPTD,Accumulated Individual Lifetime Benefit Maximum Amount,The dollar amount that the benefit plan has paid toward the individual's lifetime benefit maximum. This is the amount that has been accumulated toward the individual lifetime benefit maximum as of the date of this claim. ,9999999.99 is a valid value. It indicates there is a limit to be reached and nothing has been applied to it.,S,9,3050,3058,9,2,,,
+2,367,INDLBFTREM,Remaining Individual Lifetime Benefit Maximum Amount,The dollar amount that the benefit plan has left to pay toward the individual's lifetime benefit maximum amount as of this claim. ,9999999.99 is a valid value. It indicates there is a limit to be reached and nothing has been applied to it.,S,9,3059,3067,9,2,,,
+2,368,FAMLBFTUT,Family Lifetime Benefit Maximum Amount Used,The dollar amount of the family's lifetime benefit maximum that the benefit plan paid for this claim. ,,S,9,3068,3076,9,2,,,
+2,369,FAMLBFTPTD,Accumulated Family Lifetime Benefit Maximum Amount,The dollar amount that the benefit plan has paid toward the family's lifetime benefit maximum. This is the amount that has been accumulated toward the family lifetime benefit maximum as of the date of this claim. ,9999999.99 is a valid value. It indicates there is a limit to be reached and nothing has been applied to it,S,9,3077,3085,9,2,,,
+2,370,FAMLBFTREM,Remaining Family Lifetime Benefit Maximum Amount,The dollar amount that the benefit plan has left to pay toward the family's lifetime benefit maximum amount as of this claim.,,S,9,3086,3094,9,2,,,
+4,371,LFTBFTMSCH,Lifetime Benefit Maximum Schedule Code ,The code that identifies the lifetime benefit maximum schedule used for the claim during claim processing. This field works with the Lifetime Benefit Maximum Accumulation Code  specified in field LFTBFTACCC (#372).,Values are Prime-defined and used in Prime's claim processing system. ,A,10,3095,3104,0,0,,,
+2,372,LFTBFTACCC,Lifetime Benefit Maximum Accumulation Code,"The code that is used with the lifetime benefit maximum schedule, and ties all claims for a lifetime benefit maximum together, either within a benefit plan or across benefit plans.  If a benefit plan has more than one lifetime benefit maximum schedule, accumulation codes provide a way to separate the accumulations for each type of schedule.
+
+Accumulation codes help determine the amounts that the member paid toward the deductible, out-of-pocket maximum, benefit maximum and lifetime benefit maximum.","The most frequently used values include:
+BOTH
+OON
+PREVENTIVE
+SPECIALTY
+PASSTHRU",A,10,3105,3114,0,0,,,
+2,373,LFTBFTFLAG,Lifetime Benefit Maximum Flag,The indication whether a dollar amount was applied toward a lifetime benefit maximum during claim processing.,"X = Dollar amount was applied to a lifetime benefit maximum
+Blank = No dollar amount was applied to a lifetime benefit maximum",A,1,3115,3115,0,0,,,
+2,374,INDBFTUT,Individual Benefit Maximum Amount Used,The dollar amount that the benefit plan has paid toward the individual benefit maximum for this claim. ,,S,9,3116,3124,9,2,,,
+2,375,INDBMAXPTD,Accumulated Individual Benefit Maximum Amount,The dollar amount that the benefit plan has paid toward the individual benefit maximum for the current benefit period. This is the amount that has been accumulated toward the individual benefit maximum as of the date of this claim. ,99999.99 is a valid value. It indicates there is a limit to be reached and nothing has been applied to it,S,9,3125,3133,9,2,,,
+2,376,FAMBFTUT,Family Benefit Maximum Amount Used,The dollar amount that the benefit plan has paid toward the family benefit maximum for this claim. ,,S,9,3134,3142,9,2,,,
+2,377,FAMBMAXPTD,Accumulated Family Benefit Maximum Amount,The dollar amount that the benefit plan has paid toward the family benefit maximum for the current benefit period. This is the amount that has been accumulated toward the family  benefit maximum as of the date of this claim. ,99999.99 is a valid value. It indicates there is a limit to be reached and nothing has been applied to it,S,9,3143,3151,9,2,,,
+2,378,INDBMAXREM,Remaining Individual Benefit Maximum Amount,The dollar amount that the benefit plan has left to pay toward the individual's benefit maximum amount as of this claim. ,,S,9,3152,3160,9,2,,,
+2,379,FAMBMAXREM,Remaining Family Benefit Maximum Amount,The dollar amount that the benefit plan has left to pay toward the family's benefit maximum amount as of this claim. ,,S,9,3161,3169,9,2,,,
+2,380,BFTMAXSCHD,Benefit Maximum Schedule Code ,The code that identifies the benefit maximum schedule used for the claim during claim processing. This field works with the Benefit Maximum Accumulation Code specified in field BFTMAXACCC (#381).,Values are Prime-defined and used in Prime's claim processing system. ,A,10,3170,3179,0,0,,,
+2,381,BFTMAXACCC,Benefit Maximum Accumulation Code,"The code that is used with the benefit maximum schedule, and ties all claims for a benefit maximum together, either within a benefit plan or across benefit plans.  If a benefit plan has more than one benefit maximum schedule, accumulation codes provide a way to separate the accumulations for each type of schedule.
+
+Accumulation codes help determine the amounts that the member paid toward the deductible, out-of-pocket maximum, benefit maximum and lifetime benefit maximum.","The most frequently used values include:
+BOTH
+OON
+PREVENTIVE
+SPECIALTY
+PASSTHRU",A,10,3180,3189,0,0,,,
+2,382,BFTMAXFLAG,Benefit Maximum Flag,The indication whether a dollar amount was applied toward a benefit maximum during claim processing. ,"X = Dollar amount applied toward a benefit maximum
+Blank = No dollar amount applied toward a benefit maximum",A,1,3190,3190,0,0,,,
+2,383,INDOOPPTD,Accumulated Individual Out of Pocket Amount,"The dollar amount that the member has paid toward the individual out of pocket amount for the current benefit period. This is the amount that has been accumulated toward the individual out of pocket amount as of the date of this claim. 
+
+Note:  This amount may include pharmacy and medical dollars, if the member's Out of Pocket maximum is set up to include both types of claims.",9999999.99 is a valid value. It indicates there is a limit to be reached and nothing has been applied to it.,S,9,3191,3199,9,2,,,
+2,384,FAMOOPPTD,Accumulated Family Out of Pocket Amount,"The dollar amount that the family has paid toward the family out of pocket amount for the current benefit period. This is the amount that has been accumulated toward the family out of pocket amount as of the date of this claim. 
+
+Note:  This amount may include pharmacy and medical dollars, if the Out of Pocket maximum is set up to include both types of claims.",9999999.99 is a valid value. It indicates there is a limit to be reached and nothing has been applied to it.,S,9,3200,3208,9,2,,,
+2,385,INDOOPREM,Remaining Individual Out of Pocket Amount,The dollar amount that the member has left to pay toward the individual's out of pocket amount as of this claim. ,9999999.99 is a valid value. It indicates there is a limit to be reached and nothing has been applied to it.,S,9,3209,3217,9,2,,,
+2,386,FAMOOPREM,Remaining Family Out of Pocket Amount,The dollar amount that the family has left to pay toward the family's out of pocket amount as of this claim. ,,S,9,3218,3226,9,2,,,
+4,387,OOPSCHD,Out of Pocket Maximum Schedule Code,The code that identifies the out of pocket schedule used for the claim during claim processing. This field works with the Out of Pocket Accumulation Code specified in field OOPACCC (#388).,Values are Prime-defined and used in Prime's claim processing system. ,A,10,3227,3236,0,0,,,
+2,388,OOPACCC,Out of Pocket Accumulation Code,"The code that is used with the out of pocket maximum schedule, and ties all claims for a out of pocket maximum together, either within a benefit plan or across benefit plans.  If a benefit plan has more than one out of pocket maximum schedule, accumulation codes provide a way to separate the accumulations for each type of schedule.
+
+Accumulation codes help determine the amounts that the member paid toward the deductible, out-of-pocket maximum, benefit maximum and lifetime benefit maximum.","The most frequently used values include:
+BOTH
+OON
+PREVENTIVE
+SPECIALTY
+PASSTHRU",A,10,3237,3246,0,0,,,
+2,389,OOPFLAG,Out of Pocket Flag,The indication whether an out of pocket amount was applied during claim processing. ,"X = Out of Pocket amount applied
+Blank = No Out of Pocket amount applied",A,1,3247,3247,0,0,,,
+5,390,CONTRIBUT,Contribution Amount,Field is not currently used. ,Contains only zeroes. ,N,9,3248,3256,9,2,,,
+5,391,CONTBASIS,Contribution Basis,Field is not currently used. ,Contains only spaces to ensure the field is blank.,A,2,3257,3258,0,0,,,
+5,392,CONTSCHED,Contribution Schedule,Field is not currently used. ,Contains only spaces to ensure the field is blank.,A,10,3259,3268,0,0,,,
+5,393,CONTACCCD,Contribution Accumulation Code,Field is not currently used. ,Contains only spaces to ensure the field is blank.,A,10,3269,3278,0,0,,,
+5,394,CONTFLAG,Contribution Flag,Field is not currently used. ,Contains only spaces to ensure the field is blank.,A,1,3279,3279,0,0,,,
+5,395,RXTFLAG,RxTRACK Flag,Field is not currently used. ,Contains only spaces to ensure the field is blank.,A,1,3280,3280,0,0,,,
+1,396,REIMBURSMT,Payment Reimbursement Code,The code that indicates whether payment is due to the pharmacy or the member.  ,"P = Pharmacy Reimbursement
+M = Member Reimbursement",A,1,3281,3281,0,0,,,
+1,397,CLMORIGIN,Claim Origination Flag,The code that indicates how the claim was sent to Prime. ,"B = Batch loaded                        
+C = Trial-API/DUR MSG,SKIP DEDUCTIBLE   
+E = Trial-API/SKIP DUR, DEDUCTIBLE      
+G = Trial-API/SKIP DEDUCTIBLE           
+H = Batch Trial Mass Amendment          
+I = Batch Mass Amendment Update         
+J = Manual Single Amendment Update      
+K = Batch Loaded/Excl Payment           
+M = Manually keyed                      
+N = Trial-Batch-RxACT/DUR               
+O = Trial-Batch-RxACT/SKPDUR           
+P = Retro-Active Eligiblity Reprocess  
+Q = Trial-Batch-RxACT/DURMSG           
+S = CMS State-To Plan Recon            
+T = Electronic transaction             
+V = Trial-Manual-RxACT/DUR             
+W = Trial-Manual-RxACT/SKPMSG          
+X = Trial-Manual-RxACT/DURMSG          
+1 = Trial-Batch                        
+3 = Trial-Batch/DUR MSG ONLY           
+2 = Trial-Batch/SKIP DUR               
+4 = Trial-Manual                       
+5 = Trial-Manual/SKIP DUR              
+6 = Trial-Manual/DUR MSG ONLY          
+7 = Trial-API                          
+8 = Trial-API/SKIP DUR          
+9 = Trial-API/DUR MSG ONLY      
+",A,1,3282,3282,0,0,,,
+5,398,HLDCLMFLAG,Hold Claim Flag,Field is not currently used. ,Contains only spaces to ensure the field is blank.,A,1,3283,3283,0,0,,,
+5,399,HLDCLMDAYS,Hold Claim Days,Field is not currently used. ,Contains only zeroes. ,N,3,3284,3286,3,0,,,
+5,400,DTEINJURY,Submitted Date of Injury,Field is not currently used. ,Contains only zeroes. ,N,8,3287,3294,8,0,,,
+4,401,ADDUSER,Add System User ID,"The identifier of the Prime employee who entered the claim in the claims processing system. 
+
+For electronic claims, this field displays a default system identifier. ",,A,10,3295,3304,0,0,,,
+4,402,CHGUSER,"Change System User ID
+
+","The identifier of the Prime employee who updated the claim on the claims processing system. 
+
+For electronic claims, this field displays a default system identifier. ",,A,10,3305,3314,0,0,,,
+4,403,DMRUSERID,Direct Member Reimbursement (DMR) System User ID,"The identifier of the Prime employee who entered the Direct Member Reimbursement (DMR) claim in the claims processing system. 
+
+For electronic claims, this field displays a default system identifier. ",,A,10,3315,3324,0,0,,,
+4,404,PRAUSERID,Add System User ID - Prior Authorization (PA),"The identifier of the Prime employee who entered the Prior Authorization (PA) on the claim in the claims processing system. 
+
+For electronic prior authorizations, this field displays a default system identifier. ",,A,10,3325,3334,0,0,,,
+3,405,CLAIMREFID,Claim Reference Identification Number for Workers' Compensation - Pharmacy Submitted,"The number assigned by Workers' Compensation to the claim, as submitted by the pharmacy. ",,A,30,3335,3364,0,0,435-DZ,Claim/Reference ID,Identifies the claim number assigned by Worker’s Compensation Program.
+3,406,EOBDENOV,Explanation of Benefits (EOB) Denial Override Code,"The 3-digit code that identifies the reason that payment of the claim was denied, as stated on the Explanation of Benefits (EOB).",,A,3,3365,3367,0,0,,,
+5,407,EOBPDOV,Explanation of Benefits (EOB) Paid Override Code,"Field is not currently used. 
+
+",Contains only spaces to ensure the field is blank.,A,3,3368,3370,0,0,,,
+3,408,MANTRKNBR,Manual Pharmacy Claim Tracking Number,A client-defined number used to track manual or paper claims for reporting purposes. ,,A,14,3371,3384,0,0,,,
+3,409,MANRECVDTE,Manual Pharmacy Claim Received Date,The date that Prime received the manual or paper claim from the member to be processed.  ,Format = CCYYMMDD,N,8,3385,3392,8,0,,,
+5,410,PASAUTHTYP,Submitted Prior Authorization (PA) Authorization Type,Field is not currently used. ,Contains only spaces to ensure the field is blank.,A,2,3393,3394,0,0,,,
+5,411,PASAUTHID,Submitted Prior Authorization (PA) Segment Identifier (ID),Field is not currently used. ,Contains only spaces to ensure the field is blank.,A,11,3395,3405,0,0,,,
+5,412,PASREQTYPE,Submitted Prior Authorization (PA) Request Type,Field is not currently used. ,Contains only spaces to ensure the field is blank.,A,1,3406,3406,0,0,,,
+5,413,PASREQFROM,"Submitted Prior Authorization (PA) Start Date
+",Field is not currently used. ,Contains only zeroes. ,N,8,3407,3414,8,0,,,
+5,414,PASREQTHRU,Submitted Prior Authorization (PA) End Date,Field is not currently used. ,Contains only zeroes. ,N,8,3415,3422,8,0,,,
+5,415,PASBASISRQ,Submitted Prior Authorization (PA) Basis of Request,Field is not currently used. ,Contains only spaces to ensure the field is blank.,A,2,3423,3424,0,0,,,
+5,416,PASREPFN,Submitted Prior Authorization (PA) Member Representative First Name,Field is not currently used. ,Contains only spaces to ensure the field is blank.,A,12,3425,3436,0,0,,,
+5,417,PASREPLN,Submitted Prior Authorization (PA) Member Representative Last Name,Field is not currently used. ,Contains only spaces to ensure the field is blank.,A,15,3437,3451,0,0,,,
+5,418,PASSTREET,Submitted Prior Authorization (PA) Member Representative Street Address,Field is not currently used. ,Contains only spaces to ensure the field is blank.,A,30,3452,3481,0,0,,,
+5,419,PASCITY,Submitted Prior Authorization (PA) Member Representative City,Field is not currently used. ,Contains only spaces to ensure the field is blank.,A,20,3482,3501,0,0,,,
+5,420,PASSTATE,Submitted Prior Authorization (PA) Member Representative State,Field is not currently used. ,Contains only spaces to ensure the field is blank.,A,2,3502,3503,0,0,,,
+5,421,PASZIP,Submitted Prior Authorization (PA) Member Representative Zip Code,Field is not currently used. ,Contains only spaces to ensure the field is blank.,A,15,3504,3518,0,0,,,
+5,422,PASPANBR,Submitted Prior Authorization (PA)  Assigned Number,Field is not currently used. ,Contains only spaces to ensure the field is blank.,A,11,3519,3529,0,0,,,
+5,423,PASAUTHNBR,Submitted Prior Authorization (PA) Transaction Number,Field is not currently used. ,Contains only spaces to ensure the field is blank.,A,20,3530,3549,0,0,,,
+5,424,PASSDOCCT,Submitted Prior Authorization (PA) Supporting Documentation Line Count,Field is not currently used. ,Contains only zeroes. ,N,3,3550,3552,3,0,,,
+5,425,CLIENTDEF1,Client Defined Field 1,Field is not currently used. ,Contains only spaces to ensure the field is blank.,A,10,3553,3562,0,0,,,
+5,426,CLIENTDEF2,Client Defined Field 2,Field is not currently used. ,Contains only spaces to ensure the field is blank.,A,10,3563,3572,0,0,,,
+5,427,CLIENTDEF3,Client Defined Field 3,Field is not currently used. ,Contains only spaces to ensure the field is blank.,A,10,3573,3582,0,0,,,
+5,428,CLIENTDEF4,Client Defined Field 4,Field is not currently used. ,Contains only spaces to ensure the field is blank.,A,10,3583,3592,0,0,,,
+5,429,CLIENTDEF5,Client Defined Field 5,Field is not currently used. ,Contains only spaces to ensure the field is blank.,A,10,3593,3602,0,0,,,
+5,430.1,CCTRESERV1.1,Reserved Field 1.1,Field is not currently used. ,Contains only spaces to ensure the field is blank.,A,1,3603,3603,0,0,,,
+3,430.2,CCTRESERV1.2,Health Insurance Market (HIM) Status,The code that indicates whether the claim is a Health Insurance Market (HIM) claim ,"blank = Not an HIM Claim
+Y = HIM Claim ",A,1,3604,3604,0,0,,,
+3,430.3,CCTRESERV1.3,Deliquency Handling Code,Indicates whether the Health Insurance Market claim is in the Deliquency Period,"blank = Not In Delinquency Period
+G = In Delinquency Period - Approved Code 029    
+R = In Delinquency Period - Reject Code 646",A,1,3605,3605,0,0,,,
+3,430.4,CCTRESERV1.4,Deliquency Resolved Code,Indicates whether the Health Insurance Market claim in the Deliquency Period has been Resolved,"N = Not Resolved
+Y = Yes, Resolved",A,1,3606,3606,0,0,,,
+5,430.5,CCTRESERV1.5,Price Schedule Type,The price schedule type describes the kind of pharmacy contract that is supported by the price schedule.,"E = Extended Supply Network
+H = Home Infusion
+L = Long Term Care
+M = Mail
+R = Retail
+S = Specialty",A,1,3607,3607,0,0,,,
+5,430.6,CCTRESERV1.6,Secondary Claim Code,"The indicator describing whether Synchronized Claims Adjudication (SCA) is Medicare Part D or Other Health Insurance (OHI).
+
+SCA is a Prime Therapeutics process used to handle a co-administered benefit through a single pharmacy claim, designed for Part D benefits such as Employer Group Waiver Plan (EGWP).  EGWP has Basic Part D coverage along with a Group based copay/coinsurance. CMS considers the EGWP to be providing defined standard coverage (basic Part D benefit) along with a co-administered Other Health Insurance (OHI) (copay or coinsurance tiers).  The pharmacy will submit to Prime based on the member ID card.
+
+Prime's system will process a simple Part D claim, and then create a second claim (OHI) to determine the Group's additional benefit.  The final Patient Pay and Total Amount Due will be returned to the pharmacy as if it was a single claim.","1 = First SCA claim - Medicare Part D
+2 = Second SCA claim - Other Health Insurance (OHI)",A,1,3608,3608,0,0,,,
+5,430.7,CCTRESERV1.7,Reserved Field 1.7,Field is not currently used. ,Contains only spaces to ensure the field is blank.,A,1,3609,3609,0,0,,,
+5,430.8,CCTRESERV1.8,Reserved Field 1.8,Field is not currently used. ,Contains only spaces to ensure the field is blank.,A,1,3610,3610,0,0,,,
+5,430.9,CCTRESERV1.9,Plan Product Type,Indicates the high level Product Type categorization of the benefit plan,"B - Medicare Part B           
+C - Commercial                
+D - Medicare Part D           
+H - Health Insurance Mktplace 
+M - Medicaid                  ",A,1,3611,3611,0,0,,,
+5,430.10,CCTRESERV1.10,Prorate Copay Indicator,"Indicates whether the claim copay was prorated.
+
+Prorating a copay can occur if the drug is available for prorating, and the copay is considered a flat copay, and the days supply on the claim is less than the value of the Prorate Days Supply minus Compare Days field.","Y = claim copay was prorated 
+N = claim copay was not prorated",A,1,3612,3612,0,0,,,
+5,431,CCTRESERV2,Client Code,This code is used to identify the specific client which is defined as the organization that has an agreement with Prime for PBM or related services such as Mail Order or Rebate. This Client Code is created within Prime's Client and Member Master system (CAMM) and then loaded into RxCLAIM via automated feed.,,A,10,3613,3622,0,0,,,
+5,432.1,CCTRESERV3.1,Formulary Tier,The Tier read from the preferred list on which the product was found at plan option 26 (Preferred Formulary).  Used to calculate member pay unless there was an override.,00 through 06,A,2,3623,3624,0,0,,,
+5,432.2,CCTRESERV3.2,Formulary Tier-Final,"The Tier used to calculate member pay when the product's Formulary Tier was not used due to an override, such as a tier exception.
+
+The Tier used to calculate member pay for a multiple ingredient compound. (Formulary Tier is always blank for a compound claim.)",00 through 06,A,2,3625,3626,0,0,,,
+5,432.3,CCTRESERV3.3,Cost Share Code,The Cost Share Code read from the preferred list on which the product was found at plan option 26 (Preferred Formulary).  Used to calculate member pay unless there was an override.,Cost Share Codes,A,2,3627,3628,0,0,,,
+5,432.4,CCTRESERV3.4,Cost Share Code-Final,"The Cost Share Code used to calculate member pay when the product's Formulary Cost Share Code was not used due to an override, such as a formulary exception.
+
+The Cost Share Code used to calculate member pay for a multiple ingredient compound. (Formulary Cost Share Code is always blank for a compound claim.)",Cost Share Codes,A,2,3629,3630,0,0,,,
+5,432.5,CCTRESERV3.5,Plan Sponsor Pricing Detail,For Employer Groups - indicates if the claim appears on the Plan Sponsor Pricing Detail Report.,"Blank = Claim is not on the Plan Sponsor Pricing Detail report
+Y = Claim is on the Plan Sponsor Pricing Detail Report",A,1,3631,3631,0,0,,,
+5,432.6,CCTRESERV3.6,Benefit Selection Cost Indicator,Indicates whether the claim was considered for Benefit Selection Cost penalty.,"Blank = Claim not considered for Benefit Selection Cost Penalty
+Y = Yes",A,1,3632,3632,0,0,,,
+5,433.1,CCTRESERV4.1,New Drug Application (NDA) Product Override,"Only in GAP phase or Catastrophic phases, the presence of this value is being considered to calculate the patient pay and Coverage Gap Discount for Member Medicare Part D claims. 
+
+NOTE:  The New Drug Application (NDA) Flag can be found in Field # 40 (position 214) on the Supplemental MCEF.","Blank = Manufacturer Discount is NOT based on NDA status or NDA Product Override. 
+0 = No forced the claim to NOT calculate Manufacturer Discount on the Drug.
+1 = Yes forced the claim to calculate Manufacturer Discount on the Drug.",A,1,3633,3633,0,0,,,
+5,433.2,CCTRESERV4.2,Biologic License Application (BLA) Flag,"Only in GAP phase or Catastrophic phases, the presence of this value is being considered to calculate the patient pay and Coverage Gap Discount for Member Medicare Part D claims. ","Blank = Manufacturer Discount is NOT based on BLA status or BLA Product Override.
+0 = No forced the claim to NOT calculate Manufacturer Discount on the Drug.
+1 = Yes forced the claim to calculate Manufacturer Discount on the Drug.",A,1,3634,3634,0,0,,,
+5,433.3,CCTRESERV4.3,Biologic License Application (BLA) Override,"Only in GAP phase or Catastrophic phases, the presence of this value is being considered to calculate the patient pay and Coverage Gap Discount for Member Medicare Part D claims.","Blank = Manufacturer Discount is NOT based on BLA status or BLA Product Override.
+0 = No forced the claim to NOT calculate Manufacturer Discount on the Drug.
+1 = Yes forced the claim to calculate Manufacturer Discount on the Drug.",A,1,3635,3635,0,0,,,
+5,433.4,CCTRESERV4.4,Applied Accumulator Records Indicator,Applied Accumulator Records exist in Applied Accum MCEF,"blank = No records for this claim
+Y = records exist for this claim",A,1,3636,3636,0,0,,,
+5,433.5,CCTRESERV4.5,Considered Met Accumulator Records Indicator,Considered Met Accumulator Records exist in Considered Met Accum MCEF,"blank = No records for this claim
+Y = records exist for this claim",A,1,3637,3637,0,0,,,
+5,433.6,CCTRESERV4.6,Drug Cost Reduction Extract Records Indicator,"Drug Cost Reduction Records exist and values may be available based on the claim adjudication in fields: Drug Cost Reduction Indicator, Alternative Drug Cost, and Drug Cost Percentage Applied","blank = No records for this claim
+Y = records exist for this claim",A,1,3638,3638,0,0,,,
+5,433.7,CCTRESERV4.7,Eligibility Redirect Indicator,"The Eligibility Redirect Indicator will be set when claim adjudication for an MAPD member is submitted to a member's Medicare Part D benefit initially, but redirected to adjudicate under that member's Medicare Part B benefit
+
+*Note: This jump occurs based on the Eligibility Redirect Schedule.  Fields 64 & 65 (Bank Identification Number (BIN) - Submitted & Processor Control Number (PCN) - Submitted) will still contain the BIN & PCN of the Medicare Part D eligibility as submitted by the pharmacy when Indicator set to 'Y'.","blank = Claim processed under the member's Medicare Part D eligibility
+Y = Claim jumped and processed under the member's Medicare Part B eligibility",A,1,3639,3639,0,0,,,
+5,433.8,CCTRESERV4.8,Point of Sale Rebate Flag,A Point of Sale Rebate may have been considered during adjudication of the claim.,"blank = Point of Sale Rebate was not considered during adjudication of the claim
+Y = Point of Sale Rebate was considered during adjudication of the claim ",A,1,3640,3640,0,0,,,
+5,433.9,CCTRESERV4.9,Network Contract Type Code,"The Network Contract Type Code will be set when a rented pharmacy network was used during processing of a claim. 
+
+Indicator may be present on paid, reversal of paid, captured, reversal of captured, and reject claim records.","blank = Claim processed on Prime's contracted network
+E = Claim processed on Express Scripts (ESI) rented network",A,1,3641,3641,0,0,,,
+5,433.10,CCTRESERV4.10,Patient Assistance Program Claim Designation Flag,"Flag will be set to a Y if the claim is identified as a SaveOn Claim, otherwise blank. A claim is identified as a SaveOn Claim if the Benefit Plan has the SaveOn Program attached and drug is on the SaveOn Drug List at the time the claim was adjudicated. ","Y or Blank
+If Blank: Contains only spaces to ensure the field is blank.",A,1,3642,3642,0,0,,,
+5,434.1,CCTRESERV5.1,Biosimilar Rating,"Only in GAP phase or Catastrophic phases, the presence of this value is being considered to calculate the patient pay and Generic Gap Reduction for Member Medicare Part D claims.","B = Biosimilar: Assign patient pay as Brand for LICS in all phases and Brand for non-LICS in Catastrophic phase.  Assign Generic Gap Reduction for non-LICS in Gap phase.                                            
+I = Interchangeable: Do not treat as ""B=Biosimilar"" when determining patient pay in any phase.  Assign Generic Gap Reduction for non-LICS in Gap phase.
+Blank = Not Applicable: Patient pay and Coverage Gap Discount/Generic Gap Reduction is NOT determined by Biosimilar Override.                                
+NA = Not Available: Do not treat as ""B=Biosimilar"" when determining patient pay or Coverage Gap Discount/Generic Gap Reduction.                                                                 
+NR = Not Rated: Do not treat as ""B=Biosimilar"" when determining patient pay or Coverage Gap Discount/Generic Gap Reduction.
+RF = Reference: Do not treat as ""B=Biosimilar"" when determining patient pay or Coverage Gap Discount/Generic Gap Reduction.",A,5,3643,3647,0,0,,,
+5,434.2,CCTRESERV5.2,Biosimilar Override,"Only in GAP phase or Catastrophic phases, the presence of this value is being considered to calculate the patient pay and Generic Gap Reduction for Member Medicare Part D claims.","B = Biosimilar: Assign patient pay as Brand for LICS in all phases and Brand for non-LICS in Catastrophic phase.  Assign Generic Gap Reduction for non-LICS in Gap phase.                                            
+I = Interchangeable: Do not treat as ""B=Biosimilar"" when determining patient pay in any phase.  Assign Generic Gap Reduction for non-LICS in Gap phase.
+Blank = Not Applicable: Patient pay and Coverage Gap Discount/Generic Gap Reduction is NOT determined by Biosimilar Override.                  
+NA = Not Available: Do not treat as ""B=Biosimilar"" when determining patient pay or Coverage Gap Discount/Generic Gap Reduction, regardless of Biosimilar Rating value.                                                                 
+NR = Not Rated: Do not treat as ""B=Biosimilar"" when determining patient pay or Coverage Gap Discount/Generic Gap Reduction, regardless of Biosimilar Rating value.                                                                       
+RF = Reference: Do not treat as ""B=Biosimilar"" when determining patient pay or Coverage Gap Discount/Generic Gap Reduction, regardless of Biosimilar Rating value.  
+",A,5,3648,3652,0,0,,,
+5,435,USERFIELD,User Defined Field 1,Field is not currently used. ,Contains only spaces to ensure the field is blank.,A,10,3653,3662,0,0,,,
+2,436,COPAYCAT,Low Income Cost-Sharing Subsidy (LICS) Copay Category Code,"The copay level to which the member is assigned as part of the Medicare Part D benefit.  Low Income Cost-Sharing Subsidy (LICS) is ""Extra Help"" for members who require financial assistance to pay for their prescriptions. The additional assistance is based on the members' household income and other resources. 
+","0, 1, 2, 3, 4, 5 or blank
+0 = standard (non subsidized)
+1 = LICS I (i.e. $2/$6 copays)
+2 = LICS II (i.e. $1/$3 copays)
+3 = LICS Institutionalized ($0 copay)
+4 = LICS III (i.e. 15% coinsurance) 
+5 or blank = unknown (non subsidized)",A,1,3663,3663,0,0,,,
+4,437,MEDTRMRSN,Medicare Termination Reason Code,Field is not currently used. ,Contains only spaces to ensure the field is blank.,A,4,3664,3667,0,0,,,
+1,438,M7V3N2,Reimbursement Check Number,The number assigned to the check for reimbursement.  Field REIMBURSMT (#396) indicates whether the reimbursement is for the pharmacy or the member.  ,,N,9,3668,3676,9,0,,,
+1,439,M7C2DT,Reimbursement Check Date,The date that the reimbursement check is generated.  Field REIMBURSMT (#396) indicates whether the reimbursement is for the pharmacy or the member. ,"Format CYYMMDD; 0 represents 1900's,  1 represents 2000's",N,7,3677,3683,7,0,,,
+2,440,INTFLAG,Accumulator Integrated Flag,"The code indicating whether both medical and pharmacy claim dollars are counted toward combined benefit plan accumulator(s).  If any of the pharmacy benefit accumulators are shared with the medical benefit, even if the claim adjudicated with $0 Patient Pay, this field displays a “Y” based on the integrated accumulator set-up on the Benefit Plan.","Y = Dollars from medical and pharmacy claims are combined; one set of accumulator limits applies to both medical and pharmacy benefits.
+N = Dollars from medical and pharmacy claims are not combined; accumulator limits are separately defined for medical and pharmacy benefits.
+",A,1,3684,3684,0,0,,,
+2,441,ABAQTX,Subscriber Last Name,"The subscriber's last name based on the eligibility file submitted by the client.
+
+Note:  This subscriber is associated with the member on the claim. ",,A,25,3685,3709,0,0,,,
+2,442,ABARTX,Subscriber First  Name,"The subscriber's first name based on the eligibility file submitted by the client.
+
+Note:  This subscriber is associated with the member on the claim. ",,A,15,3710,3724,0,0,,,
+2,443,ABASTX,Subscriber Middle Initial ,"The subscriber's middle initial based on the eligibility file submitted by the client.
+
+Note:  This subscriber is associated with the member on the claim. ",,A,1,3725,3725,0,0,,,
+2,444,ABAAST,Subscriber Gender Code,"The gender of the subscriber based on the eligibility file submitted by the client.
+
+Note:  This subscriber is associated with the member on the claim. ","M = Male
+F = Female",A,1,3726,3726,0,0,,,
+2,445,ABAJDT,Subscriber Date of Birth ,"The date of birth of the subscriber based on the eligibility file submitted by the client.
+
+Note:  This subscriber is associated with the member on the claim. ",YYYYMMDD,N,8,3727,3734,8,0,,,
+2,446,ABA1TX,Subscriber Address Line 1,"The street address (line 1) of the subscriber based on the eligibility file submitted by the client.
+
+Note:  This subscriber is associated with the member on the claim. ",,A,25,3735,3759,0,0,,,
+2,447,ABA2TX,Subscriber Address Line 2,"The street address (line 2) of the subscriber based on the eligibility file submitted by the client.
+
+Note:  This subscriber is associated with the member on the claim. ",,A,15,3760,3774,0,0,,,
+2,448,ABAYTX,Subscriber City,"The city address of the subscriber based on the eligibility file submitted by the client.
+
+Note:  This subscriber is associated with the member on the claim. ",,A,20,3775,3794,0,0,,,
+2,449,ABAZTX,Subscriber State,"The two-character state abbreviation of the subscriber based on the eligibility file submitted by the client.
+
+Note:  This subscriber is associated with the member on the claim. ",,A,2,3795,3796,0,0,,,
+2,450,ABA0TX,Subscriber Zip,"The five-digit zip code of the subscriber based on the eligibility file submitted by the client. 
+
+Note:  This subscriber is associated with the member on the claim. ",,A,5,3797,3801,0,0,,,
+2,451,ABHKT1,Subscriber Zip Extension,"The four-digit zip code extension of the subscriber based on the eligibility file submitted by the client. 
+
+Note:  This subscriber is associated with the member on the claim. ",,A,4,3802,3805,0,0,,,
+4,452,AOB9TX,Pharmacy Address Line 1,The street address (line 1) of the pharmacy that dispensed the prescription for this claim.,,A,55,3806,3860,0,0,,,
+4,453,AOCATX,Pharmacy City,The city address of the pharmacy that dispensed the prescription for this claim.,,A,30,3861,3890,0,0,,,
+4,454,AOCCTX,Pharmacy State,The two-character state abbreviation of the pharmacy that dispensed the prescription for this claim.,,A,2,3891,3892,0,0,,,
+4,455,AOAGNB,Pharmacy Phone,The telephone number of the pharmacy that dispensed the prescription for this claim.,,N,10,3893,3902,10,0,,,
+4,456,AOZ6CD,Pharmacy Federal Tax ID,The federal tax identifier of the pharmacy that dispensed the prescription for this claim.,,A,15,3903,3917,0,0,,,
+1,457,PHRTL,Total Amount Due to Pharmacy,"The total dollar amount that was due to the pharmacy as reimbursement for the prescription, regardless of who was responsible to pay, after all calculations have been applied to the claim.    
+
+   PHRDUEAMT (#264)
++ PHRPATPAY (#263) 
++ PHROTHPAYA (#283)
+- PHRINCENTV (#278)
+- PHRPROFFEE (#282) 
+__________________________
+= Total Due Pharmacy",,S,10,3918,3927,10,2,,,
+1,458,NPIPROV,Pharmacy ID - National Provider Identifier (NPI),A unique ID number assigned to the dispensing pharmacy by the  National Plan and Provider Enumeration System (NPPES).,,A,15,3928,3942,0,0,,,
+1,459,PRVNCPDPID,Pharmacy ID - National Council for Prescription Drug Programs (NCPDP),A unique 7-digit number assigned by the National Council for Prescription Drug Programs (NCPDP) to the dispensing  pharmacy. ,,A,15,3943,3957,0,0,,,
+1,460,AMWIHC,CMS Contract Identifier,The identifier that the Centers for Medicare and Medicaid Services (CMS) have assigned to the Medicare Part D plan sponsor. ,"Hxxxx - Identifies local MAs and MA-PDs.
+Rxxxx - Identifies regional MAs and MA-PDs.
+Sxxxx - Identifies PDPs.",A,5,3958,3962,0,0,,,
+2,461,AMWJHC,CMS Plan Benefit Package (PBP) ID,The identifier that the Centers for Medicare and Medicaid Services (CMS) have assigned to the member's Medicare Part D plan benefit package. ,"0xx - Indicates individual plan.
+8xx - Indicates Employer Group Waiver Plan.",A,3,3963,3965,0,0,,,
+4,462,AMWKHC,Covered Plan Paid (CPP) TrOOP Schedule Code,The code that defines which Medicare Part D TrOOP schedule is used to calculate the Covered Plan Paid (CPP) amount for this claim.,Values are Prime-defined and used in Prime's claim processing system. ,A,10,3966,3975,0,0,,,
+4,463,AMWLHC,Drug Coverage Status Schedule Code,The code that defines which Medicare Part D schedule is used to determine a CMS-recognized drug coverage status. CMS stands for the Centers for Medicare and Medicaid Services.,Values are Prime-defined and used in Prime's claim processing system. ,A,10,3976,3985,0,0,,,
+1,464,AMO6H9,Drug Coverage Status Code,The CMS-recognized drug coverage status code determined by the Medicare Part D schedule from the AMWLHC field (#463).   CMS stands for the Centers for Medicare and Medicaid Services.,"The following values are the most commonly used  and are reported on the Prescription Drug Event (PDE): 
+
+C = Covered drugs
+E = Enhanced Alternative drugs  
+O = Over-the-counter drugs",A,1,3986,3986,0,0,,,
+3,465,AMR5HS,Medicare Part D Profile Sequence Number,The Medicare Part D Master Profile that was in effect when this claim was processed.,,N,5,3987,3991,5,0,,,
+1,466,AMXFHX,Covered Plan Paid (CPP) Amount,"The dollar amount the plan paid for a covered Medicare Part D drug under the defined standard benefit. If the drug is not covered, then the value will be zero.  
+
+The value displayed in this field depends on the code displayed in the Medicare Part D Drug Coverage Status Code field (AMO6H9 #464).",,S,9,3992,4000,9,2,,,
+1,467,AMXGHX,Prior TrOOP Amount,The dollar amount the member has accumulated toward Medicare Part D True Out Of Pocket (TrOOP) prior to this claim.,,S,9,4001,4009,9,2,,,
+1,468,AMDSPR,Submitted Other Payer Amount Paid,"The dollar amount that the primary payer contributed toward this prescription when Prime is a secondary payer.  This is used for Coordination of Benefits. 
+
+Note:  This dollar amount does not count toward Medicare Part D True Out Of Pocket (TrOOP).",,S,9,4010,4018,9,2,,,
+1,469,AMNFHY,Low Income Cost-Sharing Subsidy (LICS) Amount,"The dollar amount of the claim attributed to the Medicare Part D Low Income Cost-Sharing Subsidy (LICS). 
+
+Low Income Cost-Sharing Subsidy (LICS) is ""Extra Help"" for members who require financial assistance to pay for their prescriptions. The additional assistance is based on the members' household income and other resources. ",,S,9,4019,4027,9,2,,,
+4,470,AMW2HE,Low Income Cost-Sharing Subsidy (LICS) TrOOP Schedule Code,"The code that defines which Medicare Part D TrOOP schedule is used to calculate the Low Income Cost-Sharing Subsidy (LICS) copay for this claim.
+
+Low Income Cost-Sharing Subsidy (LICS) is ""Extra Help"" for members who require financial assistance to pay for their prescriptions. The additional assistance is based on the members' household income and other resources. ",Values are Prime-defined and used in Prime's claim processing system. ,A,10,4028,4037,0,0,,,
+4,471,AMBWHT,Low Income Cost-Sharing Subsidy (LICS) TrOOP Schedule Step Number,The sequence step number of the Low Income Cost-Sharing Subsidy (LICS) Medicare Part D TrOOP Schedule used during claim processing.,"For claims through 2009, this field may contain a value of 1, 2, or 3.  
+
+For claims 2010 and later, this field contains a 0 even for LICS members.
+
+Values are Prime-defined and used in Prime's claim processing system. ",N,2,4038,4039,2,0,,,
+4,472,AMBXHT,Low Income Cost-Sharing Subsidy (LICS) TrOOP Schedule Step Count,The total number of steps in the Low Income Cost-Sharing Subsidy (LICS) Medicare Part D TrOOP Schedule.  ,"For claims through 2009, this field may contain a value of 1, 2, or 3.  
+
+For claims 2010 and later, this field contains a 0 even for LICS members.
+
+Values are Prime-defined and used in Prime's claim processing system. ",N,2,4040,4041,2,0,,,
+1,473,AMNGHY,Deductible Level Drug Spend - Medicare Part D ,"The Medicare Part D Plan's deductible amount if the plan has a Deductible phase.  If there is no deductible for the plan, zero is displayed.
+
+Drug Spend (not TrOOP) is used to determine the end of the Deductible phase.",,S,9,4042,4050,9,2,,,
+1,474,AMNJHY,Amount Toward Medicare Part D Plan Deductible,The amount of this claim's drug spend that counts toward the member's Deductible phase in a Medicare Part D Plan.  ,,S,9,4051,4059,9,2,,,
+4,475,AMOAHY,Deductible Level TrOOP Amount,"The TrOOP threshold amount for the Medicare Part D Deductible phase that a member must meet to qualify for Catastrophic coverage.
+
+The Deductible Level Drug Spend field (AMNGHY #473) is used to determine the end of the Deductible phase.",,S,9,4060,4068,9,2,,,
+4,476,AMNLHY,Plan Coverage Gap Drug Spend - Medicare Part D,"The drug spend amount representing the upper threshold for the Medicare Part D Coverage Gap phase to qualify for Catastrophic coverage.
+
+The Medicare Part D Plan Catastrophic Amount field (AMNIHY #478) is used to determine the end of the Coverage Gap phase. ",,S,9,4069,4077,9,2,,,
+2,477,AMN3HY,Amount Toward Medicare Part D Plan Coverage Gap,The dollar amount of this claim's drug spend that counts toward the member's Coverage Gap phase in a Medicare Part D plan.  ,,S,9,4078,4086,9,2,,,
+1,478,AMNIHY,Plan TrOOP Catastrophic Amount,The TrOOP threshold amount a Medicare Part D member must meet to qualify for Catastrophic coverage.,,S,9,4087,4095,9,2,,,
+3,479,AMN4HY,Plan Paid Amount Catastrophic,The dollar amount of this claim's drug spend paid by the plan during the Catastrophic Phase in a Medicare Part D plan. ,,S,9,4096,4104,9,2,,,
+2,480,AMN5HY,Plan Initial Coverage Amount,"The dollar amount of the Medicare Part D member's drug spend before the member's initial coverage ends and the Coverage Gap begins, if a Coverage Gap applies to the plan.  This amount is in addition to the deductible. ",9999999.99 displays if there is no Coverage Gap for the plan,S,9,4105,4113,9,2,,,
+3,481,AMNHHY,Plan Paid Amount Initial Coverage,The dollar amount of this claim's drug spend paid by the plan during the Initial Coverage Phase in a Medicare Part D plan. ,,S,9,4114,4122,9,2,,,
+2,482,AMOJHY,Member Amount Toward  Medicare Part D Deductible,The dollar amount of this claim during the Deductible phase that applied to True Out Of Pocket (TrOOP) in a Medicare Part D plan. ,,S,9,4123,4131,9,2,,,
+2,483,AMOKHY,Member Amount Toward Medicare Part D Coverage Gap,The dollar amount of this claim during the Coverage Gap phase that applied to True Out Of Pocket (TrOOP) in a Medicare Part D plan. ,,S,9,4132,4140,9,2,,,
+2,484,AMOLHY,Member Amount Toward Medicare Part D Catastrophic ,"The dollar amount of this claim paid by the member, LICS and/or another qualified TrOOP payer during the Catastrophic phase in a Medicare Part D plan.   
+
+Note:  Amounts paid in Catastrophic do not count toward TrOOP, because TrOOP has been met at the TrOOP threshold and no longer accumulates.",,S,9,4141,4149,9,2,,,
+4,485,AMWXHE,Plan TrOOP Schedule Code,"The code that defines which Medicare Part D TrOOP schedule determines the thresholds of drug spend and/or TrOOP for the Medicare Part D benefit phases. 
+",Values are Prime-defined and used in Prime's claim processing system. ,A,10,4150,4159,0,0,,,
+2,486,AMOMHY,Member Amount Toward Medicare Part D Initial Coverage,The dollar amount of this claim during the Initial Coverage phase that applied to True Out Of Pocket (TrOOP) in a Medicare Part D plan. ,,S,9,4160,4168,9,2,,,
+1,487,AMNBIA,Catastrophic Coverage Code,The code that indicates whether the claim was paid within the Medicare Part D Catastrophic Phase. ,"Blank = Below TrOOP Threshold, not yet in Catastrophic phase or Not applicable (for non-Covered Drugs)
+A = Reached TrOOP Threshold, Catastrophic coverage begins on this claim 
+C = Reached Catastrophic coverage",A,1,4169,4169,0,0,,,
+1,488,AMNMHY,Gross Drug Cost Above Out of Pocket Threshold (GDCA),The amount of drug costs that fall above the out of pocket (TrOOP) threshold for Medicare Part D Plans for covered drugs as reported on the Prescription Drug Event (PDE). ,"For non-covered drugs, GDCA must be populated with a zero dollar amount ($0.00). GDCA only tracks the cost of covered drugs to note their location and indicate the beneficiary’s status with respect to the True Out Of Pocket (TrOOP) threshold.",S,9,4170,4178,9,2,,,
+1,489,AMNNHY,Gross Drug Cost Below Out of Pocket Threshold (GDCB),The amount of drug costs that fall below the out of pocket (TrOOP) threshold for Medicare Part D Plans for covered drugs as reported on the Prescription Drug Event (PDE).,"For non-covered drugs, GDCB must be populated with a zero dollar amount ($0.00). GDCB only tracks the cost of covered drugs to note their location and indicate the beneficiary’s status with respect to the True Out Of Pocket (TrOOP) threshold.",S,9,4179,4187,9,2,,,
+3,490,AMNOHY,Non-Covered Plan Paid (NPP) Amount,"The net amount the Medicare Part D plan paid for benefits beyond the standard/basic benefit. This dollar amount should include non-Part D drugs, OTC drugs, Enhanced Alternative (EA) drugs, and EA cost-sharing.",,S,9,4188,4196,9,2,,,
+1,491,AMNPHY,Drug Spend Amount - Medicare Part D,"The dollar amount of this claim that counts toward Medicare Part D drug spend.  
+
+    Approved Ingredient Cost PHRINGRCST (#258) 
++ Approved Dispensing Fee PHRDISPFEE (#259)
++ Approved Sales Tax PHRSLSTAX (#262)
++ Approved Professional Service Fee PHRINCENTV (#278)
+____________________________________________________
+= Medicare Part D Drug Spend Amount
+
+",,S,9,4197,4205,9,2,,,
+5,492,FILLER1,Filler,Not currently used. ,,A,77,4206,4282,,,,,
+4,493,E_AONZIA,Pharmacy Dispenser Type (secondary),"The qualifier that further describes the pharmacy that dispensed the drug. 
+
+Note:  This field is an extension of DISPROTHER field (#150).",See the Dispenser Type tab.,A,3,4283,4285,0,0,,,
+4,494,E_AON0IA,Pharmacy Dispenser Type (tertiary),"The qualifier that further describes the pharmacy that dispensed the drug. 
+
+Note:  This field is an extension of DISPROTHER field (#150).",See the Dispenser Type tab.,A,3,4286,4288,0,0,,,
+4,495,"SRVPROVNME
+(E_AOB8TX)",Pharmacy Name,The name of the pharmacy that dispensed the prescription(s)  as listed on the National Council for Prescription Drug Programs (NCPDP) files.,,A,60,4289,4348,0,0,,,
+1,496,RXNUMBER12,Submitted Prescription Number (12 characters),"The prescription number assigned to the submitted claim.  This is the reference number assigned by the provider for the dispensed drug or product and/or service provided. 
+
+Note:  This field displays the entire prescription number that is partially displayed in the RXNUMBER field (#75).  The RXNUMBER field only displays the first 9 characters.","12 characters of the prescription number 
+
+Note:  If the prescription number is less than 12 characters, the value is zero-filled from the left. 
+
+",A,12,4349,4360,0,0,402-D2,Prescription/ Service Reference Number,Reference number assigned by the provider for the dispensed drug/product and/or service provided.
+4,497,PHRPTPST13,Pharmacy Member Pay Schedule Table (13 characters) - Approved ,"The code that identifies the patient/member pay table used during claim processing to calculate the patient/member pay dollar amount.  
+
+Note:  This field displays the entire Pharmacy Approved Patient Pay Schedule Table code that is partially displayed in PHRPTPST field (#269).  The PHRPTPST field only displays the first 10 characters. ","Up to 13 characters of the Pharmacy Approved Patient Pay Schedule Table code.
+
+Values are Prime-defined and used in Prime's claim processing system. ",A,13,4361,4373,0,0,,,
+4,498,CLTPTPST13,Member Pay Schedule Table Used (13 characters) - Client ,"The code that identifies the final member pay table used during the rebilling of the claim to calculate the patient/member pay dollar amount.  
+
+Note:  This field displays the entire Client Patient Pay Schedule Table code that is partially displayed in CLTPTPST field (#315).  The CLTPTPST field only displays the first 10 characters. ","Up to 13 characters of the Client Patient Pay Schedule Table code.
+
+Values are Prime-defined and used in Prime's claim processing system. ",A,13,4374,4386,0,0,,,
+4,499,AKFIHS,Reprocess Claim Sequence Nbr,Reprocess Claim Sequence number will start at 999 and reduce in number with every trial claim created.  Reprocess claim sequence number will not reset to 999.,Claims start at 999 and reduce in number. ,N,3,4387,4389,3,0,,,
+4,500,AKD9HS,Adjustment Sequence Nbr,"Adjustment claim sequence logic: 
+1. The Adjustment claim sequence starts from 999 for the unique Claim Status of Paid (Rx#, Claim status =P and unique Claim sequence number 999).  
+2. There can be many  claim adjustments made to this unique (Rx#, Claim status =P and unique Claim sequence number 999),   Adjustment claim sequence numbers start from 999, 998, 997, etc.   
+3. When a new unique Claim Status of P and new claim sequence number occurs ( (Rx#, Claim status=P and Claim sequence number 998), the adjustment sequence number resets to start at 999.   ",Claims start at 999 and reduce in number. ,N,3,4390,4392,3,0,,,
+4,501,AKLEB0,Original Adjustment Sequence,"Original Adjustment Sequence number - 999
+This field will only be populated for manual PD7 adjustments (Claim Status Code = J)",Claims start at 999 and reduce in number  as appropriate,N,3,4393,4395,3,0,,,
+2,502,SCACLMNBR,SCA Claim Number,"A claim number is created for Synchronized claim adjudication (SCA) and is a process to handle co-administered benefits when a Medicare Part D benefit and Other Health Insurance (OHI) are combined in a single benefit (like EGWP/Employer Group Waiver Plan). 
+
+If the RxCLAIM number in field #2 is associated with the Medicare D claim, this field will be be populated with the Other Health Insurance (OHI) claim number (SCA). Conversely, if the RxCLAIM number in field #2 is associated with the OHI claim, this field will be populated with the Medicare D claim number.
+
+Prime's system will process a simple Part D claim, and then create a second claim (OHI) to determine the Group's additional benefit.  The final Patient Pay and Total Amount Due will be returned to the pharmacy as if it was a single claim.
+",,N,15,4396,4410,15,0,,,
+2,503,SCASEQNBR,SCA Sequence Number,"The number assigned to this particular iteration of the claim, indicating the order in which it was processed.  The sequence begins at 999, then reduces by 1:  999, 998, 997, etc. 
+
+Multiple sequence numbers can be assigned to the same RxCLAIM number if the pharmacy, fill date, refill code and Rx number are the same. This field will be populated on the Medicare D claim record with the sequence of the OHI claim. Conversely, this field will be populated on the OHI claim record with the sequence of the Medicare D claim following the same logic as the SCA Claim Number field above.
+
+
+Note:  If a claim is reversed, the original claim and the reversal will have the same sequence number. 
+",,N,3,4411,4413,3,0,,,
+2,504,ADJRESN,Adjustment Reprocessing Reason Code,"The Reprocessing Reason Code is assigned to claims that are subject to the Reprocessing workflow through Prime's ""Reprocessing Tracking Mechanism,"" or RTM application. 
+If multiple Reprocessing Reason Codes exist for a single claim, the first associated code found is returned in this field. 
+Additionally, a 3-byte alpha character code applied in this field of ""ADT"" indicates that the claim was adjusted due to Pharmacy Audit.","Examples:
+ADT = Pharmacy Audit
+DFH = HIM Default
+DFC = Commercial Default
+BEN = Benefit Setup Error
+ELG = Eligibility Setup Error
+NET = Network Setup Error
+MRB = Manually Resolving Trial Reprocessing Batch
+SCR = Specialty Coupon Reprocessing
+100 = Improper Cost Share
+101 = Improper Assignment
+102 = Retro Eligibility",A,3,4414,4416,3,0,,,
+2,505,TRACKID,Tracking ID,"The ID associated with an issue which resulted in Reprocessing or Adjustment. This may be one of the following: an IMT (Issue Management Tracking) number, a Service Now (SN) Tracking ID, or a Pharmacy Audit batch number.
+
+IMT numbers are used for reprocessing Medicare/Medicaid claims. SN tracking ID is used for reprocessing Commercial and HIM claims. Pharmacy Audit batch number can be used across all lines of business for all claims adjusted due to a single pharmacy audit.",,A,15,4417,4431,0,0,,,
+3,506,FORMID,Formulary ID,The Formulary ID against which the claim processed. This ID is assigned in Formulary Workplace and stamped on the Benefit Plan used during adjudication of the claim.,"The FORMID will populate as ""0"" if:
+1. The drug is not on the formulary attached to the plan (NON-FORMULARY PRODUCT message on claim)
+2. The formulary ID is not listed on the plan in Edit 26, Option 5.
+3. The formulary ID is not active on the plan at Edit 26, Option 5 at the time of the claim.
+4. The claim is a multiple ingredient compound.
+5. The claim processed under the SCA/OHI Carrier.
+6. The claim rejects before Edit 26 (Preferred Formulary)",N,5,4432,4436,0,0,,,
+5,507,FILLER2,Filler,Field is not currently used. ,,A,18,4437,4454,0,0,,,
+2,508,CDRREDIND,Drug Cost Reduction Indicator,Value indicating when a Drug Cost Reduction program (also referred to as Patent Cliff) has been considered and has been/not been applied during claim processing. This benefit program  is when a generic is introduced after the brand patent has expired. Members may be allowed to continue to receive the brand drug for an allotted time but the claim calculation will be based on the cost of the generic available. ,"Blank = No drug cost reduction program was used during claim processing
+Y = Yes, a drug cost reduction was applied during claim processing
+N = No, a drug cost reduction was not applied during claim processing",A,1,4455,4455,0,0,,,
+2,509,CDRALTCPHR,Alternative Drug Cost,"Cost of the drug that was used during claim processing when a Drug Cost Reduction (Patent Cliff program) has been applied
+Format = 9999999.99",,S,9,4456,4464,9,2,,,
+2,510,CDRPCTAPLD,Drug Cost Percentage Applied,"A predetermined percentage set up on the Drug Cost Reduction program that is used to calculate the Alternative Drug Cost
+Format = 999.99",,S,5,4465,4469,5,2,,,
+5,511.1,CCTRESERV6.1,Grace Fill Applied/Qualified Flag,Reserved for future use,,A,1,4470,4470,0,0,,,
+5,511.2,CCTRESERV6.2,Grace Fill Diagnosis Program Status,Reserved for future use,,A,1,4471,4471,0,0,,,
+5,511.3,CCTRESERV6.3,Newborn Coverage Indicator,"Indicates if the claim was processed during the newborn eligibility coverage dates, and referenced the cardholder's accumulator balances when calculating the Patient Pay.
+If the Fill Date of the claim was outside the newborn coverage effective dates, then the claim was processed referencing the submitted member's accumulator balances when calculating the Patient Pay.","Blank = Claim processed without newborn coverage logic and calculated the Patient Pay by referencing the submitted member's accumulator balance.
+Y = Claim processed using newborn coverage logic and calculated the Patient Pay by referencing the cardholder's accumulator balance.",A,1,4472,4472,0,0,,,
+5,511.4,CCTRESERV6.4,FlexAccess Claim Designation Flag,Indicates whether a claim adjudicated through FlexAccess program.  ,"Y – FlexAccess available and utilized.
+N – FlexAccess available but not utilized (e.g. Member PA had a zero dollar patient pay set up).
+Blank – FlexAccess not available on the claim.",A,1,4473,4473,0,0,,,
+5,511.5,CCTRESERV6.5,FlexAccess Member Refused Flag ,Indicates whether a member refused the FlexAccess program for this medication.,"Y – Member refused FlexAccess for this drug. 
+N – Member enrolled in FlexAccess for this drug.
+Blank- FlexAccess was utlizied but member outreach has not occurred if field 511.4 is Y. FlexAccess not available on the claim if Field 511.4 is also blank.",A,1,4474,4474,0,0,,,
+5,511.6,CCTRESERV6.6,Future Use,,,A,5,4475,4479,,,,,
+5,512,CCTRESERV7,Client Delta Schedule Name,Reserved for future use,,A,10,4480,4489,0,0,,,
+5,513,CCTRESERV8,Client Delta Rate Schedule Name,Reserved for future use,,A,10,4490,4499,0,0,,,
+5,514,CCTRESERV9,Reserve Field 9,Reserved for future use,,A,20,4500,4519,0,0,,,
+5,515,CCTRESRV10,Reserve Field 10,Reserved for future use,,A,20,4520,4539,0,0,,,
+5,516,CCTRESERV11,Individual OOP Applied Amount,The Individual OOP amount applied on the claim,,S,9,4540,4548,9,2,,,
+5,517,CCTRESRV12,Individual Deductible Applied Amount,The Indifividual Deductible amount applied on the claim,,S,9,4549,4557,9,2,,,
+5,518,CCTRESERV13,FlexAccess Standard Benefit Patient Pay,Patient Pay calculated on the claim had there been no FlexAccess. Will be available only when the field 511.4 has a value of ‘Y’.,,S,9,4558,4566,9,2,,,
+5,519,CCTRESERV14,Member Pay after Mfg Assistance,Amount member is expected to pay after FlexAccess manufacturer assistance is applied. Will be available only when the field 511.4 has a value of ‘Y’.,,S,9,4567,4575,9,2,,,
+2,520,AEUTAS,Coupon Transaction Type,"This field indicates if the coupon amount is a submitted or a reversed record on the specialty coupon file. The Alliance Rx specialty coupon file is submitted with the manufacturer coupon amount that should be applied to the original claim. If the coupon information is processed incorrectly, the file would then contain a reversed record of the original submitted coupon amount.  ","S = Submitted
+R = Reversed",A,1,4576,4576,0,0,,,
+2,521,AEG1AF,Coupon Amount ,Indicates the dollar amount of the manufacturer's specialty coupon that was applied to the original claim. This field will be populated on the adjustment record (Claim Status 'D') and any reversal of the adjustment (Claim Status 'E'). ,,S,9,4577,4585,9,2,,,
+4,522,FILLER3,Filler,Field is not currently used. ,,A,14,4586,4599,0,0,,,
+2,523,CDA,Client Defined Data,Field may be defined by the client for data elements beyond the ones listed above. ,,TBD,400,4600,4999,0,0,,,
+4,524,FILLAST,Last byte contains '*',The end of the detail record contains an '*' to allow the client to define where the row stops. ,,A,1,5000,5000,0,0,,,

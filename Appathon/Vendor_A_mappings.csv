@@ -1,0 +1,12 @@
+vendor_field,target_field
+id,Customer Id
+cust id,Customer Id
+f name,First Name
+l name,Last Name
+company name,Company
+city,City
+country,Country
+contact 1,Email
+contact 2,Phone 2
+mail,Email
+url,Website

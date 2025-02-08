@@ -1,0 +1,7 @@
+Field Name,Field Description
+Record ID,Unique identifier for each record
+Record Number,Sequential number assigned to a record
+Claim ID,Unique identifier for an insurance claim
+Original_Claim,Reference to the original claim in case of adjustments
+Group_ID,Identifier for a group of related records
+PCN,Processor Control Number used in healthcare claims

@@ -1,0 +1,801 @@
+"Priority
+Rank",Field #,Field Name,Business Name,Business Definition,"Valid Values 
+(Note:  The values provided are examples only and may not be a complete list of values)","Field
+Type",Length,"Start 
+Pos","End 
+Pos","Digits if 
+numeric","Decimals if 
+numeric",NCPDP D.0 Field #,NCPDP D.0 Field Name,NCPDP D.0 Field Description
+1,1,RECORDID,Record Identifier,"The number assigned to the record for identification purposes. All detail records are assigned ""02.""","""02""",A,2,1,2,0,0,,,
+1,2,RXCLAIMNBR,RxCLAIM Number,"A system-generated number assigned to each submitted transaction on the claims processing system. This number acts as a date and uniquely identifies a claim in the system.
+
+The RXCLAIMNBR, CLMSEQNBR, and CLAIMSTS fields are used to associate records in the Supplemental and Compound MCEF files to the claims in the Standard MCEF file.","Pos 1-2 = Year
+Pos 3-5 = Julian day of the original sequence
+Pos 6-12 = RxCLAIM-generated number
+Pos 13-15 = Processor number 
+
+Example: Claim Number 061371234567001
+06 = Year 2006
+137 = Julian date for May 17
+1234567 = System-generated number
+001 = Processor number",N,15,3,17,15,0,503-F3,Authorization Number,Number assigned by the processor to identify an authorized transaction.
+1,3,CLMSEQNBR,Claim Sequence Number,"The number assigned to this particular iteration of the claim, indicating the order in which it was processed.  The sequence begins at 999, then reduces by 1:  999, 998, 997, etc. 
+
+Multiple sequence numbers can be assigned to the same RxCLAIM number if the pharmacy, fill date, refill code and Rx number are the same.
+
+The RXCLAIMNBR, CLMSEQNBR, and CLAIMSTS fields are used to associate records in the Supplemental and Compound MCEF files to the claims in the Standard MCEF file.
+
+Note:  If a claim is reversed, the original claim and the reversal will have the same sequence number. ",Claims start at 999 and reduce in number,N,3,18,20,3,0,503-F3,Authorization Number,Number assigned by the processor to identify an authorized transaction.
+1,4,CLAIMSTS,Claim Status Code,"The code that indicates the payment status of the claim after it has been processed. 
+
+The RXCLAIMNBR, CLMSEQNBR, and CLAIMSTS fields are used to associate records in the Supplemental and Compound MCEF files to the claims in the Standard MCEF file.
+
+Example: If a claim is paid, reversed, then paid within the weekly time frame of Saturday 00:00:01 – Friday 24:00:00, the MCEF only displays the last paid transaction. The MCEF does not display the previous paid and reversal. ",See the Claim Status tab.,A,1,21,21,0,0,112-AN,Transaction Response Status,Code indicating the status of the transaction.
+1,5,CARRIERID,Carrier ID,"The identifier assigned to the insurance company or HMO that offers and underwrites the health plan.  The carrier is the highest level within the claims processing system hierarchy. All accounts, groups and members fall within the carrier.",,A,9,22,30,0,0,,,
+3,6,SCARRIERID,Carrier ID Override,"The identifier for the network carrier that owns the pharmacy network and/or product override. When processing the claim, the system will read the override carrier to find the pharmacy network and/or product override, but will continue to process under the current carrier.  A product override would be necessary if the client needs to override any values that Medi-Span had assigned to the product. ",Prime does not use this functionality.,A,9,31,39,0,0,,,
+5,7,CARRPROC,Processor Identifier,Field is not currently used. ,Contains only zeroes. ,N,10,40,49,10,0,,,
+1,8,ACCOUNTID,Account ID,"The identifier assigned to the second level of the claims processing system hierarchy. This level is generally used for reporting purposes. Accounts may identify subsidiary organizations within the main client plan, regional areas within which the client operates or other major breakouts within the client carrier.",,A,15,50,64,0,0,,,
+5,9,ACCTBENCDE,Account Benefit Code,Field is not currently used. ,Contains only spaces to ensure the field is blank.,A,10,65,74,0,0,,,
+4,10,VERSIONNBR,Version Release Number,The NCPDP version/release number of the rules used to process this claim. This number also identifies the format of the transaction.,"3A = Standard Claim/Reversal
+3B = Workers Compensation
+3C = Medicaid Claim/Reversal
+32 = Version 3.2
+50 = Version 5.0
+51 = Version 5.1
+D0 = Version D.0
+
+Additional values are expected for Medicare. For example, N1 transactions will have either C1 or C2.",A,2,75,76,0,0,102-A2,Version/Release Number,Code uniquely identifying the transmission syntax and corresponding Data Dictionary.
+1,11,GROUPID,Group ID,The identifier assigned to the third level of the claims processing system hierarchy - below carrier and account. Each account may be broken down into multiple groups representing individuals or groups of employees. The group number links a member to the appropriate benefit plan for claims processing. ,,A,15,77,91,0,0,,,
+2,12,GROUPPLAN,Group Plan Code,"The benefit plan identifier associated to the group for its members' eligibility, and sent via the group's eligibility file.",,A,10,92,101,0,0,,,
+2,13,GRPCLIBENF,Group Client Benefit Code,The identifier used to keep accumulator dollars with the correct member if the member changes membership levels.  The identifier also is used to categorize different groups together for reporting purposes.  The Group Client Benefit Code (CBC) is sent to Prime on the eligibility files. Field is used for clients who elect to submit Group CBC in the eligibility group file.,,A,10,102,111,0,0,,,
+5,14,GROUPSIC,Group SIC Code,Field is not currently used. ,Contains only spaces to ensure the field is blank.,A,4,112,115,0,0,,,
+4,15,CLMRESPSTS,Claim Response Status Code,"The code that indicates the claim's status when Prime sent response back to the pharmacy. 
+
+Note:  Refer to the CLAIMSTS field (#4) definition and valid values for more information about the status code that applied after the claim was processed.  ","C = Captured - Code indicating that the transaction had been captured
+P = Paid - Code indicating that the transaction has been processed using plan rules and was paid
+R = Rejected - Code indicating that the transaction has been denied/rejected
+A = Reversal Accepted - Code indicating that the claim reversal has been accepted
+B = Benefit - Code indicating benefit information returned
+D = Duplicate of Paid - Code indicating that the transaction was paid in a previously submitted transaction
+F = PA Deferred - Code indicating that the prior authorization transaction cannot be processed until additional information is obtained
+Q = Duplicate of Capture - Code indicating that the transaction had been previously captured
+S = Duplicate of Approved - Code indicating that the transaction was previously approved",A,1,116,116,0,0,112-AN ,Transaction Response Status,Code indicating the status of the transaction.
+1,16,MEMBERID,Member ID,The identifier assigned a member within a group based on the eligibility file submitted by the client.,,A,20,117,136,0,0,,,
+1,17,MBRLSTNME,Member Last Name,The member's last name based on the eligibility file submitted by the client.,,A,25,137,161,0,0,,,
+1,18,MBRFSTNME,Member First Name,The member's first name based on the eligibility file submitted by the client.,,A,15,162,176,0,0,,,
+1,19,MBRMDINIT,Member Middle Initial,The member's middle initial based on the eligibility file submitted by the client.,,A,1,177,177,0,0,,,
+1,20,MBRPRSNCDE,Member Person Code,The identification code assigned to a specific person within a family (or cardholder). Person code is optionally used in conjunction with the cardholder ID number to uniquely identify family members within the cardholder ID number (last 2 digits of the card ID).,,A,3,178,180,0,0,,,
+1,21,MBRRELCDE,Member Relationship Code,The member's connection to the cardholder or subscriber. ,"1 = Cardholder
+2 = Spouse
+3 = Dependent
+4 = Other
+0 or blanks = Unspecified: map to a value of ""U"" for unspecified.",A,1,181,181,0,0,306-C6,Patient Relationship Code,Code indicating relationship of patient to cardholder.
+1,22,MBRSEX,Member Gender Code,The gender of the member.,"M = Male
+F = Female",A,1,182,182,0,0,305-C5,Patient Gender Code,Code indicating the gender of the individual.
+1,23,MBRBIRTH,Member Date of Birth,The date of birth of the member based on the eligibility file submitted by the client.,Format = CCYYMMDD,N,8,183,190,8,0,,,
+3,24,MBRAGE,Member Age - First of Month,The member's age as of the first of the month based on the eligibility file submitted by the client.. ,,N,3,191,193,3,0,,,
+1,25,MBRZIP,Member Zip Code,The member's zip code based on the eligibility file submitted by the client.,,A,15,194,208,0,0,,,
+2,26,SOCSECNBR,Member Social Security Number (SSN),The Social Security Number of the member based on the eligibility file submitted by the client.  ,,A,9,209,217,0,0,,,
+5,27,DURKEY,Drug Utilization Review (DUR) Key,Field is not currently used. ,Contains only spaces to ensure the field is blank.,A,18,218,235,0,0,,,
+2,28,DURFLAG,Member Drug Utilization Review (DUR) Process Flag,"The code that indicates whether the Drug Utilization Review (DUR) edit was used when processing claims for the member.  DUR is a system of drug use review that can detect potential adverse drug interactions, drug-pregnancy conflicts, therapeutic duplications, drug-age conflicts, etc.   ","Y = Default. DUR was used when processing the member's submitted claims.
+N = DUR was not used when processing the member's submitted claims. ",A,1,236,236,0,0,,,
+1,29,MBRFAMLYID,Member Family ID,"The unique identifier for the member's family within the group, based on the eligibility file submitted by the client. 
+
+If the member's benefit includes accumulators, this field should contain a value. 
+
+This data displays on the MCEF if it is on the member's eligibility file.",,A,20,237,256,0,0,,,
+3,30,MBRFAMLIND,Member Family Indicator,"The code that indicates whether the member's benefit plan is for an individual or a family, based on the eligibility file submitted by the client.  
+
+This data displays on the MCEF if it is on the member's eligibility file.","Blank
+N = Not Family; Individual
+Y = Family",A,1,257,257,0,0,,,
+2,31,MBRFAMLTYP,Member Family Type,"The definition of the individuals that the subscriber selected to be covered by the pharmacy benefit.
+
+This field is used to determine if the individual or family accumulator amounts should be used.
+
+This data displays on the MCEF if it is on the member's eligibility file.","1 = Family
+2 = Card Holder
+3 = Card Holder & Spouse
+4 = Card Holder & Dependents
+5 = Spouse & Dependents 
+6 = Dependents
+7 = Spouse Only
+8 = Member +1 ",A,1,258,258,0,0,,,
+2,32,COBIND,Coordination of Benefits (COB) Code,The Coordination of Benefits value that indicates whether the claim was processed as primary or secondary. A claim may be processed as secondary when a person is covered under more than one group medical program. COB requires that all programs coordinate payment of benefits in order to eliminate over-insurance or duplication of benefits.,"01 = Claim processed as Primary
+02 = Claim processed as Secondary, etc.
+
+Field always contains a value. ",A,2,259,260,0,0,,,
+3,33,MBRPLAN,Member Benefit Plan Code,"The benefit plan identifier associated to the member's record. Field is used for clients who elect to submit a Plan Code at the member level which would override the Plan Code sent at the group level.
+
+Note: The member's eligibility record ties the member to the Group record. The Group record is where the benefit plan is associated to the Group, via the Group's eligibility file.
+
+Some clients require that both their commercial and Medicare Part D members have a member plan different than the group plan.  However, all members within a given group have the same member plan.   ",,A,10,261,270,0,0,,,
+5,34,MBRPRODCDE,Member Client Product Code,The Client Product Code copied from the Member file.  It is used for reporting purposes only.,,A,6,271,276,0,0,,,
+5,35,MBRRIDERCD,Member Client Rider Code,Field is not currently used. ,Contains only spaces to ensure the field is blank.,A,6,277,282,0,0,,,
+5,36,CARENETID,Care Network Identifier,Field is not currently used. ,Contains only spaces to ensure the field is blank.,A,10,283,292,0,0,,,
+5,37,CAREQUALID,Care Qualifier Identifier,Field is not currently used. ,Contains only spaces to ensure the field is blank.,A,10,293,302,0,0,,,
+2,38,CAREFACID,Care Facility ID,"The identifier of the healthcare facility that is associated with the member. A care facility may be a clinic, nursing home, or other center that provides healthcare services. Care Facility data must be submitted on member eligibility file in order for this field to be functional.
+
+Note:  If the member's claim is from a healthcare facility that is not indicated in this field, the claim will reject.",,A,10,303,312,0,0,336-8C,Facility ID,ID assigned to the patient’s clinic/host party.
+2,39,CAREFACNAM,Care Facility Name,"The name of the healthcare facility that is associated with the member. A care facility may be a clinic, nursing home, or other center that provides healthcare services. Care Facility data must be submitted on member eligibility file in order for this field to be functional.
+
+Note:  If the member's claim is from a healthcare facility that is not indicated in this field, the claim will reject.",,A,25,313,337,0,0,,,
+2,40,MBRPCPHYS,Primary Physician ID,"The Drug Enforcement Agency (DEA) identifier assigned to the member's primary medical provider.  A primary provider is the member's first point of contact for any undiagnosed health concern. Primary Physician data must be submitted on member eligibility file in order for this field to be functional.
+
+Note:  If the plan has sent the DEA number, this field will display the value. If any other value has been sent, this field will be blank.",,A,15,338,352,0,0,,,
+2,41,PPRSFSTNME,Primary Prescriber First Name,"The first name of the member's primary medical provider.  A primary provider is the member's first point of contact for any undiagnosed health concern.  Primary Physician data must be submitted on member eligibility file in order for this field to be functional.
+
+The Primary Physician First Name displays as submitted using PRMCAREPRV field (#60) and PRMCAREPRQ field (#61).
+
+Note:  If the plan has sent the DEA number, this field will display the value. If any other value is sent, this field will be blank.",,A,15,353,367,0,0,,,
+2,42,PPRSLSTNME,Primary Prescriber Last Name,"The last name of the member's primary medical provider.  A primary provider is the member's first point of contact for any undiagnosed health concern. Primary Physician data must be submitted on member eligibility file in order for this field to be functional.
+
+The Primary Physician Last Name  displays as submitted using PRMCAREPRV field (#60) and PRMCAREPRQ field (#61).
+
+Note:  If the plan has sent the DEA number, this field will display the value. If any other value is sent, this field will be blank.",,A,25,368,392,0,0,,,
+2,43,PPRSMDINIT,Primary Prescriber Middle Initial,"The middle initial of the member's primary medical provider. A primary provider is the member's first point of contact for any undiagnosed health concern. Primary Physician data must be submitted on member eligibility file in order for this field to be functional.
+
+The Primary Physician Middle Initial displays as submitted using PRMCAREPRV field (#60) and PRMCAREPRQ field (#61).
+
+Note:  If the plan has sent the DEA number, this field will display the value. If any other value has been sent, this field will be blank.",,A,1,393,393,0,0,,,
+2,44,PPRSSPCCDE,Primary Prescriber Specialty Code,"The field of medicine in which the member's primary provider has specialized (e.g., urology, pediatrics, psychiatry, gynecology, geriatrics).  Primary Physician data must be submitted on member eligibility file in order for this field to be functional.
+
+The Primary Prescriber Specialty Code displays as submitted using PRMCAREPRV field (#60) and PRMCAREPRQ field (#61). 
+
+Note:  If the plan has sent the DEA number, this field will display the value. If any other value has been sent, this field will be blank.",,A,6,394,399,0,0,,,
+2,45,MBRALTINFL,Member Alternate Insurance Code,A code that indicates whether the member has a different insurance company or plan that may be responsible for primary payment for the products dispensed.  The code also indicates how claims for this member should be processed.  Also referred to as Coordination of Benefits.,"Blank = Not specified
+N = No: Member does not have additional coverage; coverage is primary
+Y = Yes: Member has other insurance and the claim should process under the other insurance first. 
+D = Dual Coverage: Indicates all matching member records should be considered to determine the most appropriate record to use for claim processing. Also indicates the current record is open for use to pay claims. If the member record with this code is determined to be the best match, the claim is processed against this record and acts as an N record from that point forward.
+X = Y/Dual Coverage: Acts like Y. When flag is X, the system continues to look for other matching records to use. If another matching record is found with a D, Dual Coverage logic is used to determine which record to use for claim processing. If the only available record is X, claim will reject. 
+0 = Additional Coverage: There is additional coverage and the claims processing system should look under the same carrier for benefits.
+1 = Additional Coverage, Other Carrier: There is additional coverage, but the claims processing system should look under another carrier for benefits.
+Note: Values Y, 0, and 1 work in conjunction with Process COB field on Member Eligibility Detail screen in plan edit #2. ",A,1,400,400,0,0,,,
+3,46,MBRALTINCD,Member Alternate Insurance Name,"The name of the alternate insurance company or plan that may be responsible for primary payment for the products dispensed.  Alternate insurance data must be submitted on member eligibility file in order for this field to be functional.
+
+Note:  This field only contains a value when the MBRALTINFL field (#45) does not contain 'N'. ",,A,10,401,410,0,0,,,
+3,47,MBRALTINID,Alternate Insurance Member ID,The member identifier associated with the alternate insurance. Alternate insurance data must be submitted on member eligibility file in order for this field to be functional.,,A,20,411,430,0,0,,,
+2,48,MBRMEDDTE,Member Medicare Coverage From Date,"The start date of the member's Medicare coverage, also known as the Original From Date (OFD). Medicare insurance data must be submitted on member eligibility file in order for this field to be functional.",,N,8,431,438,8,0,,,
+2,49,MBRMEDTYPE,Member Medicare Coverage Type,The code that indicates the type of Medicare coverage that the member currently has. ,"Valid values are these:
+Blank = Not specified
+A = Secondary Part A
+B = Part B
+D = Parts A & B Age 65
+M = Parts A & B
+N = Not Covered
+R = Renal
+U = Secondary, Unknown
+W = Secondary, Working/TEFRA
+Y = Yes, Undefined",A,1,439,439,0,0,,,
+2,50,MBRHICCDE,Medicare Beneficiary Identifier (MBI) ,"The MBI is a random alpha-numeric ID assigned to the member that does not contain any personally identifiable information. 
+
+This ID replaced the HICN (Health Insurance Claim Number) in April 2018. Medicare insurance data must be submitted on member eligibility file in order for this field to be functional.",,A,20,440,459,0,0,,,
+3,51,CARDHOLDER,Subscriber ID - Submitted,The identification number assigned to the person responsible for payment of premiums or whose employment is the basis for eligibility for membership in a health plan.  This is the exact ID that was submitted on the claim. This data must be submitted on the claim by the adjudicating pharmacy.,,A,20,460,479,0,0,302-C2,Cardholder ID,Insurance ID assigned to the cardholder or identification number used by the plan.
+3,52,PATLASTNME,Member Last Name - Submitted,The member's last name as submitted on the claim. This data must be submitted on the claim by the adjudicating pharmacy.,,A,15,480,494,0,0,311-CB,Patient Last Name,Individual last name.
+3,53,PATFRSTNME,Member First Name - Submitted,The member's first name as submitted on the claim. This data must be submitted on the claim by the adjudicating pharmacy.,,A,12,495,506,0,0,310-CA,Patient First Name,Individual first name.
+3,54,PERSONCDE,Person Code - Submitted,The identification code assigned to a specific person within a family (or subscriber) as submitted on the claim. Person code is optionally used in conjunction with the subscriber ID number to uniquely identify family members within the subscriber ID number (last 2 digits of the card ID). This data must be submitted on the claim by the adjudicating pharmacy.,,A,3,507,509,0,0,303-C3,Person Code,Code assigned to a specific person within a family.
+3,55,RELATIONCD,Relationship Code - Submitted,The member's connection to the subscriber as submitted on the claim.,"Blank or 0 = Not Specified
+1 = Subscriber
+2 = Spouse
+3 = Child
+4 = Other",A,1,510,510,0,0,306-C6,Patient Relationship Code,Code indicating relationship of patient to cardholder.
+3,56,SEXCODE,Member Gender Code - Submitted,The gender of the member as submitted on the claim by the pharmacy.,"0 = Unspecified
+1 = Male
+2 = Female
+3 = Non-binary",A,1,511,511,0,0,305-C5,Patient Gender Code,Code indicating the gender of the individual.
+3,57,BIRTHDTE,Member Date of Birth - Submitted,The date of birth of the member as submitted on the claim.,Format = CCYYMMDD,N,8,512,519,8,0,304-C4,Date Of Birth,Date of birth of patient.
+3,58,ELIGCLARIF,Eligibility Clarification Code - Submitted,"The code that indicates whether the current eligibility status of the member should be overridden to allow benefit coverage. An override may be required if eligibility is not maintained at the dependent level, and the dependent's status requires clarification to extend coverage to this member.  Without the override, claims for this member will reject.
+
+Example: The member has become a student but eligibility has not been updated yet. The pharmacy can indicate “3” so that the carrier may override eligibility for this member.
+","0  or blank = Unspecified
+1 = No Override
+2 = Override
+3 = Full time Student
+4 = Disabled Dependent
+5 = Dependent Parent
+6 = Significant Other",A,1,520,520,0,0,309-C9,Eligibility Clarification Code,Code indicating that the pharmacy is clarifying eligibility for a patient.
+3,59,CUSTLOC,Customer Location Code - Submitted,"The identifier of the healthcare facility that is associated with the member as submitted on the claim. A care facility may be a clinic, nursing home, or other center that provides healthcare services. 
+
+",See the Place of Service Codes tab. ,A,2,521,522,0,0,,,
+4,60,PRMCAREPRV,Primary Care Provider ID - Submitted,The identification number assigned to the member's primary medical provider as submitted on the claim.  A primary provider is the member's first point of contact for any undiagnosed health concern. This data must be submitted on the claim by the adjudicating pharmacy.,,A,15,523,537,0,0,421-DL,Primary Care Provider ID,ID assigned to the primary care provider. Used when the patient is referred to a secondary care provider.
+4,61,PRMCAREPRQ,Primary Care Provider ID Qualifier - Submitted,"The code that indicates the type of provider ID that was submitted on the claim, e.g., DEA, NPI, etc. ","Examples: 
+01 = NPI
+06 = UPIN
+12 = DEA
+",A,2,538,539,0,0,468-2E,Primary Care Provider ID Qualifier,Code qualifying the ‘Primary Care Provider ID’ (421-DL).
+4,62,FACILITYID,Facility ID - Submitted,"The 10-character identifier of the specific healthcare facility that is associated with the member as submitted on the claim. A care facility may be a clinic, nursing home, or other center that provides healthcare services.  ","Examples are hospitals, clinics, and nursing home.",A,10,540,549,0,0,336-8C,Facility ID,ID assigned to the patient’s clinic/host party.
+3,63,OTHCOVERAG,Other Coverage Code - Submitted,The code that indicates whether or not the member has other insurance coverage as submitted on the claim. This is a standard NCPDP field for the pharmacy to submit to indicate if the record is primary or secondary.  ,"0 = Not specified
+1 = No other coverage identified
+2 = Other coverage exists; payment collected
+3 = Other coverage exists; this claim not covered
+4 = Other coverage exists; payment not collected
+5 = Managed care plan denial
+6 = Other coverage denied; not a participating provider
+7 = Other coverage exists; not in effect at time of service
+8 = Claim is a billing for a copay",A,1,550,550,0,0,308-C8,Other Coverage Code,Code indicating whether or not the patient has other insurance coverage.
+2,64,BINNUMBER,Bank Identification Number (BIN) - Submitted,"The Bank ID Number or card issuer ID that is used for network routing of the claim payment.  This ID must be submitted on the claim by the adjudicating pharmacy. The BIN must be established with Prime in order for the claim to populate this file. 
+
+Each electronic claims processor must have a BIN assigned by the American National Institute. ",,A,6,551,556,0,0,101-A1,BIN Number,Card Issuer ID or Bank ID Number used for network routing.
+2,65,PROCESSOR,Processor Control Number - Submitted,An input code used by pharmacies that identifies the claim to be sent to Prime and how to process the claim. This data must be submitted on the claim by the adjudicating pharmacy.,,A,10,557,566,0,0,104-A4,Processor Control Number,Number assigned by the processor.
+3,66,GROUPNBR,Group Number - Submitted,"The identifier assigned to the group associated with the submitted claim.  This number is used to determine how to process the claim, based on the rules for the group. This data must be submitted on the claim by the adjudicating pharmacy.",,A,15,567,581,0,0,301-C1,Group ID,ID assigned to the cardholder group or employer group.
+3,67,TRANSCDE,Transaction Code - Submitted,"The numeric code that specifies the type of transaction sent or received. 
+
+Transaction Types include:
+- Claim(s) original billing
+- Claim(s) reversal or backout
+- Claim(s) billing following downtime
+- Claim(s) re-billing; reverse prior billing & original bills
+- Claim(s) refill billing
+- Claim(s) information for DUR",See the Submitted Transaction Code tab. ,A,2,582,583,0,0,103-A3,Transaction Code,Code identifying the type of transaction.
+1,68,DATESBM,Claim Submitted Date ,"The date the claim was submitted to the claims processing  system to be processed.  If this is the original claim, then this date will be identical to the ORGPDSBMDT field (#70).",Format = YYYYMMDD,N,8,584,591,8,0,,,
+3,69,TIMESBM,Claim Submitted Time,"The time the claim was submitted to the claims processing  system.
+
+",Format = HHMMSS,N,6,592,597,6,0,,,
+3,70,ORGPDSBMDT,Original Paid Transaction Submitted Date,"The date the claim was submitted the first time to the claims processing  system to be processed and had a paid status.  
+",Format = YYYYMMDD,N,8,598,605,8,0,,,
+3,71,RVDATESBM,Claim Reversal Submitted Date,The date the claim was submitted to the claims processing  system to be processed and flagged as a reversal. ,Format = YYYYMMDD,N,8,606,613,8,0,,,
+3,72,CLMCOUNTER,Claim Counter,"A number assigned to each claim based on its paid status. These numbers are used to determine the total number of paid claims and for reporting purposes. 
+
+Each paid claim counts as 1, and each reversed claim counts as -1. ","1 = Paid
+-1 = Reversed",S,1,614,614,1,0,,,
+3,73,GENERICCTR,Brand/Generic Drug Counter,"A number assigned to each claim based on whether the drug is generic or brand. These numbers are used to determine the total number of paid generic claims for reporting purposes.
+
+Each generic, paid claim counts as 1, each brand (not generic) claim counts as 0, and each reversed claim counts as -1.  ","1 = Generic, paid
+0 = Not generic, paid
+-1 = Reversed",S,1,615,615,1,0,,,
+3,74,FORMLRYCTR,Formulary Counter,"A number assigned to each claim based on whether the drug is on the benefit plan's formulary or not.  These numbers are used to determine the total number of paid claims for formulary drugs for reporting purposes.
+
+Each formulary, paid claim counts as 1, each non-formulary claim counts as 0, and each reversed claim counts as -1.  ","1 = Formulary
+0 = Not formulary
+-1 = Reversed",S,1,616,616,1,0,,,
+1,75,RXNUMBER,Prescription Number - Submitted,"The prescription number assigned to the submitted claim.  This is the reference number assigned by the provider for the dispensed drug or product and/or service provided. 
+
+","First 9 characters of the Submitted Rx Number
+
+Note:  To view all 12 characters of the Submitted Rx Number, go to RXNUMBER12, TCD Sbm Rx Nbr (Field #496).  The two fields display the same Submitted Rx Number. ",A,9,617,625,0,0,402-D2,Prescription/ Service Reference Number,Reference number assigned by the provider for the dispensed drug/product and/or service provided.
+4,76,RXNUMBERQL,Prescription Number Qualifier - Submitted ,"The code that indicates the type of billing submitted with the claim. 
+
+Note:  Currently, Prime's claims processing system only supports RxBilling, which is for prescription fills.","Valid Values are 0, 1, or 2.  
+
+Prime only uses 1 = RxBilling
+",A,1,626,626,0,0,455-EM,Prescription/ Service Reference Number Qualifier,Indicates the type of billing submitted.
+1,77,REFILL,Prescription New/Refill Code - Submitted,"The code that indicates whether the prescription is an original fill or a refill as submitted on the claim.  If it's a refill, the code is the number of the refill.","00 - New prescription
+01 to 99 - Number of refills",A,2,627,628,0,0,403-D3,Fill Number,The code indicating whether the prescription is an original or a refill.
+5,78,DISPSTATUS,Dispense Status,Field is not currently used. ,Contains only spaces to ensure the field is blank.,A,1,629,629,0,0,,,
+1,79,DTEFILLED,Prescription Fill Date - Submitted,The date the prescription was dispensed as submitted on the claim.,Format = YYYYMMDD,N,8,630,637,8,0,457-EP,Associated Prescription/Service Date,Date of the ‘Associated Prescription/Service Reference Number’ (456-EN).
+1,80,COMPOUNDCD,Prescription Compound Code - Submitted,"A numeric code indicating whether or not the prescription is a compound as submitted on the claim. 
+
+Note:  When a claim is for a multiple ingredient compound drug, the compound ingredient details are found on the Compound Claims Extract File (optional file sent with the MCEF).","1 = Not a Compound
+2 = Compound",A,1,638,638,0,0,406-D6,Compound Code,Code indicating whether or not the prescription is a compound.
+1,81,PRODTYPCDE,Product ID Qualifier - Submitted,"The two-digit qualifier that indicates the type of pharmaceutical identifier that was submitted on the claim, e.g., UPC, NDC, etc. 
+
+Note:  The code displayed in this field indicates the type of value that displays in the PRODUCTID field (#82) If the PRODTYPCDE field displays 03, then an NDC displays in the PRODUCTID field.  ",See the Product Type Codes tab. ,A,2,639,640,0,0,436-E1,Product/Service ID Qualifier,Code qualifying the value in 'Product/Service ID' (4Ø7-D7).
+1,82,PRODUCTID,Product ID - Submitted,"The actual pharmaceutical identifier as submitted on the claim. This data must be submitted on the claim by the adjudicating pharmacy.
+
+Notes:  The value displayed in this field is the actual ID for the type indicated in the PRODTYPCDE field (#81). 
+
+When a claim is for any multiple ingredient compound drug, this field displays the value of the most expensive legend ingredient of the compound, regardless of how the compound is set up. ",,A,20,641,660,0,0,407-D7,Product/Service ID,ID of the product dispensed or service provided
+4,83,PRODUCTKEY,Product Key,"The precise product file record that was used during claim processing. This key is internal to Prime's product file code.
+
+Note:  When a claim is for any multiple ingredient compound drug, this field displays the value of the most expensive legend ingredient of the compound, regardless of how the compound is set up. ",,N,9,661,669,9,0,,,
+3,84,METRICQTY,Metric Quantity Dispensed - Submitted,"The number of metric units of medication dispensed. This must comply with NCPDP billing unit standards.
+
+Note:  This is a legacy field, is not required and has been replaced by DECIMALQTY field (#85).","This value is calculated by multiplying the quantity that the pharmacy dispensed by the billing unit, as indicated in the Std Billing Unit field on the Product Detail screen. 
+
+Metric Quantity = Dispensed Quantity x Billing Unit.",S,5,670,674,5,0,404-D4,Metric Quantity,Number of metric units of medication dispensed.
+1,85,DECIMALQTY,Quantity Dispensed - Submitted,The quantity of the prescription that the pharmacy submitted and dispensed. This data must be submitted on the claim by the adjudicating pharmacy.,,S,11,675,685,11,3,442-E7,Quantity Dispensed,Quantity dispensed expressed in metric decimal units.
+1,86,DAYSSUPPLY,Days Supply - Submitted,The number of days a prescription will last. This data must be submitted on the claim by the adjudicating pharmacy.,,S,3,686,688,3,0,405-D5,Days Supply,Estimated number of days the prescription will last.
+1,87,PSC,Product Selection Code - Submitted,The submitted code that indicates whether the prescription must be filled as written or a drug substitution is allowed.,"0 = No product selection indicated
+1 = Substitution not allowed by prescriber
+2 = Substitution allowed - patient requesting product dispensed 
+3 = Substitution allowed - pharmacist selected product dispensed
+4 = Substitution allowed - generic drug not in stock
+5 = Substitution allowed - brand drug dispensed as a generic
+6 = Override
+7 = Substitution not allowed - brand drug mandated by law
+8 = Substitution allowed - generic drug not available in marketplace
+9 = Other ",A,1,689,689,0,0,408-D8,Dispense As Written (DAW)/ Product Selection Code,Code indicating whether or not the prescriber’s instructions regarding generic substitution were followed.
+2,88,WRITTENDTE,Prescription Written Date -  Submitted,The date the prescription was written by the prescriber.,"Format = YYYYMMDD
+",N,8,690,697,8,0,414-DE,Date Prescription Written,Date prescription was written.
+2,89,NBRFLSAUTH,Number of Authorized Refills - Submitted,The prescribed number of refills allowed.,"00 through 99, with 99 being as needed, refills unlimited",S,2,698,699,2,0,415-DF,Number of Refills Authorized,Number of refills authorized by the prescriber.
+2,90,ORIGINCDE,Prescription Origin Code - Submitted,The code that indicates the method used to submit the  prescription to the pharmacy. ,"0 = Not specified
+1 = Written
+2 = Telephone
+3 = Electronic
+4 = Facsimile
+5 = Pharmacy",A,1,700,700,0,0,419-DJ,Prescription Origin Code,Code indicating the origin of the prescription.
+4,91,SBMCLARCD1,Prescription Denial Clarification Code - Submitted,"The code that indicates special processing instructions.  
+
+Example:  The pharmacy can submit the claim with a code explaining that this claim is for a vacation supply, lost prescription, therapy change, etc. ",See the Rx Denial Clarification tab. ,A,2,701,702,0,0,420-DK,Submission Clarification Code,Code indicating that the pharmacist is clarifying the submission.
+3,92,PAMCNBR,Prior Authorization/Medical Certification Number - Submitted,"The number associated with the Prior Authorization (PA) for the member and submitted by the pharmacy.  This data must be submitted on the claim by the adjudicating pharmacy. This is not the PA number that is attached to a member record.
+
+If this claim uses a dynamic PA, a PA message is sent from Prime to the pharmacy, telling the pharmacy to enter a specific number to allow the PA to pay. ",,A,11,703,713,0,0,416-DG,Prior Authorization/Medical Certification Code and Number,"Value indicating prior authorization or medical certification occurred, and the number associated with the code in the left most position."
+3,93,PAMCCDE,Prior Authorization/Medical Certification Code - Submitted,The type of prior authorization associated with this claim.,"0 or blank = Not Specified
+1 = Prior Authorization
+2 = Medical Certification
+3 = EPSDT (Early Period Screening Diagnosis Treatment)
+4 = Exemption from Copay
+5 = Exemption from Rx Limits
+6 = Family Planning Indicator
+7 = AFDC (Aid to Families with Dependent Children)
+8 = Payer Defined Exception",A,2,714,715,0,0,461-EU,Prior Authorization Type Code,Code clarifying the ‘Prior Authorization Number Submitted’ (462-EV) or benefit/plan exemption.
+1,94,PRAUTHNBR,Member Prior Authorization Number,"A Prior Authorization (PA) number that allows the claim to be paid for this member. This number is either a dynamic Prior Authorization (PA) number generated by Prime, or an existing PA number. This PA number is either created at Prime or auto-loaded in a batch file.  ",V = Prior Authorization/Medical Certification Code and must be left justified in the full field.  The remaining 11 digits must be right justified and contain only zeroes.,A,11,716,726,0,0,498-PY,Prior Authorization Number-Assigned,Unique number identifying the prior authorization assigned by the processor
+2,95,PRAUTHRSN,Member Prior Authorization Reason Code,The reason that a prior authorization was required for this claim. ,See the Prior Auth Reasons tab. ,A,2,727,728,0,0,,,
+2,96,PRAUTHFDTE,Member Prior Authorization From Date,"The start date of the member's prior authorization. 
+
+Examples:   For a date of May 20, 1998, this field would display  0980520.
+
+For a date of May 20, 2005, this field would display 1050520. ","Format = CYYMMDD
+0 = 1900s
+1 = 2000s",N,7,729,735,7,0,,,
+2,97,PRAUTHTDTE,Member Prior Authorization Through Date,"The end date of the member's prior authorization. 
+
+Examples:   For a date of May 20, 1998, this field would display  0980520.
+
+For a date of May 20, 2005, this field would display 1050520.","Format = CYYMMDD
+0 = 1900s
+1 = 2000s",N,7,736,742,7,0,,,
+1,98,LABELNAME,Drug Label Abbreviation,"The label name of the drug dispensed plus the drug's strength and dosage. This is the abbreviation of PRODNAME field (#99). 
+
+Note:  When a claim is for any multiple ingredient compound drug, this field displays the value of the most expensive legend ingredient of the compound, regardless of how the compound is set up. ","Examples:
+
+SIMVASTATIN  TAB 20MG
+LISINOPRIL   TAB 20MG
+NORETHIN ACE TAB 5MG   ",A,30,743,772,0,0,,,
+1,99,PRODNAME,Drug Name ,"The full drug name of the drug dispensed.   
+
+Note:  When a claim is for any multiple ingredient compound drug, this field displays the value of the most expensive legend ingredient of the compound, regardless of how the compound is set up. ","Examples:
+
+SIMVASTATIN
+LISINOPRIL
+NORETHINDRONE ACETATE     ",A,70,773,842,0,0,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,

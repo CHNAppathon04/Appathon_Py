@@ -1,0 +1,7 @@
+Field Name,Field Description
+Transaction ID,Unique identifier for each record
+Entry Number,Sequential number assigned to a record
+Case ID,Unique identifier for an insurance claim
+Initial_Claim,Reference to the original claim in case of adjustments
+Batch_ID,Identifier for a group of related records
+Processing Code,Processor Control Number used in healthcare claims

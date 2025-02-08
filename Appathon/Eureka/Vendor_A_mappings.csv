@@ -1,0 +1,42 @@
+Vendor Field,Customer Field
+Record ID,RECORDID
+Record Number,RXCLAIMNBR
+Claim ID,CLMSEQNBR
+Original_Claim,CLAIMSTS
+Group_ID,GROUPID
+PCN,BINNUMBER
+Employee_ID,MEMBERID
+SSN,SOCSECNBR
+Patient_ID,MBRFAMLYID
+Patient_Last_Name,PATLASTNME
+Patient_First_Name,PATFRSTNME
+Patient_Address 1,CAREFACNAM
+Patient_Address 2,CUSTLOC
+Patient_City,CUSTLOC
+Patient_State,CUSTLOC
+Patient_Zip_code,MBRZIP
+Relationship,RELATIONCD
+Date_of_Birth,BIRTHDTE
+Prescriber_Name,PPRSLSTNME
+Pharmacy_Name,CAREFACNAM
+Pharmacy_Type,CARENETID
+Date_of_Service,DATESBM
+Prescription_No,RXNUMBER
+Date_Prescription_Filled,DTEFILLED
+In-Out_Network,OTHCOVERAG
+NDC,PRODUCTID
+Label_Name,LABELNAME
+Brand_Generic,GENERICCTR
+Drug_Strength,PRODUCTID
+Days_Supply,DAYSSUPPLY
+Quantity,DECIMALQTY
+Dosage Form,PRODTYPCDE
+Formulary,FORMLRYCTR
+Total_Billed_Amount,Total Billed Amount
+Plan_Paid_Amount,Plan_Paid_Amount
+Member_Copay_Coins,Member_Total_Paid_Amount
+Member_Deductible,Member_Deductible
+Member_Other_Cost,PRAUTHNBR
+Member_Total_Paid_Amount,Total Billed Amount
+Paid_Date,Datesbm
+Status,ELIGCLARIF
